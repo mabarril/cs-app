@@ -9,9 +9,9 @@ import { MatCardModule } from '@angular/material/card';
 
 
 @Component({
-  selector: 'app-inscricao-campori',
-  templateUrl: './inscricao-campori.component.html',
-  styleUrl: './inscricao-campori.component.scss',
+  selector: 'app-inscricao',
+  templateUrl: './inscricao.component.html',
+  styleUrl: './inscricao.component.css',
   standalone: true,
   imports: [
     MatInputModule,
@@ -22,11 +22,11 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule
   ]
 })
-export class InscricaoCamporiComponent {
+export class InscricaoComponent {
   private fb = inject(FormBuilder);
-  addressForm = this.fb.group({
-    company: null,
-    firstName: [null, Validators.required],
+  inscricaoCamporiForm = this.fb.group({
+    nome: null,
+    responsavel: [null, Validators.required],
     lastName: [null, Validators.required],
     address: [null, Validators.required],
     address2: null,
