@@ -12,22 +12,12 @@
         </div>
       </div>
       <div class="row">
-        <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="First name" formControlName="firstName">
-            @if (inscricaoCamporiForm.controls['firstName'].hasError('required')) {
-              <mat-error>First name is <strong>required</strong></mat-error>
+            <input matInput placeholder="Responsável" formControlName="responsavel">
+            @if (inscricaoCamporiForm.controls['responsavel'].hasError('required')) {
+              <mat-error>O nome do responsável é <strong>requerido</strong></mat-error>
             }
           </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Last name" formControlName="lastName">
-            @if (inscricaoCamporiForm.controls['lastName'].hasError('required')) {
-              <mat-error>Last name is <strong>required</strong></mat-error>
-            }
-          </mat-form-field>
-        </div>
       </div>
       <div class="row">
         <div class="col">
