@@ -1,39 +1,29 @@
-<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="inscricaoCamporiForm" novalidate (ngSubmit)="onSubmit()">
   <mat-card class="shipping-card">
     <mat-card-header>
-      <mat-card-title>Inscrição Campori</mat-card-title>
+      <mat-card-title>Shipping Information</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Company" formControlName="company">
+            <input matInput placeholder="Nome Desbravador" formControlName="nome">
           </mat-form-field>
         </div>
       </div>
       <div class="row">
-        <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="First name" formControlName="firstName">
-            @if (addressForm.controls['firstName'].hasError('required')) {
-              <mat-error>First name is <strong>required</strong></mat-error>
+            <input matInput placeholder="Responsável" formControlName="responsavel">
+            @if (inscricaoCamporiForm.controls['responsavel'].hasError('required')) {
+              <mat-error>O nome do responsável é <strong>requerido</strong></mat-error>
             }
           </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Last name" formControlName="lastName">
-            @if (addressForm.controls['lastName'].hasError('required')) {
-              <mat-error>Last name is <strong>required</strong></mat-error>
-            }
-          </mat-form-field>
-        </div>
       </div>
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <textarea matInput placeholder="Address" formControlName="address"></textarea>
-            @if (addressForm.controls['address'].hasError('required')) {
+            @if (inscricaoCamporiForm.controls['address'].hasError('required')) {
               <mat-error>Address is <strong>required</strong></mat-error>
             }
           </mat-form-field>
@@ -56,7 +46,7 @@
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder="City" formControlName="city">
-            @if (addressForm.controls['city'].hasError('required')) {
+            @if (inscricaoCamporiForm.controls['city'].hasError('required')) {
               <mat-error>City is <strong>required</strong></mat-error>
             }
           </mat-form-field>
@@ -68,7 +58,7 @@
                 <mat-option [value]="state.abbreviation">{{ state.name }}</mat-option>
               }
             </mat-select>
-            @if (addressForm.controls['state'].hasError('required')) {
+            @if (inscricaoCamporiForm.controls['state'].hasError('required')) {
               <mat-error>State is <strong>required</strong></mat-error>
             }
           </mat-form-field>
