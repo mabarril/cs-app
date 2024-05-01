@@ -1,0 +1,30 @@
+  <mat-card>
+    <mat-card-header>
+      <h3>Inscrição Evento</h3>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <mat-form-field class="full-width" >
+          <mat-label class="full-width">Selecione o Evento</mat-label>
+          <mat-select class="full-width" [(value)]="selectedEvento">
+            @for (evento of eventos; track evento) {
+            <mat-option [value]="evento">{{evento.desc_evento}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="full-width">
+          <mat-label class="full-width">Selecione o Participante</mat-label>
+          <mat-select class="full-width" [(value)]="selectedRegistro">
+            @for (registro of registros; track registro) {
+            <mat-option [value]="registro">{{registro.nome}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="button-container">
+        <button mat-flat-button color="primary" class="button" (click)="onSubmit()">INSERIR</button>
+      </div>
+    </mat-card-content>
+    <mat-card>

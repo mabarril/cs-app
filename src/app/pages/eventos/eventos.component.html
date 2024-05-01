@@ -1,0 +1,40 @@
+<form [formGroup]="eventoForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Evento</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+            <mat-form-field class="full-width">
+                <mat-label>Nome do Evento</mat-label>
+              <input matInput formControlName="nome">
+              @if (eventoForm.controls['nome'].hasError('required')) {
+                <mat-error>O nome do evento deverá ser informado </mat-error>
+              }
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <div class="col">
+                <mat-form-field class="full-width">
+                    <mat-label>Valor</mat-label>
+                    <input matInput placeholder="0" type="number" class="example-right-align" formControlName="valor">
+                    <span matTextPrefix>R$&nbsp;</span>
+                    <span matTextSuffix>.00</span>
+                    @if (eventoForm.controls['valor'].hasError('required')) {
+                        <mat-error>O valor deverá ser informado </mat-error>
+                    }
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Estado" formControlName="estado">
+                </mat-form-field>
+            </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+  

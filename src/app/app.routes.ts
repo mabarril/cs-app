@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
-import { InscricaoComponent } from './pages/campori/inscricao/inscricao.component';
+import { EventosComponent } from './pages/eventos/eventos.component';
+import { InscricaoComponent } from './pages/evento/inscricao/inscricao.component';
 
 export const routes: Routes = [
-    { path: 'campori/inscricao', component: InscricaoComponent }
+    { path: 'evento/inscricao', component: InscricaoComponent },
+    { path: 'evento', component: EventosComponent }
 ];
