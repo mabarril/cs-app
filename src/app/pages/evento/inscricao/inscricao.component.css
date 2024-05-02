@@ -1,19 +1,27 @@
-.container {
-  margin: 2%;
-}
-
 .full-width {
   width: 100%;
 }
 
 mat-card {
-  background-color: rgba(211, 211, 211, 0.40);
+  background-color: rgb(235, 231, 231)s;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 300px;
+  /* Ensure the card stays on top of other elements */
+}
+
+
+app-lista-inscricao {
+  top: 300px;
+  /* Adjust 200px to the height of your mat-card */
 }
 
 .button-container {
   display: flex;
   justify-content: end;
 }
+
 .button {
   border-radius: 9999px;
   margin-bottom: 20px;

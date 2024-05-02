@@ -1,0 +1,18 @@
+<mat-action-list>
+    @for (inscricao of lista; track inscricao.id) {
+    <button mat-list-item (click)="save()" class="button">
+            <div class="row item-lista">
+                <span>{{ inscricao.cadastro?.nome }}</span>
+            </div>
+            <div class="row item-lista" >
+                <div class="col-6">
+                    <span>{{ inscricao.evento?.desc_evento }}</span>
+                </div>
+                <div class="col-6">
+                    <span> {{inscricao.evento?.vlr_evento}}</span>
+                </div>
+            </div>
+    </button>
+    <mat-divider></mat-divider>
+    }
+</mat-action-list>

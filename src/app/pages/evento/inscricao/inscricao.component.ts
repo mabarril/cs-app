@@ -10,23 +10,22 @@ import { Evento } from '/home/barril/workspace/cs-app/src/app/models/evento.mode
 import { Registro } from '../../../models/registro.model';
 import { RegistroService } from '../../../services/registro.services';
 import { CommonModule } from '@angular/common';
-import { InscricaoEvento } from '../../../models/inscricao_evento.model';
 import { InscricaoEventoService } from '../../../services/inscricao-evento.service';
-
+import { ListaInscricaoComponent } from "../../../components/lista-inscricao/lista-inscricao.component";
+import { InscricaoEvento } from '../../../models/inscricao_evento.model';
 
 @Component({
   selector: 'app-inscricao',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatCardModule, MatButtonModule, CommonModule],
   templateUrl: './inscricao.component.html',
-  styleUrl: './inscricao.component.css'
+  styleUrl: './inscricao.component.css',
+  imports: [MatFormFieldModule, MatInputModule, MatSelectModule, MatCardModule, MatButtonModule, CommonModule, ListaInscricaoComponent,]
 })
 export class InscricaoComponent implements OnInit {
 
   eventos?: Evento[];
   registros?: Registro[];
   inscricao_evento?: InscricaoEvento;
-
 
   selectedEvento?: Evento;
   selectedRegistro?: Registro;
@@ -63,9 +62,5 @@ export class InscricaoComponent implements OnInit {
       return;
     });
 
-    console.log(this.selectedEvento, this.selectedRegistro);
-    // Pass these values to your service here
   }
-
-
 }

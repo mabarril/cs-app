@@ -1,0 +1,10 @@
+.item-lista {
+    font-size: smaller;
+    display: flex;
+    justify-content: space-between;
+}
+.button {
+    padding: 20px;
+}
+
+
