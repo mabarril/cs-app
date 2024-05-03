@@ -1,7 +1,7 @@
 import csv
 import tabula
  
-pdf_file = "eventos-2.pdf"
+pdf_file = "eventos0503.pdf"
 csv_file = "teste.csv"
 
 def ler_arquivo_csv(caminho_do_arquivo):
@@ -13,7 +13,7 @@ def ler_arquivo_csv(caminho_do_arquivo):
         dados = [linha for linha in leitor]
     return dados
 
-tabula.convert_into("eventos.pdf", "teste.csv", output_format="csv", pages="all")
+tabula.convert_into(pdf_file, csv_file, output_format="csv", pages="all")
 
 dados_csv = ler_arquivo_csv('teste.csv')
 print(dados_csv)

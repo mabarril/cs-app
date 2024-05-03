@@ -13,6 +13,9 @@ db_config = {
 conn = mysql.connector.connect(**db_config)
 cursor = conn.cursor()
 
+# Limpa a tabela
+cursor.execute("DELETE FROM cadastro_responsavel")
+
 # Leitura do arquivo CSV
 with open('cadastro.csv', 'r') as csvfile:
     csvreader = csv.reader(csvfile)
