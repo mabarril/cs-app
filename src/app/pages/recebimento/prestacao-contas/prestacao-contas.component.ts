@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -17,8 +17,16 @@ import { Registro } from '../../../models/registro.model';
   templateUrl: './prestacao-contas.component.html',
   styleUrl: './prestacao-contas.component.css'
 })
-export class PrestacaoContasComponent implements OnInit {
-  typesOfShoes: string[] = ['BootsBootsBootsBootsBootsBo', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
+export class PrestacaoContasComponent implements OnChanges, OnInit {
+recibos?: [{
+    recibo: 123;
+    nome: "marcelo";
+  },
+    {
+      recibo: 456;
+      nome: "giselle";
+    }];
+
 
   listaInscricoes?: Inscricao[];
   lista?: InscricaoEvento[] = [];
@@ -49,4 +57,15 @@ export class PrestacaoContasComponent implements OnInit {
       });
     });
   };
+
+  ngOnChanges(changes: SimpleChanges): void {
+    for (let propName in changes) {  
+      let change = changes[propName];
+      let curVal  = JSON.stringify(change.currentValue);
+      let prevVal = JSON.stringify(change.previousValue);
+    
+            console.log(curVal);
+            console.log(prevVal);
+         }
+   }
 }

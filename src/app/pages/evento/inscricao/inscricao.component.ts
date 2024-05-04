@@ -6,13 +6,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
 import { EventoService } from '../../../services/evento.service';
-import { Evento } from '/home/barril/workspace/cs-app/src/app/models/evento.model';
 import { Registro } from '../../../models/registro.model';
 import { RegistroService } from '../../../services/registro.services';
 import { CommonModule } from '@angular/common';
 import { InscricaoEventoService } from '../../../services/inscricao-evento.service';
 import { ListaInscricaoComponent } from "../../../components/lista-inscricao/lista-inscricao.component";
 import { InscricaoEvento } from '../../../models/inscricao_evento.model';
+import { Evento } from '../../../models/evento.model';
 
 @Component({
   selector: 'app-inscricao',

@@ -7,7 +7,7 @@
       <mat-form-field class="full-width">
         <mat-label class="full-width">Selecione o Evento</mat-label>
         <mat-select class="full-width" [(value)]="selectedEvento">
-          @for (evento of eventos; track evento) {
+              @for (evento of eventos; track evento) {
           <mat-option [value]="evento">{{evento.desc_evento}}</mat-option>
           }
         </mat-select>

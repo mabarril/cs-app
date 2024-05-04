@@ -9,8 +9,8 @@
         </mat-card-header>
         <mat-card-content>
             <mat-selection-list #shoes>
-                @for (shoe of typesOfShoes; track shoe) {
-                <mat-list-option>{{shoe}}</mat-list-option>
+                @for (recibo of recibos; track recibo) {
+                <mat-list-option>{{recibo.nome}}</mat-list-option>
                 }
             </mat-selection-list>
         </mat-card-content>
