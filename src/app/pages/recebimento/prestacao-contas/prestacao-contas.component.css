@@ -1,0 +1,25 @@
+.flex-layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+mat-card {
+    margin: 10px;
+    max-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+mat-card-content {
+    overflow: auto;
+    flex-grow: 1;
+  }
+
+mat-card-footer{
+    flex-shrink: 0;
+}
+
+.center {
+    text-align: center;
+}

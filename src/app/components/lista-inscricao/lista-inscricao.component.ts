@@ -1,13 +1,9 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
-import { EventoService } from '../../services/evento.service';
-import { RegistroService } from '../../services/registro.services';
 import { InscricaoEventoService } from '../../services/inscricao-evento.service';
 import { Inscricao } from '../../models/inscricao.model';
 import { Evento } from '../../models/evento.model';
 import { Registro } from '../../models/registro.model';
-import { isNgTemplate } from '@angular/compiler';
-import { combineLatest, concat, forkJoin, map } from 'rxjs';
 import { InscricaoEvento } from '../../models/inscricao_evento.model';
 
 @Component({

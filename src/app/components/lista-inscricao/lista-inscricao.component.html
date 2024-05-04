@@ -2,7 +2,7 @@
     @for (inscricao of lista; track inscricao.id) {
     <button mat-list-item (click)="save()" class="button">
             <div class="row item-lista">
-                <span>{{ inscricao.cadastro?.nome }}</span>
+                <strong><span>{{ inscricao.cadastro?.nome }}</span></strong>
             </div>
             <div class="row item-lista" >
                 <div class="col-6">

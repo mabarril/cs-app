@@ -1,0 +1,42 @@
+<div class="center">
+    <h1>Prestação de Contas</h1>
+</div>
+<div class="flex-layout">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Recibos</mat-card-title>
+            <mat-card-subtitle>Start</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-selection-list #shoes>
+                @for (shoe of typesOfShoes; track shoe) {
+                <mat-list-option>{{shoe}}</mat-list-option>
+                }
+            </mat-selection-list>
+        </mat-card-content>
+        <mat-card-footer>
+
+            <p>
+                Options selected: {{shoes.selectedOptions.selected.length}}
+            </p>
+        </mat-card-footer>
+    </mat-card>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Recibos</mat-card-title>
+            <mat-card-subtitle>Inscritos Evento</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-selection-list #shoes>
+                @for (item of lista; track item) {
+                <mat-list-option>{{item.cadastro?.nome}}</mat-list-option>
+                }
+            </mat-selection-list>
+
+            <p>
+                Options selected: {{shoes.selectedOptions.selected.length}}
+            </p>
+
+        </mat-card-content>
+    </mat-card>
+</div>
