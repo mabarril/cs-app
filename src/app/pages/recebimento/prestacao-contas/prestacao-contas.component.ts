@@ -42,8 +42,9 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
   parcela?: number = 0;
   reg: any;
   rec: any;
+  nrRecibo: number | undefined = 0;
 
-  constructor(private inscricaoEventoService: InscricaoEventoService, private eventoService: EventoService, private registroService: RegistroService, private recebimentoService: RecebimentoService ) { };
+  constructor(private inscricaoEventoService: InscricaoEventoService, private eventoService: EventoService, private registroService: RegistroService, private recebimentoService: RecebimentoService) { };
 
   @ViewChild('inscritos') inscritos?: MatSelectionList;
   @ViewChild('recibo') recibo?: MatSelectionList;
@@ -84,10 +85,11 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
 
   }
 
-  onSubmit(): void {
+  registraRecebimento(): void {
     this.reg.forEach((element: any) => {
+      console.log(this.rec);
       var registroPagamento = ({
-        nr_recibo: this.rec,
+        nr_recibo: this.nrRecibo,
         id_cadastro: element,
         vlr: this.parcela
       });
@@ -113,10 +115,12 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
     this.reg = this.selectedOptionsRegistro?.map((item: any) => item.value);
     var itemRecibo = this.recibos?.find((recibo) => recibo.id == this.rec);
     var valor = itemRecibo?.vlr_recibo
+    var recibo = itemRecibo!.nr_recibo;
 
     if (valor && this.reg) {
       this.parcela = valor / (this.reg.length);
+      this.nrRecibo = recibo;
     }
-  
+
   }
 }

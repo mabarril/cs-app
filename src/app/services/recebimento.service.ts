@@ -16,6 +16,6 @@ export class RecebimentoService {
   }
 
   create(registroPagamento: RegistroPagamento): Observable<RegistroPagamento> {
-    return this.http.post<RegistroPagamento>('api/evento/inscricao', registroPagamento);
+    return this.http.post<RegistroPagamento>('api/recebimento/prestacao-contas', registroPagamento);
   }
 }
