@@ -18,8 +18,4 @@ export class RecebimentoService {
   create(registroPagamento: RegistroPagamento): Observable<RegistroPagamento> {
     return this.http.post<RegistroPagamento>('api/recebimento/prestacao-contas', registroPagamento);
   }
-
-  getListaRegistroPagamentos(): Observable<RegistroPagamento[]> {
-    return this.http.get<RegistroPagamento[]>(`api/recebimento/valor-pago/`);
-  }
 }

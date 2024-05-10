@@ -14,9 +14,6 @@ import { Recibo } from '../../../models/recibo.model';
 import { MatListOption } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { RegistroPagamento } from '../../../models/registro_pagamento.model';
-import { DialogComponent } from '../../../components/dialog/dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-
 
 @Component({
   selector: 'app-prestacao-contas',
@@ -25,6 +22,7 @@ import { MatDialog } from '@angular/material/dialog';
   templateUrl: './prestacao-contas.component.html',
   styleUrl: './prestacao-contas.component.css'
 })
+
 
 export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewInit {
 
@@ -46,20 +44,24 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
   rec: any;
   nrRecibo: number | undefined = 0;
 
-  listaRecibosPagamentos?: RegistroPagamento[];
-
-  constructor(private inscricaoEventoService: InscricaoEventoService, private eventoService: EventoService, private registroService: RegistroService, private recebimentoService: RecebimentoService, public dialog: MatDialog) { };
+  constructor(private inscricaoEventoService: InscricaoEventoService, private eventoService: EventoService, private registroService: RegistroService, private recebimentoService: RecebimentoService) { };
 
   @ViewChild('inscritos') inscritos?: MatSelectionList;
   @ViewChild('recibo') recibo?: MatSelectionList;
 
   ngAfterViewInit(): void {
-    
-    this.loadAllEventos();
+    this.eventoService.getAll().subscribe((data) => {
+      this.eventos = data;
+    });
 
-    this.loadAllRegistros();
+    this.registroService.getAll().subscribe((data) => {
+      this.registros = data;
+    });
 
-    this.loadRecebimentosData();
+    this.recebimentoService.getAll().subscribe((data) => {
+      this.recibos = data;
+    });
+
 
     this.inscricaoEventoService.getAll().subscribe((data) => {
       this.listaInscricoes = data;
@@ -73,28 +75,6 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
       });
     });
 
-  }
-
-  private loadRecebimentosData() {
-    this.recebimentoService.getAll().subscribe((data) => {
-      this.recibos = data;
-    });
-
-    this.recebimentoService.getListaRegistroPagamentos().subscribe((data) => {
-      this.listaRecibosPagamentos = data;
-    });
-  }
-
-  private loadAllRegistros() {
-    this.registroService.getAll().subscribe((data) => {
-      this.registros = data;
-    });
-  }
-
-  private loadAllEventos() {
-    this.eventoService.getAll().subscribe((data) => {
-      this.eventos = data;
-    });
   }
 
   ngOnInit(): void {
@@ -114,11 +94,8 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
         vlr: this.parcela
       });
 
-      this.dialog.open(DialogComponent, {
-        data: {
-          title: "Sucesso",
-          message: "Pagamento registrado com sucesso!"
-        }
+      this.recebimentoService.create(registroPagamento).subscribe((data) => {
+        console.log(data);
       });
     });
   };
