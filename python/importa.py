@@ -1,7 +1,7 @@
 import csv
 import tabula
  
-pdf_file = "eventos0503.pdf"
+pdf_file = "eventos-02.pdf"
 csv_file = "teste.csv"
 
 def ler_arquivo_csv(caminho_do_arquivo):

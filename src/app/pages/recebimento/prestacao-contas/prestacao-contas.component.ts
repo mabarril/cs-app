@@ -14,6 +14,7 @@ import { Recibo } from '../../../models/recibo.model';
 import { MatListOption } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { RegistroPagamento } from '../../../models/registro_pagamento.model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-prestacao-contas',
@@ -43,6 +44,7 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
   reg: any;
   rec: any;
   nrRecibo: number | undefined = 0;
+  registrosPagamentos?: RegistroPagamento[];
 
   constructor(private inscricaoEventoService: InscricaoEventoService, private eventoService: EventoService, private registroService: RegistroService, private recebimentoService: RecebimentoService) { };
 
@@ -50,17 +52,11 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
   @ViewChild('recibo') recibo?: MatSelectionList;
 
   ngAfterViewInit(): void {
-    this.eventoService.getAll().subscribe((data) => {
-      this.eventos = data;
-    });
+    this.loadEventos();
 
-    this.registroService.getAll().subscribe((data) => {
-      this.registros = data;
-    });
+    this.loadRegistros();
 
-    this.recebimentoService.getAll().subscribe((data) => {
-      this.recibos = data;
-    });
+    this.loadRecibos();
 
 
     this.inscricaoEventoService.getAll().subscribe((data) => {
@@ -77,11 +73,30 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
 
   }
 
+  private loadRecibos() {
+    this.recebimentoService.getAll().subscribe((data) => {
+      this.recibos = data;
+    });
+  }
+
+  private loadRegistros() {
+    this.registroService.getAll().subscribe((data) => {
+      this.registros = data;
+    });
+  }
+
+  private loadEventos() {
+    this.eventoService.getAll().subscribe((data) => {
+      this.eventos = data;
+    });
+  }
+
   ngOnInit(): void {
 
   };
 
   ngOnChanges(changes: SimpleChanges) {
+
 
   }
 
@@ -93,11 +108,16 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
         id_cadastro: element,
         vlr: this.parcela
       });
-
-      this.recebimentoService.create(registroPagamento).subscribe((data) => {
-        console.log(data);
-      });
+      var data;
+      try {
+        this.recebimentoService.create(registroPagamento).subscribe((data) => {
+          data = data;
+        });
+        alert('Pagamento não registrado!');
+      } catch (error) {
+      }
     });
+    this.loadRecibos();
   };
 
   selected(): any {
