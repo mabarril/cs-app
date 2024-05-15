@@ -1,4 +1,4 @@
-import { Component, Input, NgModule, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { InscricaoEventoService } from '../../services/inscricao-evento.service';
 import { Inscricao } from '../../models/inscricao.model';
@@ -6,6 +6,7 @@ import { Evento } from '../../models/evento.model';
 import { Registro } from '../../models/registro.model';
 import { InscricaoEvento } from '../../models/inscricao_evento.model';
 import { SortByNamePipe } from '../../pipes/sort-by-name.pipe';
+import { orderBy } from 'lodash';
 
 
 
@@ -33,8 +34,8 @@ export class ListaInscricaoComponent implements OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges) {
-    if ((changes['eventos'].currentValue !== changes['eventos'].previousValue) ||
-      (changes['registros'].currentValue !== changes['registros'].previousValue)) {
+    if ((changes['eventos']!.currentValue! !== changes['eventos'].previousValue) ||
+      (changes['registros']!.currentValue! !== changes['registros'].previousValue)) {
       this.inscricaoEventoService.getAll().subscribe((data) => {
         this.listaInscricoes = data;
         this.listaInscricoes?.forEach((linha) => {
@@ -44,12 +45,11 @@ export class ListaInscricaoComponent implements OnChanges {
             cadastro: this.registros?.find(registro => registro.id == linha.id_cadastro)
           });
           this.lista?.push(item);
+          this.lista = orderBy(this.lista, ['cadastro.nome'], 'asc');
         });
       });
+
     };
-    console.log(this.lista)
   };
-
-
 }
 

@@ -1,5 +1,5 @@
 <mat-action-list>
-    @for (inscricao of lista! | sortByName: 'nome'; track inscricao.id) {
+    @for (inscricao of lista!; track inscricao.id) {
     <button mat-list-item class="button">
             <div class="row item-lista">
                 <strong><span>{{ inscricao.cadastro?.nome }}</span></strong>

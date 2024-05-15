@@ -37,10 +37,14 @@ export class InscricaoComponent implements OnInit {
       this.eventos = data;
     });
 
+    this.loadAllRegistros();
+
+  }
+
+  private loadAllRegistros() {
     this.registroService.getAll().subscribe((data) => {
       this.registros = data;
     });
-
   }
 
   onSubmit(): void {
@@ -57,6 +61,7 @@ export class InscricaoComponent implements OnInit {
 
     this.inscricaoEventoService.create(this.inscricao_evento).subscribe((data) => {
       this.inscricao_evento = data;
+      this.loadAllRegistros();
     }, (error) => {
       alert('Erro ao realizar inscrição. Tente novamente mais tarde.');
       return;
