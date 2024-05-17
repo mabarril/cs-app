@@ -1,12 +1,12 @@
 <div class="center">
     <h1>Prestação de Contas</h1>
 </div>
+
 <div class="flex-layout">
     <div>
         <mat-card>
             <mat-card-header>
                 <mat-card-title>Recibos</mat-card-title>
-                <mat-card-subtitle>Start</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
                 <mat-selection-list #recibo [multiple]="false">
@@ -26,12 +26,21 @@
     <div>
         <mat-card>
             <mat-card-header>
-                <mat-card-title>Recibos</mat-card-title>
-                <mat-card-subtitle>Inscritos Evento</mat-card-subtitle>
+                <mat-card-title>Inscritos Evento</mat-card-title>
             </mat-card-header>
             <mat-card-content>
+                <mat-form-field class="example-form-field">
+                    <mat-label>Pesquisa</mat-label>
+                    <input matInput type="text" [(ngModel)]="value" (input)="filtraInscritos(value)">
+                    @if (value) {
+                    <button matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    }
+                </mat-form-field>
+
                 <mat-selection-list #inscritos>
-                    @for (item of lista; track item) {
+                    @for (item of listaFiltrada; track item) {
                     <mat-list-option [value]="item.cadastro?.id">{{item.cadastro?.nome}}</mat-list-option>
                     }
                 </mat-selection-list>
@@ -45,5 +54,6 @@
     </div>
 </div>
 <div class="button-container">
-    <button mat-flat-button color="primary" class="button" (click)="registraRecebimento()" [disabled]="selected()">INSERIR</button>
+    <button mat-flat-button color="primary" class="button" (click)="registraRecebimento()"
+        [disabled]="selected()">INSERIR</button>
 </div>

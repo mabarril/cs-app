@@ -14,12 +14,15 @@ import { Recibo } from '../../../models/recibo.model';
 import { MatListOption } from '@angular/material/list';
 import { FormsModule } from '@angular/forms';
 import { RegistroPagamento } from '../../../models/registro_pagamento.model';
-import { forkJoin } from 'rxjs';
+import { orderBy } from 'lodash';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-prestacao-contas',
   standalone: true,
-  imports: [MatListModule, MatButtonModule, MatCardModule, MatListOption, FormsModule],
+  imports: [MatListModule, MatButtonModule, MatCardModule, MatListOption, FormsModule, MatIconModule, MatInputModule, MatFormFieldModule],
   templateUrl: './prestacao-contas.component.html',
   styleUrl: './prestacao-contas.component.css'
 })
@@ -28,6 +31,8 @@ import { forkJoin } from 'rxjs';
 export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewInit {
 
   recibos?: Recibo[];
+
+  value = '';
 
   listaInscricoes?: Inscricao[];
   lista?: InscricaoEvento[] = [];
@@ -45,6 +50,7 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
   rec: any;
   nrRecibo: number | undefined = 0;
   registrosPagamentos?: RegistroPagamento[];
+  listaFiltrada?: InscricaoEvento[];
 
   constructor(private inscricaoEventoService: InscricaoEventoService, private eventoService: EventoService, private registroService: RegistroService, private recebimentoService: RecebimentoService) { };
 
@@ -58,7 +64,6 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
 
     this.loadRecibos();
 
-
     this.inscricaoEventoService.getAll().subscribe((data) => {
       this.listaInscricoes = data;
       this.listaInscricoes?.forEach((linha) => {
@@ -69,7 +74,10 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
         });
         this.lista?.push(item);
       });
+      this.lista = orderBy(this.lista, ['cadastro.nome'], 'asc');
     });
+
+    this.listaFiltrada = this.lista;
 
   }
 
@@ -96,8 +104,19 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
   };
 
   ngOnChanges(changes: SimpleChanges) {
+    
+  }
 
 
+  filtraInscritos(valor: string) {
+    if (valor.length == 0)  {
+      this.listaFiltrada = this.lista;
+    } else {
+      this.listaFiltrada = this.lista?.filter((item) => {
+        return item.cadastro?.nome?.toLowerCase().startsWith(valor.toLowerCase());
+      });
+    }
+    
   }
 
   registraRecebimento(): void {
@@ -118,6 +137,7 @@ export class PrestacaoContasComponent implements OnChanges, OnInit, AfterViewIni
       }
     });
     this.loadRecibos();
+    this.inscritos?.selectedOptions.clear();
   };
 
   selected(): any {

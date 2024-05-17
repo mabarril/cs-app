@@ -35,3 +35,7 @@ mat-card-content {
     margin: 10px;
     font-size: small;
 }
+
+.example-form-field {
+    width: 100%;
+  }
