@@ -5,3 +5,19 @@ table {
 .container {
     padding: 20px;
 }
+
+.conteudo-pdf {
+    display: none;
+}
+
+.gera-pdf {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+button {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 50px;
+}

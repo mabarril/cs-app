@@ -1,0 +1,122 @@
+<form [formGroup]="controlePagamentoForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="controle-pagamento">
+        <mat-card-header>
+            <mat-card-title>Controle de Pagamento</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label class="full-width">Responsável</mat-label>
+                        <mat-select class="full-width" [(value)]="selectedResponsavel">
+                            @for (responsavel of responsaveis; track responsavel) {
+                            <mat-option [value]="responsavel">{{responsavel.nome_responsavel}}</mat-option>
+                            }
+                        </mat-select>
+                        @if (controlePagamentoForm.controls['responsavel'].hasError('required')) {
+                        <mat-error>O nome do evento deverá ser informado </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label class="full-width">Data</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="data">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        @if (controlePagamentoForm.controls['data'].hasError('required')) {
+                        <mat-error>A data deverá ser informada </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label class="full-width">Forma de Pagamento</mat-label>
+                        <mat-select class="full-width" [(value)]="selectedFormaPagamento">
+                            @for (tipo of formaPagamento; track tipo) {
+                            <mat-option [value]="tipo">{{tipo}}</mat-option>
+                            }
+                        </mat-select>
+                        @if (controlePagamentoForm.controls['responsavel'].hasError('required')) {
+                        <mat-error>O nome do evento deverá ser informado </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label class="full-width">Descrição</mat-label>
+                        <input matInput formControlName="observacao">
+                        @if (controlePagamentoForm.controls['observacao'].hasError('required')) {
+                        <mat-error>A observação deverá ser informada </mat-error>
+                        }
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <button mat-raised-button (click)="openUserDialog(); $event.preventDefault()">Pick user</button>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <th>Forma de Pagamento</th>
+                        <th>Valor</th>
+                        <th>Item</th>
+                    </tr>
+                    @for (lista of listaPagamento; track lista) {
+                    <tr>
+                        <td>
+                            <mat-form-field class="full-width">
+                                <mat-label class="full-width">Forma de Pagamento</mat-label>
+                                <mat-select class="full-width">
+                                    @for (registro of registros; track registro) {
+                                    <mat-option [value]="registro.id">{{registro.nome}}</mat-option>
+                                    }
+                                </mat-select>
+                                @if (controlePagamentoForm.controls['responsavel'].hasError('required')) {
+                                <mat-error>O nome do evento deverá ser informado </mat-error>
+                                }
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="full-width">
+                                <mat-label>Valor</mat-label>
+                                <input matInput placeholder="0" type="number" class="example-right-align"
+                                    formControlName="valor">
+                                <span matTextPrefix>R$&nbsp;</span>
+                                <span matTextSuffix>.00</span>
+                                @if (controlePagamentoForm.controls['valor'].hasError('required')) {
+                                <mat-error>O valor deverá ser informado </mat-error>
+                                }
+                            </mat-form-field>
+                        </td>
+
+                        <td>
+                            <mat-form-field class="full-width">
+                                <mat-label class="full-width">Item</mat-label>
+                                <mat-select class="full-width" [(value)]="selectedItem">
+                                    @for (item of itens; track item) {
+                                    <mat-option [value]="item">{{item}}</mat-option>
+                                    }
+                                </mat-select>
+                                @if (controlePagamentoForm.controls['responsavel'].hasError('required')) {
+                                <mat-error>O nome do evento deverá ser informado </mat-error>
+                                }
+                            </mat-form-field>
+                        <td>
+                    </tr>
+                    }
+                </table>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-flat-button color="primary" class="button" (click)="onSubmit()">INSERIR</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

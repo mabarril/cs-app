@@ -1,0 +1,80 @@
+.full-width {
+    width: 100%;
+}
+
+mat-card {
+    background-color: rgb(235, 231, 231)s;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    margin: 30px auto;
+    /* Ensure the card stays on top of other elements */
+}
+
+
+.example-right-align {
+    text-align: right;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.button-container {
+    display: flex;
+    justify-content: end;
+}
+
+.button {
+    border-radius: 9999px;
+    margin-bottom: 20px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.col {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.col:last-child {
+    margin-right: 0;
+}
+
+mat-list-item {
+    padding: 10px;
+}
+
+td {
+    width: 33%;
+    padding: 10px;
+}
+
+
+@media (width <= 500px) {
+    .row {
+        flex-direction: column;
+        justify-content: space-between
+    }
+
+    .col {
+        flex: 1;
+        margin-right: 0;
+    }
+
+    .col:last-child {
+        margin-right: 0;
+    }
+ 
+}

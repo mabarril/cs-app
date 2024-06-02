@@ -1,0 +1,23 @@
+<div class="container">
+  <h2 mat-dialog-title>User Detail</h2>
+  <div mat-dialog-content>
+    <mat-form-field class="full-width">
+      <mat-label class="full-width">Forma de Pagamento</mat-label>
+      <mat-select class="full-width">
+        @for (registro of registros; track registro) {
+        <mat-option [value]="registro">{{registro}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <p>City:
+      <mat-form-field appearance="fill">
+        <input matInput [(ngModel)]="data.city" placeholder="Enter city">
+      </mat-form-field>
+    </p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onCancelUserDialog()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  </div>
+</div>
