@@ -1,23 +1,35 @@
 <div class="container">
-  <h2 mat-dialog-title>User Detail</h2>
+
+  <h2 mat-dialog-title>Pagamento</h2>
+
   <div mat-dialog-content>
     <mat-form-field class="full-width">
-      <mat-label class="full-width">Forma de Pagamento</mat-label>
-      <mat-select class="full-width">
+      <mat-label class="full-width">Desbravador</mat-label>
+      <mat-select class="full-width"  [(value)]="selectedRegistro" [(ngModel)]="data.desbravador">
         @for (registro of registros; track registro) {
-        <mat-option [value]="registro">{{registro}}</mat-option>
+        <mat-option [value]="registro">{{registro.nome}}</mat-option>
         }
       </mat-select>
     </mat-form-field>
 
-    <p>City:
-      <mat-form-field appearance="fill">
-        <input matInput [(ngModel)]="data.city" placeholder="Enter city">
-      </mat-form-field>
-    </p>
+    <mat-form-field class="full-width">
+      <mat-label>Valor</mat-label>
+      <input matInput [(ngModel)]="data.valor" placeholder="0" type="number" class="example-right-align">
+      <span matTextPrefix>R$&nbsp;</span>
+      <span matTextSuffix>.00</span>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label class="full-width">Item</mat-label>
+      <mat-select class="full-width"  [(value)]="selectedItem" [(ngModel)]="data.item">
+        @for (item of itens; track item) {
+        <mat-option [value]="item">{{item}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
   </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="onCancelUserDialog()">Cancel</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+  <div mat-dialog-actions class="button-container">
+    <button class="button" mat-flat-button color="secondary" (click)="onCancelUserDialog()">CANCELAR</button>
+    <button class="button" mat-flat-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>INSERIR</button>
   </div>
 </div>

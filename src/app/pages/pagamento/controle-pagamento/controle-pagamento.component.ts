@@ -14,18 +14,8 @@ import { RegistroService } from '../../../services/registro.services';
 import { Registro } from '../../../models/registro.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from '../../../components/user-dialog/user-dialog.component';
+import { ItemPago } from '../../../models/itemPago.model';
 
-export interface itemPago {
-  desbravador: number;
-  valor: number,
-  item: string,
-  descricao: string,
-};
-
-export interface User {
-  name: string;
-  city: string;
-} 
 
 @Component({
   selector: 'app-controle-pagamento',
@@ -38,9 +28,12 @@ export interface User {
 
 export class ControlePagamentoComponent implements OnInit {
 
+  itemPago: ItemPago = {
+    desbravador: {} as Registro,
+    valor: 0,
+    item: ''
+  };
 
-
-  user = { name: '', city: '' };
   dialogRef: any;
 
 
@@ -50,19 +43,14 @@ export class ControlePagamentoComponent implements OnInit {
   itens: string[] = ['Mensalidade', 'Eventos', 'Uniforme'];
   selectedFormaPagamento: string | undefined;
   formaPagamento: string[] = ['Pix', '7me', 'Dinheiro', 'Cartão'];
-  registros: Registro[] = [];
 
-  listaPagamento = ['Mensalidade', 'Eventos', 'Uniforme'];
+  listaItensPago: ItemPago[] = [];
 
-  constructor(private responsavelService: ResponsavelService, private registroService: RegistroService, public dialog: MatDialog) { }
+  constructor(private responsavelService: ResponsavelService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.responsavelService.getAll().subscribe(responsaveis => {
       this.responsaveis = responsaveis
-    });
-
-    this.registroService.getAll().subscribe(registros => {
-      this.registros = registros;
     });
   }
 
@@ -81,17 +69,12 @@ export class ControlePagamentoComponent implements OnInit {
     alert('Thanks!');
   }
 
-  adicionaPagamento() {
-    this.listaPagamento.push('Mensalidade');
-  }
-
   openUserDialog() {
-    this.dialogRef = this.dialog.open(UserDialogComponent, 
-      { data: this.user, height: '480px', width: '600px', autoFocus: true });
+    this.dialogRef = this.dialog.open(UserDialogComponent,
+      { data: this.itemPago, height: 'auto', width: '480px', autoFocus: true });
 
-    this.dialogRef.afterClosed().subscribe((result: User) => {
-      console.log('The User dialog was closed.');
-      console.log(result?.name + ' - ' + result?.city);
+    this.dialogRef.afterClosed().subscribe((result: ItemPago) => {
+      this.listaItensPago.push(result);
     });
   }
 

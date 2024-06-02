@@ -11,8 +11,10 @@ mat-card {
     /* Ensure the card stays on top of other elements */
 }
 
-
-.example-right-align {
+.center-align {
+    text-align: center;
+}
+.right-align {
     text-align: right;
 }
 
@@ -71,10 +73,15 @@ td {
     .col {
         flex: 1;
         margin-right: 0;
+        text-align: right;
     }
 
     .col:last-child {
         margin-right: 0;
+    }
+
+    .list-item {
+        min-height: 100px;
     }
  
 }
