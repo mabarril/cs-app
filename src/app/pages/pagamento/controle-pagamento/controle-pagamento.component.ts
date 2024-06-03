@@ -15,7 +15,18 @@ import { Registro } from '../../../models/registro.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserDialogComponent } from '../../../components/user-dialog/user-dialog.component';
 import { ItemPago } from '../../../models/itemPago.model';
+import { RecebimentoRegistro } from '../../../models/recebimento_registro';
+import { ControleRecebimentoService } from '../../../services/controle-recebimento.service';
 
+export interface controlePagamento {
+  responsavel: string;
+  valor: number;
+  data: Date;
+  formaPagamento: string;
+  status: string;
+  comprovante: string;
+  observacao: string;
+};
 
 @Component({
   selector: 'app-controle-pagamento',
@@ -34,6 +45,8 @@ export class ControlePagamentoComponent implements OnInit {
     item: ''
   };
 
+
+
   dialogRef: any;
 
 
@@ -43,10 +56,12 @@ export class ControlePagamentoComponent implements OnInit {
   itens: string[] = ['Mensalidade', 'Eventos', 'Uniforme'];
   selectedFormaPagamento: string | undefined;
   formaPagamento: string[] = ['Pix', '7me', 'Dinheiro', 'Cartão'];
+  recebimentoRegistro: RecebimentoRegistro = {} as RecebimentoRegistro;
 
   listaItensPago: ItemPago[] = [];
+  listaResultado: ItemPago[] = [];
 
-  constructor(private responsavelService: ResponsavelService, public dialog: MatDialog) { }
+  constructor(private responsavelService: ResponsavelService, public dialog: MatDialog, private controleRecebimentoService: ControleRecebimentoService) { }
 
   ngOnInit(): void {
     this.responsavelService.getAll().subscribe(responsaveis => {
@@ -66,16 +81,37 @@ export class ControlePagamentoComponent implements OnInit {
   });
 
   onSubmit(): void {
-    alert('Thanks!');
+    let controlePagamento: controlePagamento = {
+      responsavel: this.controlePagamentoForm.value.responsavel || '',
+      valor: this.controlePagamentoForm.value.valor || 0,
+      data: this.controlePagamentoForm.value.data || new Date(),
+      formaPagamento: this.controlePagamentoForm.value.formaPagamento || '',
+      status: this.controlePagamentoForm.value.status || '',
+      comprovante: this.controlePagamentoForm.value.comprovante || '',
+      observacao: this.controlePagamentoForm.value.observacao || ''
+    };
+    
+    this.controleRecebimentoService.create(this.recebimentoRegistro).subscribe(recebimentoRegistro => {
+      console.log(recebimentoRegistro);
+    } );
+
   }
 
   openUserDialog() {
+    let data = {} as ItemPago;
     this.dialogRef = this.dialog.open(UserDialogComponent,
-      { data: this.itemPago, height: 'auto', width: '480px', autoFocus: true });
+      { data: data, height: 'auto', width: '480px', autoFocus: true });
 
     this.dialogRef.afterClosed().subscribe((result: ItemPago) => {
-      this.listaItensPago.push(result);
+      this.adicionarItem(result);
     });
   }
 
+  adicionarItem(itemPago: ItemPago) {
+    this.listaItensPago.push(itemPago);
+    console.log(this.listaItensPago);
+  }
+  
+
 }
+
