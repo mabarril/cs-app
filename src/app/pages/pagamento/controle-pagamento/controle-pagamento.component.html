@@ -52,40 +52,44 @@
                 <div class="col">
                     <mat-form-field class="full-width">
                         <mat-label class="full-width">Descrição</mat-label>
-                        <input matInput formControlName="observacao">
-                        @if (controlePagamentoForm.controls['observacao'].hasError('required')) {
-                        <mat-error>A observação deverá ser informada </mat-error>
-                        }
+                        <input matInput formControlName="descricao">
                     </mat-form-field>
                 </div>
             </div>
             <div class="button-container">
-                <button mat-flat-button color="primary" class="button"
-                    (click)="openUserDialog(); $event.preventDefault()">INSERIR PAGAMENTO</button>
+
             </div>
             <mat-list role="list">
 
                 @for (lista of listaItensPago; track lista) {
-                    <mat-list-item class="list-item">
-                        <div class="row">
-                            <div class="col">
-                                {{ lista.desbravador.nome }}
-                            </div>
-                            <div class="col right-align">
-                                {{ lista.valor.toFixed(2) }}
-                            </div>
-                            <div class="col right-align">
-                                {{ lista.item }}
-                            </div>
+                <mat-list-item class="list-item">
+                    <div class="row">
+                        <div class="col">
+                            {{ lista.desbravador.nome }}
                         </div>
-                    </mat-list-item>
-                    <mat-divider></mat-divider>
-                  }
-              </mat-list>
+                        <div class="col right-align">
+                            {{ lista.valor.toFixed(2) }}
+                        </div>
+                        <div class="col right-align">
+                            {{ lista.item }}
+                        </div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+                }
+            </mat-list>
+            <div class="total">
+                <span>Total {{ totalPago.toFixed(2)}}</span>
+            </div>
+            <mat-divider></mat-divider>
+
         </mat-card-content>
 
         <mat-card-actions class="button-container">
-                <button mat-flat-button color="primary" class="button" (click)="onSubmit()">INSERIR</button>
+            <button mat-mini-fab color="primary" class="button" (click)="openUserDialog(); $event.preventDefault()">
+                <mat-icon>plus_one</mat-icon>
+            </button>
+            <button mat-flat-button color="primary" class="button" (click)="onSubmit()">REGISTRAR PAGAMENTO</button>
         </mat-card-actions>
     </mat-card>
 </form>

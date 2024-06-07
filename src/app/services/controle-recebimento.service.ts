@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RecebimentoRegistro } from '../models/recebimento_registro';
 import { Observable } from 'rxjs';
+import { Recebimento } from '../models/recebimento.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,9 @@ import { Observable } from 'rxjs';
 export class ControleRecebimentoService {
 
   constructor(private http: HttpClient) { }
-
-  create(recebimentoRegistro: RecebimentoRegistro): Observable<RecebimentoRegistro> {
-    return this.http.post<RecebimentoRegistro>('api/recebimento/registro', recebimentoRegistro);
+  
+  create(recebimento: Recebimento): Observable<Recebimento> {
+    console.log('vvvvv', recebimento);
+    return this.http.post<Recebimento>('api/recebimento/registro', recebimento);
   }
 }

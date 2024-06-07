@@ -17,22 +17,15 @@ import { UserDialogComponent } from '../../../components/user-dialog/user-dialog
 import { ItemPago } from '../../../models/itemPago.model';
 import { RecebimentoRegistro } from '../../../models/recebimento_registro';
 import { ControleRecebimentoService } from '../../../services/controle-recebimento.service';
-
-export interface controlePagamento {
-  responsavel: string;
-  valor: number;
-  data: Date;
-  formaPagamento: string;
-  status: string;
-  comprovante: string;
-  observacao: string;
-};
+import { MatIconModule } from '@angular/material/icon';
+import { CurrencyPipe } from '@angular/common';
+import { Recebimento } from '../../../models/recebimento.model';
 
 @Component({
   selector: 'app-controle-pagamento',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, ReactiveFormsModule, MatDatepickerModule, MatListModule],
+  imports: [MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, ReactiveFormsModule, MatDatepickerModule, MatListModule, MatIconModule, CurrencyPipe],
   templateUrl: './controle-pagamento.component.html',
   styleUrl: './controle-pagamento.component.css'
 })
@@ -45,13 +38,13 @@ export class ControlePagamentoComponent implements OnInit {
     item: ''
   };
 
-
+  totalPago: number = 0;
 
   dialogRef: any;
 
 
   responsaveis?: Responsavel[];
-  selectedResponsavel: string | undefined;
+  selectedResponsavel: Responsavel | undefined;
   selectedItem: string | undefined;
   itens: string[] = ['Mensalidade', 'Eventos', 'Uniforme'];
   selectedFormaPagamento: string | undefined;
@@ -69,32 +62,37 @@ export class ControlePagamentoComponent implements OnInit {
     });
   }
 
+  // $responsavel = $data["responsavel"];
+  // $dtPgto = $data["dtPgto"];
+  // $forma = $data["forma"];
+  // $descricao = $data["descricao"];
+  // $recibo = $data["recibo"];
+  // $itens = $data["itens"];
+
   private fb = inject(FormBuilder);
   controlePagamentoForm = this.fb.group({
     responsavel: [null, Validators.required],
     valor: [null, Validators.required],
     data: [null, Validators.required],
     formaPagamento: [null, Validators.required],
-    status: [null, Validators.required],
-    comprovante: [null, Validators.required],
-    observacao: [null, Validators.required]
+    descricao: [null, Validators.required]
   });
 
   onSubmit(): void {
-    let controlePagamento: controlePagamento = {
-      responsavel: this.controlePagamentoForm.value.responsavel || '',
-      valor: this.controlePagamentoForm.value.valor || 0,
-      data: this.controlePagamentoForm.value.data || new Date(),
-      formaPagamento: this.controlePagamentoForm.value.formaPagamento || '',
-      status: this.controlePagamentoForm.value.status || '',
-      comprovante: this.controlePagamentoForm.value.comprovante || '',
-      observacao: this.controlePagamentoForm.value.observacao || ''
+    console.log(this.selectedResponsavel);
+    let recebimento: Recebimento = {
+      responsavel: this.selectedResponsavel?.nome_responsavel || '',
+      dtPgto: (this.controlePagamentoForm.value.data as unknown as Date)?.toISOString().split('T')[0]
+      || new Date().toISOString().split('T')[0],
+      descricao: this.controlePagamentoForm.value.descricao || '',
+      forma: this.selectedFormaPagamento || '',
+      itens: this.listaItensPago
     };
-    
-    this.controleRecebimentoService.create(this.recebimentoRegistro).subscribe(recebimentoRegistro => {
-      console.log(recebimentoRegistro);
-    } );
-
+  
+    this.controleRecebimentoService.create(recebimento).subscribe(recebimento => {
+      console.log(recebimento);
+    });
+  
   }
 
   openUserDialog() {
@@ -109,9 +107,10 @@ export class ControlePagamentoComponent implements OnInit {
 
   adicionarItem(itemPago: ItemPago) {
     this.listaItensPago.push(itemPago);
+    this.totalPago = this.totalPago + itemPago.valor;
     console.log(this.listaItensPago);
   }
-  
+
 
 }
 

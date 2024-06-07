@@ -32,7 +32,7 @@ input[type=number] {
 
 .button-container {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
 }
 
 .button {
@@ -63,6 +63,13 @@ td {
     padding: 10px;
 }
 
+.total {
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px;
+    justify-content: flex-end;
+}
 
 @media (width <= 500px) {
     .row {
@@ -82,6 +89,10 @@ td {
 
     .list-item {
         min-height: 100px;
+    }
+    .button-container {
+        display: flex;
+        justify-content: space-around;
     }
  
 }
