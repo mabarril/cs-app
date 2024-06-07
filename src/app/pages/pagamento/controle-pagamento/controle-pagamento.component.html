@@ -31,8 +31,6 @@
                         }
                     </mat-form-field>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col">
                     <mat-form-field class="full-width">
                         <mat-label class="full-width">Forma de Pagamento</mat-label>
@@ -56,9 +54,18 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="button-container">
-
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label class="full-width">Número do Recibo</mat-label>
+                        <input matInput formControlName="recibo">
+                    </mat-form-field>
+                    @if (controlePagamentoForm.controls['recibo'].hasError('pattern')) {
+                        <mat-error>Informar somente <strong>valor numérico</strong></mat-error>
+                        }
+                </div>
             </div>
+
             <mat-list role="list">
 
                 @for (lista of listaItensPago; track lista) {
@@ -89,7 +96,7 @@
             <button mat-mini-fab color="primary" class="button" (click)="openUserDialog(); $event.preventDefault()">
                 <mat-icon>plus_one</mat-icon>
             </button>
-            <button mat-flat-button color="primary" class="button" (click)="onSubmit()">REGISTRAR PAGAMENTO</button>
+            <button mat-flat-button color="primary" class="button" disabled="!formApto" (click)="onSubmit()">REGISTRAR PAGAMENTO</button>
         </mat-card-actions>
     </mat-card>
 </form>
