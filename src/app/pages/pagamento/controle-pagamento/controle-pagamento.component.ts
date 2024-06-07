@@ -22,6 +22,8 @@ import { Registro } from '../../../models/registro.model';
 
 import { ResponsavelService } from '../../../services/responsavel.service';
 import { ControleRecebimentoService } from '../../../services/controle-recebimento.service';
+import { ThisReceiver } from '@angular/compiler';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-controle-pagamento',
@@ -77,31 +79,33 @@ export class ControlePagamentoComponent implements OnInit {
     formaPagamento: [null, Validators.required],
     descricao: null, // não obrigatório
     recibo: [null, Validators.pattern('^[0-9]*$')]
-
   });
 
+  limparForm(): void {
+    this.controlePagamentoForm.reset();
+    this.listaItensPago = [];
+    this.selectedFormaPagamento = '';
+    this.selectedResponsavel = undefined;
+    this.selectedItem = '';
+    this.totalPago = 0;
+  }
+
   onSubmit(): void {
-    console.log(this.selectedResponsavel);
+    console.log('chamou');
     let recebimento: Recebimento = {
       responsavel: this.selectedResponsavel?.nome_responsavel || '',
       dtPgto: (this.controlePagamentoForm.value.data as unknown as Date)?.toISOString().split('T')[0]
         || new Date().toISOString().split('T')[0],
       descricao: this.controlePagamentoForm.value.descricao || '',
       forma: this.selectedFormaPagamento || '',
-      itens: this.listaItensPago
+      itens: this.listaItensPago,
+      recibo: this.controlePagamentoForm.value.recibo || ''
     };
-
-    this.controleRecebimentoService.create(recebimento).subscribe(recebimento => {
-      console.log(recebimento);
+    this.controleRecebimentoService.create(recebimento).subscribe((res: Recebimento) => {
+      console.log(res);
     });
-  }
-
-  validateForm(): void {
-    if (this.selectedResponsavel && this.selectedItem && this.selectedFormaPagamento && this.listaItensPago.length > 0, this.controlePagamentoForm.valid) {
-      this.formApto = true;
-    } else {
-      this.formApto = false;
-    };
+    alert('Pagamento registrado com sucesso');
+    this.limparForm();  
   }
 
   openUserDialog() {
