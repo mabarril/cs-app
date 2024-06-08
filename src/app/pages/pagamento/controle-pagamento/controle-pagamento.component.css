@@ -63,11 +63,19 @@ td {
     padding: 10px;
 }
 
+.button-resp {
+    margin: 10px;
+  }
 .total {
     display: flex;
     font-size: 20px;
     font-weight: bold;
     padding: 10px;
+    justify-content: flex-end;
+}
+
+.rightDisplay {
+    display: flex;
     justify-content: flex-end;
 }
 

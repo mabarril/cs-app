@@ -12,13 +12,13 @@ import { ItemPago } from '../../models/itemPago.model';
 
 
 @Component({
-  selector: 'app-user-dialog',
+  selector: 'app-registra-item-recebimento',
   standalone: true,
   imports: [MatFormField, FormsModule, MatLabel, MatButtonModule, MatInputModule, MatSelectModule, MatDialogClose],
-  templateUrl: './user-dialog.component.html',
-  styleUrl: './user-dialog.component.css'
+  templateUrl: './registra-item-recebimento.component.html',
+  styleUrl: './registra-item-recebimento.component.css'
 })
-export class UserDialogComponent implements OnInit {
+export class RegistraItemRecebimentoComponent implements OnInit {
 
   itens: string[] = ['Mensalidade', 'Eventos', 'Uniforme'];
   registros: Registro[] = [];
@@ -26,7 +26,7 @@ export class UserDialogComponent implements OnInit {
   selectedItem: string | undefined;
 
   constructor(
-    public dialogRef: MatDialogRef<UserDialogComponent>,
+    public dialogRef: MatDialogRef<RegistraItemRecebimentoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ItemPago,
     private registroService: RegistroService,
   ) { }

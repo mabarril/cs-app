@@ -10,9 +10,17 @@ import { HttpClient } from '@angular/common/http';
 
 export class ResponsavelService {
 
+
+
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Responsavel[]> {
     return this.http.get<Responsavel[]>(`api/responsavel`);
   }
+
+  create(responsavel: Responsavel): Observable<Responsavel> {
+    return this.http.post<Responsavel>(`api/responsavel`, responsavel);
+  }
+
+
 }

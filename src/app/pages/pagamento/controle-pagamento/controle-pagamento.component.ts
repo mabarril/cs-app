@@ -12,8 +12,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CurrencyPipe } from '@angular/common';
 
-import { UserDialogComponent } from '../../../components/user-dialog/user-dialog.component';
-
 import { RecebimentoRegistro } from '../../../models/recebimento_registro';
 import { Responsavel } from '../../../models/responsavel.model';
 import { Recebimento } from '../../../models/recebimento.model';
@@ -22,8 +20,9 @@ import { Registro } from '../../../models/registro.model';
 
 import { ResponsavelService } from '../../../services/responsavel.service';
 import { ControleRecebimentoService } from '../../../services/controle-recebimento.service';
-import { ThisReceiver } from '@angular/compiler';
-import { HttpResponse } from '@angular/common/http';
+
+import { RegistraItemRecebimentoComponent } from '../../../components/registra-item-recebimento/registra-item-recebimento';
+import { RegistraResponsavelComponent } from '../../../components/registra-responsavel/registra-responsavel.component';
 
 @Component({
   selector: 'app-controle-pagamento',
@@ -46,8 +45,6 @@ export class ControlePagamentoComponent implements OnInit {
 
   dialogRef: any;
 
-  formApto = false
-
   responsaveis?: Responsavel[];
   selectedResponsavel: Responsavel | undefined;
   selectedItem: string | undefined;
@@ -61,15 +58,11 @@ export class ControlePagamentoComponent implements OnInit {
 
   constructor(private responsavelService: ResponsavelService, public dialog: MatDialog, private controleRecebimentoService: ControleRecebimentoService) { }
 
-
-
   ngOnInit(): void {
     this.responsavelService.getAll().subscribe(responsaveis => {
-      this.responsaveis = responsaveis
+      this.responsaveis = responsaveis;
     });
   }
-
-
 
   private fb = inject(FormBuilder);
   controlePagamentoForm = this.fb.group({
@@ -105,16 +98,29 @@ export class ControlePagamentoComponent implements OnInit {
       console.log(res);
     });
     alert('Pagamento registrado com sucesso');
-    this.limparForm();  
+    this.limparForm();
   }
 
-  openUserDialog() {
+  openItemDialog() {
     let data = {} as ItemPago;
-    this.dialogRef = this.dialog.open(UserDialogComponent,
+    this.dialogRef = this.dialog.open(RegistraItemRecebimentoComponent,
       { data: data, height: 'auto', width: '480px', autoFocus: true });
 
     this.dialogRef.afterClosed().subscribe((result: ItemPago) => {
       this.adicionarItem(result);
+    });
+  }
+
+  openResponsavelDialog() {
+    let data = {} as Responsavel;
+    this.dialogRef = this.dialog.open(RegistraResponsavelComponent,
+      { data: data, height: 'auto', width: '480px', autoFocus: true });
+
+    this.dialogRef.afterClosed().subscribe((result: Responsavel) => {
+      result.nome_responsavel = result.nome_responsavel!.toUpperCase();
+      this.responsaveis?.push(result);
+      this.responsavelService.create(result).subscribe((res: Responsavel) => {
+        console.log(res);});
     });
   }
 
