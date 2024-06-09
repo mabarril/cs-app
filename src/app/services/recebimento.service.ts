@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Recibo } from '../models/recibo.model';
 import { RegistroPagamento } from '../models/registro_pagamento.model';
 import { RecebimentoRegistro } from '../models/recebimento_registro';
+import { Recebimento } from '../models/recebimento.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,4 +28,8 @@ export class RecebimentoService {
   getRelatorio(): Observable<RecebimentoRegistro[]> {
     return this.http.get<RecebimentoRegistro[]>('api/recebimento/relatorio');
   }
+
+  getExtrato(): Observable<any[]> {
+    return this.http.get<any[]>('api/recebimento/extrato');
+  } 
 }

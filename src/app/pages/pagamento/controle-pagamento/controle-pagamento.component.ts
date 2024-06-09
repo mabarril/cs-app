@@ -84,15 +84,14 @@ export class ControlePagamentoComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('chamou');
     let recebimento: Recebimento = {
       responsavel: this.selectedResponsavel?.nome_responsavel || '',
-      dtPgto: (this.controlePagamentoForm.value.data as unknown as Date)?.toISOString().split('T')[0]
+      data: (this.controlePagamentoForm.value.data as unknown as Date)?.toISOString().split('T')[0]
         || new Date().toISOString().split('T')[0],
       descricao: this.controlePagamentoForm.value.descricao || '',
       forma: this.selectedFormaPagamento || '',
       itens: this.listaItensPago,
-      recibo: this.controlePagamentoForm.value.recibo || ''
+      id_recibo: this.controlePagamentoForm.value.recibo || ''
     };
     this.controleRecebimentoService.create(recebimento).subscribe((res: Recebimento) => {
       console.log(res);
@@ -120,7 +119,8 @@ export class ControlePagamentoComponent implements OnInit {
       result.nome_responsavel = result.nome_responsavel!.toUpperCase();
       this.responsaveis?.push(result);
       this.responsavelService.create(result).subscribe((res: Responsavel) => {
-        console.log(res);});
+        console.log(res);
+      });
     });
   }
 
