@@ -7,6 +7,7 @@ import { ListaPrestacaoContasComponent } from './components/lista-prestacao-cont
 import { PrestacaoContasPdfComponent } from './components/prestacao-contas-pdf/prestacao-contas-pdf.component';
 import { ControlePagamentoComponent } from './pages/pagamento/controle-pagamento/controle-pagamento.component';
 import { ExemploComponent } from './pages/exemplo/exemplo.component';
+import { ExtratoDesbravadorComponent } from './pages/extrato-desbravador/extrato-desbravador.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent},
@@ -16,6 +17,7 @@ export const routes: Routes = [
     { path: 'recebimento/relatorio', component: ListaPrestacaoContasComponent},
     { path: 'recebimento/pdf', component: PrestacaoContasPdfComponent},
     { path: 'pagamento/controle', component: ControlePagamentoComponent},
+    { path : 'extrato/desbravador', component: ExtratoDesbravadorComponent},
     { path: 'exemplo', component: ExemploComponent},
     
     { path: '', redirectTo: 'home', pathMatch: 'full'},
