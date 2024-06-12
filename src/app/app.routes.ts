@@ -14,7 +14,6 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'evento/inscricao', component: InscricaoComponent },
     { path: 'evento', component: EventosComponent },
-<<<<<<< HEAD
     { path: 'recebimento/prestacao-contas', component: PrestacaoContasComponent},
     { path: 'recebimento/relatorio', component: ListaPrestacaoContasComponent},
     { path: 'recebimento/pdf', component: PrestacaoContasPdfComponent},
@@ -25,16 +24,5 @@ export const routes: Routes = [
     
     { path: '', redirectTo: 'home', pathMatch: 'full'},
     { path: '**', redirectTo: 'home'}
-=======
-    { path: 'recebimento/prestacao-contas', component: PrestacaoContasComponent },
-    { path: 'recebimento/relatorio', component: ListaPrestacaoContasComponent },
-    { path: 'recebimento/pdf', component: PrestacaoContasPdfComponent },
-    { path: 'pagamento/controle', component: ControlePagamentoComponent },
-    { path: 'extrato/desbravador', component: ExtratoDesbravadorComponent },
-    { path: 'exemplo', component: ExemploComponent },
-
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: '**', redirectTo: 'home' }
->>>>>>> refs/remotes/origin/develop
 
 ];

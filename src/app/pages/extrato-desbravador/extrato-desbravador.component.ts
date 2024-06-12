@@ -64,9 +64,9 @@ export class ExtratoDesbravadorComponent implements OnInit {
     this.registroService.getAll().subscribe(registros => {
       this.registros = registros;
     });
-    this.recebimentoService.getExtrato().subscribe(recebimentos => {
-      this.listaRecebimentos = recebimentos;
-    });
+    // this.recebimentoService.getExtrato().subscribe(recebimentos => {
+    //   this.listaRecebimentos = recebimentos;
+    // });
 
 
   }
