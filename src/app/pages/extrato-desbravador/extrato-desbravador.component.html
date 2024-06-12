@@ -3,7 +3,74 @@
         <mat-card-title>
             <h1>Extrato Desbravador</h1>
         </mat-card-title>
-
     </mat-card-header>
-       
+    <mat-card-content>
+        <div class="row">
+            <mat-form-field class="full-width">
+                <mat-label class="full-width">Responsável</mat-label>
+                <mat-select class="full-width" [(value)]="selectedRegistro">
+                    @for (registro of registros; track registro) {
+                    <mat-option [value]="registro">{{registro.nome}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <!-- <button mat-mini-fab color="secondary" class="button button-resp"
+                (click)="openResponsavelDialog(); $event.preventDefault()">
+                <mat-icon>plus_one</mat-icon>
+            </button> -->
+        </div>
+
+        <mat-list role="list">
+
+            @for ( desbravador of registros; track desbravador) {
+            <mat-list-item class="list-item">
+                <div class="row">
+                    <div matListItemTitle>{{ desbravador.nome }}</div>
+                    <div matListItemLine>
+                        
+                        <mat-accordion>
+                            <mat-expansion-panel hideToggle>
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                  This is the expansion title
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                  This is a summary of the content
+                                </mat-panel-description>
+                              </mat-expansion-panel-header>
+                              <p>This is the primary content of the panel.</p>
+                            </mat-expansion-panel>
+                            <mat-expansion-panel (opened)="panelOpenState = true"
+                                                 (closed)="panelOpenState = false">
+                              <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                  Self aware panel
+                                </mat-panel-title>
+                                <mat-panel-description>
+                                  Currently I am {{panelOpenState ? 'open' : 'closed'}}
+                                </mat-panel-description>
+                              </mat-expansion-panel-header>
+                              <p>I'm visible because I am open</p>
+                            </mat-expansion-panel>
+                          </mat-accordion>
+
+
+                    </div>
+                </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            }
+        </mat-list>
+        <!-- <div class="total">
+            <span>Total {{ totalPago.toFixed(2)}}</span>
+        </div> -->
+        <mat-divider></mat-divider>
+    </mat-card-content>
+    <mat-card-actions class="button-container">
+        <!-- <button mat-mini-fab color="primary" class="button" (click)="openItemDialog(); $event.preventDefault()">
+            <mat-icon>plus_one</mat-icon>
+        </button> -->
+        <button mat-flat-button color="primary" class="button">REGISTRAR PAGAMENTO</button>
+    </mat-card-actions>
+
 </mat-card>

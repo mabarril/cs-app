@@ -33,6 +33,9 @@ with open('cadastro.csv', 'r') as csvfile:
             cursor.execute(query, (id, mae))
         if resp != '':
             cursor.execute(query, (id, resp))
+        if row[2] != 'DESBRAVADOR':
+            proprio = row[1]
+            cursor.execute(query, (id, proprio))
 # Confirma as alterações
 conn.commit()
 

@@ -2,9 +2,9 @@ import { ItemPago } from "./itemPago.model";
 
 export class Recebimento {
     responsavel?: string;
-    dtPgto?: string;
+    data?: string;
     forma?: string;
-    recibo?: string;
+    id_recibo?: string;
     descricao?: string;
     itens?: ItemPago[];
 }
