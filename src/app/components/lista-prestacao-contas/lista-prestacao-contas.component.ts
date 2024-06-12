@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { RecebimentoRegistro } from '../../models/recebimento_registro';
 import { RecebimentoService } from '../../services/recebimento.service';;
 import { MatButtonModule } from '@angular/material/button';
@@ -8,42 +8,42 @@ import { Router, RouterLink } from '@angular/router';
 
 
 const ELEMENT_DATA: RecebimentoRegistro[] = [
-  { 
-    nome: 'Marcelo Alexandre Barrionuevo', 
-    evento: 'Evento 1', 
-    vlrEvento: 100, 
-    vlrPago: 100, 
-    saldo: 0 
+  {
+    nome: 'Marcelo Alexandre Barrionuevo',
+    evento: 'Evento 1',
+    vlrEvento: 100,
+    vlrPago: 100,
+    saldo: 0
   },
-  { 
-    nome: 'Maria Neide Claro Barrionuevo', 
-    evento: 'Evento 2', 
-    vlrEvento: 200, 
-    vlrPago: 200, 
-    saldo: 0 
+  {
+    nome: 'Maria Neide Claro Barrionuevo',
+    evento: 'Evento 2',
+    vlrEvento: 200,
+    vlrPago: 200,
+    saldo: 0
   },
-  { 
-    nome: 'José Ribeiro Neto', 
-    evento: 'Evento 3', 
-    vlrEvento: 300.50, 
-    vlrPago: 30, 
+  {
+    nome: 'José Ribeiro Neto',
+    evento: 'Evento 3',
+    vlrEvento: 300.50,
+    vlrPago: 30,
     saldo: 30.50
 
   },
- ];
+];
 
 @Component({
-    selector: 'app-lista-prestacao-contas',
-    standalone: true,
-    templateUrl: './lista-prestacao-contas.component.html',
-    styleUrl: './lista-prestacao-contas.component.css',
-    imports: [MatTableModule, MatButtonModule, PrestacaoContasPdfComponent]
+  selector: 'app-lista-prestacao-contas',
+  standalone: true,
+  templateUrl: './lista-prestacao-contas.component.html',
+  styleUrl: './lista-prestacao-contas.component.css',
+  imports: [MatTableModule, MatButtonModule, PrestacaoContasPdfComponent]
 })
 
 
-export class ListaPrestacaoContasComponent implements OnInit{
+export class ListaPrestacaoContasComponent implements OnInit {
 
-  constructor(private recebimentoService: RecebimentoService, private router: Router) {};
+  constructor(private recebimentoService: RecebimentoService, private router: Router) { };
 
   ngOnInit(): void {
     // Call the method to fetch the data from the service
@@ -63,7 +63,7 @@ export class ListaPrestacaoContasComponent implements OnInit{
       }
     );
   }
-;
+  ;
 
   displayedColumns: string[] = ['nome', 'evento', 'vlrEvento', 'vlrPago', 'saldo'];
   dataSource = ELEMENT_DATA;
@@ -72,5 +72,5 @@ export class ListaPrestacaoContasComponent implements OnInit{
   geraPdf() {
     this.router.navigate(['recebimento/pdf', this.dataSource]);
   }
-    
+
 }
