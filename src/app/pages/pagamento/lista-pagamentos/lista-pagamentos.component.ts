@@ -8,8 +8,7 @@ import { DatePipe, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { CurrencyPipe } from '@angular/common';
 import { SortByNamePipe } from '../../../pipes/sort-by-name.pipe';
-import { orderBy } from 'lodash';
-
+import { SortByPipe } from '../../../pipes/sort-by.pipe';
 const ELEMENT_DATA: Pagamento[] = [];
 
 @Component({
