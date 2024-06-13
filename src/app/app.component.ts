@@ -10,6 +10,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { NgxMaskDirective, provideNgxMask, NgxMaskPipe, NgxMaskService } from 'ngx-mask';
+import { CommonModule } from "@angular/common";
+
 
 
 @Component({
@@ -17,8 +20,9 @@ import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/d
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  providers: [provideNgxMask(), { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { height: '480px', width: '600px', autoFocus: true } }], 
   imports: [RouterOutlet, HttpClientModule, HomeComponent, ToolbarComponent, NgxPrintModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule
-    , MatDialogModule],
+    , MatDialogModule, NgxMaskDirective, NgxMaskPipe, CommonModule,]
 })
 
 

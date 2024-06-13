@@ -6,6 +6,6 @@ table {
     padding: 20px;
 }
 
-.right-align {
-    text-align: right;
+.align {
+    text-align: justify;
 }
