@@ -1,4 +1,4 @@
-table {
+.full-width {
     width: 100%;
 }
 
@@ -8,4 +8,29 @@ table {
 
 .align {
     text-align: justify;
+}
+
+.recibo_ok {
+    color: green;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.col {
+    flex: 1;
+    margin-right: 20px;
+}
+
+@media (width <= 500px) {
+    .row {
+        flex-direction: column;
+        justify-content: space-between
+    }
+
+    .col {
+        flex: 1;
+    }
 }
