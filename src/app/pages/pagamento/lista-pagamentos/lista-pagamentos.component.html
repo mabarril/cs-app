@@ -1,42 +1,31 @@
 <div class="container">
     <div class="row">
-        <div class="col full-width" >
+        <div class="col full-width">
             <h1>Lista de Pagamentos</h1>
         </div>
         <div class="col">
-            <mat-form-field  class="full-width">
-                <mat-label>Filter</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+            <mat-form-field class="full-width">
+                <mat-label>Filtrar</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Responsável ou Recibo" #input>
             </mat-form-field>
         </div>
         <div class="col">
-                <mat-label class="full-width">Itens</mat-label>
-                <mat-select class="full-width" [(value)]="selectedItem" onchange="selecionaItem()">
-                    <mat-option [value]=""></mat-option>
-                    @for (item of itens; track item) {
-                    <mat-option [value]="item">{{item}}</mat-option>
-                    }
-                </mat-select> 
+            <mat-label class="full-width">Itens</mat-label>
+            <mat-select class="full-width" [(value)]="selectedItem" (selectionChange)="selecionaItem()">
+                <mat-option [value]="">Todos</mat-option>
+                @for (item of itens; track item) {
+                <mat-option [value]="item">{{item}}</mat-option>
+                }
+            </mat-select>
         </div>
     </div>
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width">
 
-        <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-        <!-- Position Column -->
-        <!-- <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> Código </th>
-            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-        </ng-container> -->
-
-        <!-- Name Column -->
         <ng-container matColumnDef="responsavel">
             <th mat-header-cell *matHeaderCellDef> Responsável </th>
             <td mat-cell *matCellDef="let element"> {{element.responsavel }} </td>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="data">
             <th mat-header-cell *matHeaderCellDef> Data Pagamento </th>
             <td mat-cell *matCellDef="let element"> {{formataData(element.data)}} </td>
@@ -46,21 +35,19 @@
             <th mat-header-cell *matHeaderCellDef> Observacao </th>
             <td mat-cell *matCellDef="let element"> {{element.descricao }} </td>
         </ng-container>
-        
+
         <ng-container matColumnDef="item">
-               <th mat-header-cell *matHeaderCellDef> Item </th>
-               <td mat-cell *matCellDef="let element"> {{element.item }} </td>
-           </ng-container>
-        
+            <th mat-header-cell *matHeaderCellDef> Item </th>
+            <td mat-cell *matCellDef="let element"> {{element.item }} </td>
+        </ng-container>
+
         <ng-container matColumnDef="valor">
             <th mat-header-cell *matHeaderCellDef> Valor </th>
             <td mat-cell *matCellDef="let element" class="align">
                 {{formataValor(element.valor)}}</td>
         </ng-container>
-            
 
-
-            <ng-container matColumnDef="recibo">
+        <ng-container matColumnDef="recibo">
             <th mat-header-cell *matHeaderCellDef> Recibo </th>
             <td mat-cell *matCellDef="let element"> {{element.id_recibo}} </td>
         </ng-container>
@@ -70,10 +57,11 @@
             <td mat-cell *matCellDef="let element"> <button mat-icon-button>
                     <mat-icon>more_vert</mat-icon>
                 </button>
-                <button mat-icon-button [ngClass] = "{'recibo_ok' : element.id_recibo != null }" [disabled]="element.id_recibo != null">
+                <button mat-icon-button [ngClass]="{'recibo_ok' : element.id_recibo != null }"
+                    [disabled]="element.id_recibo != null">
                     <mat-icon>check_small</mat-icon>
-                  </button>
-             </td>
+                </button>
+            </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

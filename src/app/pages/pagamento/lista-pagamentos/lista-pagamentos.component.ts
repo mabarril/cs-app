@@ -1,4 +1,4 @@
-import { Component, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, LOCALE_ID } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelect } from '@angular/material/select';
@@ -38,7 +38,9 @@ export class ListaPagamentosComponent {
 
   displayedColumns: string[] = ['responsavel', 'data', 'item', 'valor', 'recibo', 'acao'];
   dataSource = ELEMENT_DATA;
-selectdItem: any;
+  selectdItem: any;
+
+  listaOriginal: Pagamento[] | undefined;
 
   constructor(private recebimentoService: RecebimentoService, public datePipe: DatePipe) { };
 
@@ -48,8 +50,6 @@ selectdItem: any;
     this.fetchData();
   }
 
-  
-
   fetchData(): void {
     // Call the service method to get the data
     this.recebimentoService.getLista().subscribe(
@@ -57,6 +57,7 @@ selectdItem: any;
         // Assign the received data to the dataSource property
         this.dataSource = data;
         this.dataSource = orderBy(this.dataSource, ['responsavel'], 'asc');
+        this.listaOriginal = this.dataSource;
       },
       (error: any) => {
         // Handle the error
@@ -64,7 +65,6 @@ selectdItem: any;
       }
     );
   }
-  ;
 
   formataData(dataInformada: string) {
     registerLocaleData(localePt);
@@ -77,10 +77,10 @@ selectdItem: any;
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     filterValue == '' ? this.fetchData() :
-    this.dataSource = this.dataSource.filter(item => 
-      item.id_recibo?.toString().includes(filterValue.trim().toUpperCase()) || 
-      item.responsavel?.includes(filterValue.trim().toUpperCase())
-    );
+      this.dataSource = this.dataSource.filter(item =>
+        item.id_recibo?.toString().includes(filterValue.trim().toUpperCase()) ||
+        item.responsavel?.includes(filterValue.trim().toUpperCase())
+      );
   }
 
   formataValor(valor: number) {
@@ -90,9 +90,8 @@ selectdItem: any;
 
   selecionaItem() {
     if (this.selectedItem == undefined || this.selectedItem == '') {
-      this.fetchData();
-    } else 
-    (this.dataSource = this.dataSource.filter(item => item.item == this.selectedItem));
+      this.dataSource! = this.listaOriginal!;
+    } else
+      (this.dataSource = this.listaOriginal!.filter(item => item.item?.toLowerCase() == this.selectedItem?.toLowerCase()));
   }
-
 }
