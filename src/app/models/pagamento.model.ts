@@ -3,8 +3,7 @@ export class Pagamento {
     responsavel?: string;
     data?: string;
     descricao?: string;
-    vlr_dbr?: number; 
-    vlr_eventos?: number;
-    vlr_uniforme?: number;
+    valor?: number; 
     id_recibo?: number;   
+    item?: string;
 };

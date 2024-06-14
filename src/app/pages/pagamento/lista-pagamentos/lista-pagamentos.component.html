@@ -10,8 +10,8 @@
             </mat-form-field>
         </div>
         <div class="col">
-                <mat-label class="full-width">Tipo de Pagamento</mat-label>
-                <mat-select class="full-width" [(value)]="selectedItem">
+                <mat-label class="full-width">Itens</mat-label>
+                <mat-select class="full-width" [(value)]="selectedItem" onchange="selecionaItem()">
                     <mat-option [value]=""></mat-option>
                     @for (item of itens; track item) {
                     <mat-option [value]="item">{{item}}</mat-option>
@@ -42,31 +42,25 @@
             <td mat-cell *matCellDef="let element"> {{formataData(element.data)}} </td>
         </ng-container>
 
-        Symbol Column
         <ng-container matColumnDef="descricao">
             <th mat-header-cell *matHeaderCellDef> Observacao </th>
             <td mat-cell *matCellDef="let element"> {{element.descricao }} </td>
         </ng-container>
-
-        <ng-container matColumnDef="dbv">
-            <th mat-header-cell *matHeaderCellDef> Mensalidades </th>
+        
+        <ng-container matColumnDef="item">
+               <th mat-header-cell *matHeaderCellDef> Item </th>
+               <td mat-cell *matCellDef="let element"> {{element.item }} </td>
+           </ng-container>
+        
+        <ng-container matColumnDef="valor">
+            <th mat-header-cell *matHeaderCellDef> Valor </th>
             <td mat-cell *matCellDef="let element" class="align">
-                {{formataValor(element.vlr_dbv)}}</td>
+                {{formataValor(element.valor)}}</td>
         </ng-container>
+            
 
-        <ng-container matColumnDef="uniforme">
-            <th mat-header-cell *matHeaderCellDef> Uniforme </th>
-            <td mat-cell *matCellDef="let element" class="align">
-                {{formataValor(element.vlr_uniforme)}}</td>
-        </ng-container>
 
-        <ng-container matColumnDef="eventos">
-            <th mat-header-cell *matHeaderCellDef> Eventos </th>
-            <td mat-cell *matCellDef="let element" class="align">
-                {{formataValor(element.vlr_eventos)}}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="recibo">
+            <ng-container matColumnDef="recibo">
             <th mat-header-cell *matHeaderCellDef> Recibo </th>
             <td mat-cell *matCellDef="let element"> {{element.id_recibo}} </td>
         </ng-container>

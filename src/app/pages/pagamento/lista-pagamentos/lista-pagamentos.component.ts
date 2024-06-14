@@ -36,7 +36,7 @@ export class ListaPagamentosComponent {
 
   // Define the  variable with an empty array or replace it with the desired data source
 
-  displayedColumns: string[] = ['responsavel', 'data', 'dbv', 'uniforme', 'eventos', 'recibo', 'acao'];
+  displayedColumns: string[] = ['responsavel', 'data', 'item', 'valor', 'recibo', 'acao'];
   dataSource = ELEMENT_DATA;
 selectdItem: any;
 
@@ -87,5 +87,12 @@ selectdItem: any;
     registerLocaleData(localePt, 'br');
     return new CurrencyPipe('pt-BR').transform(valor, 'BRL', 'symbol', '1.2-2');
   };
+
+  selecionaItem() {
+    if (this.selectedItem == undefined || this.selectedItem == '') {
+      this.fetchData();
+    } else 
+    (this.dataSource = this.dataSource.filter(item => item.item == this.selectedItem));
+  }
 
 }
