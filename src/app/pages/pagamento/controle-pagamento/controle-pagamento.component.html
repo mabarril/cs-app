@@ -66,6 +66,16 @@
                     <mat-error>Informar somente <strong>valor numérico</strong></mat-error>
                     }
                 </div>
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <mat-label class="full-width">Item</mat-label>
+                        <mat-select class="full-width"  [(value)]="selectedItem">
+                          @for (item of itens; track item) {
+                          <mat-option [value]="item">{{item}}</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                </div>
             </div>
 
             <mat-list role="list">
@@ -78,9 +88,6 @@
                         </div>
                         <div class="col right-align">
                             {{ lista.valor.toFixed(2) }}
-                        </div>
-                        <div class="col right-align">
-                            {{ lista.item }}
                         </div>
                     </div>
                 </mat-list-item>

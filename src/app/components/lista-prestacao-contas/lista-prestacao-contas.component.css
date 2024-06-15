@@ -2,6 +2,18 @@ table {
     width: 100%;
 }
 
+.mat-column-vlrEvento {
+    text-align: right;
+}
+
+.mat-column-vlrPago {
+    text-align: right;
+}
+
+.mat-column-saldo {
+    text-align: right;
+}
+
 .container {
     padding: 20px;
 }
@@ -20,4 +32,16 @@ button {
     margin-top: 30px;
     margin-bottom: 30px;
     border-radius: 50px;
+}
+th {
+    font-size: x-small;
+    font-weight: bold;
+}
+
+td {
+    font-size: x-small;
+}
+
+.mat-mdc-row {
+    height: 30px;
 }

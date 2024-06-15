@@ -38,7 +38,6 @@ export class ControlePagamentoComponent implements OnInit {
   itemPago: ItemPago = {
     desbravador: {} as Registro,
     valor: 0,
-    item: ''
   };
 
   totalPago: number = 0;
@@ -71,7 +70,8 @@ export class ControlePagamentoComponent implements OnInit {
     data: [null, Validators.required],
     formaPagamento: [null, Validators.required],
     descricao: null, // não obrigatório
-    recibo: [null, Validators.pattern('^[0-9]*$')]
+    recibo: [null, Validators.pattern('^[0-9]*$')],
+    item: [null, Validators.required]
   });
 
   limparForm(): void {
@@ -91,7 +91,8 @@ export class ControlePagamentoComponent implements OnInit {
       descricao: this.controlePagamentoForm.value.descricao || '',
       forma: this.selectedFormaPagamento || '',
       itens: this.listaItensPago,
-      id_recibo: this.controlePagamentoForm.value.recibo || ''
+      id_recibo: this.controlePagamentoForm.value.recibo || '',
+      item: this.selectedItem || '',
     };
     this.controleRecebimentoService.create(recebimento).subscribe((res: Recebimento) => {
       console.log(res);

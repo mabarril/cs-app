@@ -3,7 +3,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/select';
-import { PrestacaoContasPdfComponent } from '../../../components/prestacao-contas-pdf/prestacao-contas-pdf.component';
 import { RecebimentoService } from '../../../services/recebimento.service';
 import { Pagamento } from '../../../models/pagamento.model';
 import { DatePipe, registerLocaleData } from '@angular/common';
@@ -23,7 +22,7 @@ const ELEMENT_DATA: Pagamento[] = [];
 @Component({
   selector: 'app-lista-pagamentos',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, NgClass, PrestacaoContasPdfComponent, MatSelect, MatOption, MatIcon, SortByNamePipe, MatInputModule, MatFormFieldModule, MatPaginator, ArrayFiltroPipe],
+  imports: [MatTableModule, MatButtonModule, NgClass, MatSelect, MatOption, MatIcon, SortByNamePipe, MatInputModule, MatFormFieldModule, MatPaginator, ArrayFiltroPipe],
   templateUrl: './lista-pagamentos.component.html',
   styleUrl: './lista-pagamentos.component.css',
   providers: [DatePipe, CurrencyPipe, { provide: LOCALE_ID, useValue: 'pt-BR' }]

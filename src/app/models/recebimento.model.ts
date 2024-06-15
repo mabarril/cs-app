@@ -7,4 +7,5 @@ export class Recebimento {
     id_recibo?: string;
     descricao?: string;
     itens?: ItemPago[];
+    item?: String;
 }

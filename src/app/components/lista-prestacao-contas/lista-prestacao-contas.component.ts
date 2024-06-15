@@ -1,49 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { RecebimentoRegistro } from '../../models/recebimento_registro';
 import { RecebimentoService } from '../../services/recebimento.service';;
 import { MatButtonModule } from '@angular/material/button';
-import { PrestacaoContasPdfComponent } from "../prestacao-contas-pdf/prestacao-contas-pdf.component";
-import { Router, RouterLink } from '@angular/router';
+import { NgxPrintModule } from 'ngx-print';
+import { CurrencyPipe, registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 
 
-const ELEMENT_DATA: RecebimentoRegistro[] = [
-  {
-    nome: 'Marcelo Alexandre Barrionuevo',
-    evento: 'Evento 1',
-    vlrEvento: 100,
-    vlrPago: 100,
-    saldo: 0
-  },
-  {
-    nome: 'Maria Neide Claro Barrionuevo',
-    evento: 'Evento 2',
-    vlrEvento: 200,
-    vlrPago: 200,
-    saldo: 0
-  },
-  {
-    nome: 'José Ribeiro Neto',
-    evento: 'Evento 3',
-    vlrEvento: 300.50,
-    vlrPago: 30,
-    saldo: 30.50
-
-  },
-];
+const ELEMENT_DATA: RecebimentoRegistro[] = [];
 
 @Component({
   selector: 'app-lista-prestacao-contas',
   standalone: true,
   templateUrl: './lista-prestacao-contas.component.html',
   styleUrl: './lista-prestacao-contas.component.css',
-  imports: [MatTableModule, MatButtonModule, PrestacaoContasPdfComponent]
+  imports: [MatTableModule, MatButtonModule, NgxPrintModule ],
+  providers: [CurrencyPipe, { provide: LOCALE_ID, useValue: 'pt-BR' }]
 })
 
 
 export class ListaPrestacaoContasComponent implements OnInit {
+  
 
-  constructor(private recebimentoService: RecebimentoService, private router: Router) { };
+  totalSaldo: number = 0;
+  totalVlrEvento: number = 0;
+  totalVlrPago: number = 0;
+
+  constructor(private recebimentoService: RecebimentoService) { };
 
   ngOnInit(): void {
     // Call the method to fetch the data from the service
@@ -56,11 +40,12 @@ export class ListaPrestacaoContasComponent implements OnInit {
       (data: RecebimentoRegistro[]) => {
         // Assign the received data to the dataSource property
         this.dataSource = data;
+        this.calculaTotal();
       },
       (error: any) => {
         // Handle the error
         console.error('Error fetching data:', error);
-      }
+      }, 
     );
   }
   ;
@@ -69,8 +54,24 @@ export class ListaPrestacaoContasComponent implements OnInit {
   dataSource = ELEMENT_DATA;
 
 
-  geraPdf() {
-    this.router.navigate(['recebimento/pdf', this.dataSource]);
+  formataValor(valor: number) {
+    registerLocaleData(localePt, 'pt-BR');
+    return new CurrencyPipe('pt-BR').transform(valor, 'BRL', 'symbol', '1.2-2');
+  };
+
+  calculaTotal() {
+    this.dataSource.forEach((element: any) => {
+
+      let saldo = parseFloat(element.saldo) ? parseFloat(element.saldo) : 0;
+      this.totalSaldo += saldo;
+      console.log(this.totalSaldo);
+
+      let vlrEvento = parseFloat(element.vlrEvento) ? parseFloat(element.vlrEvento) : 0;
+      this.totalVlrEvento += vlrEvento;
+
+      let vlrPago = parseFloat(element.vlrPago) ? parseFloat(element.vlrPago) : 0;
+      this.totalVlrPago += vlrPago;
+    });
   }
 
 }
