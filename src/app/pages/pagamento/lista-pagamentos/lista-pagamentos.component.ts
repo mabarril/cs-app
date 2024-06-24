@@ -14,8 +14,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginator } from '@angular/material/paginator';
 import { ArrayFiltroPipe } from '../../../pipes/array-filtro.pipe';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
+import { Recebimento } from '../../../models/recebimento.model';
+import { RegistraReciboComponent } from '../../../components/registra-recibo/registra-recibo.component';
 
 const ELEMENT_DATA: Pagamento[] = [];
 
@@ -30,6 +33,8 @@ const ELEMENT_DATA: Pagamento[] = [];
 
 export class ListaPagamentosComponent {
 
+  dialogRef: any;
+
   selectedItem: string | undefined;
   itens: string[] = ['Mensalidade', 'Eventos', 'Uniforme'];
 
@@ -41,7 +46,7 @@ export class ListaPagamentosComponent {
 
   listaOriginal: Pagamento[] | undefined;
 
-  constructor(private recebimentoService: RecebimentoService, public datePipe: DatePipe) { };
+  constructor(private recebimentoService: RecebimentoService, public datePipe: DatePipe, public dialog: MatDialog) { };
 
 
   ngOnInit(): void {
@@ -92,5 +97,19 @@ export class ListaPagamentosComponent {
       this.dataSource! = this.listaOriginal!;
     } else
       (this.dataSource = this.listaOriginal!.filter(item => item.item?.toLowerCase() == this.selectedItem?.toLowerCase()));
+  }
+
+  openReciboDialog(element : Pagamento) {
+    let data = {} as Pagamento;
+    data.id = element.id
+    this.dialogRef = this.dialog.open(RegistraReciboComponent,
+      { data: data, height: 'auto', width: '480px', autoFocus: true });
+
+    this.dialogRef.afterClosed().subscribe((result: Pagamento) => {
+      console.log("RESULT ", result)
+      // this.responsavelService.create(result).subscribe((res: Responsavel) => {
+      //   console.log(res);
+      // });
+    });
   }
 }

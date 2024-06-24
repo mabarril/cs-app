@@ -58,8 +58,8 @@
             <td mat-cell *matCellDef="let element"> <button mat-icon-button>
                     <mat-icon>more_vert</mat-icon>
                 </button>
-                <button mat-icon-button [ngClass]="{'recibo_ok' : element.id_recibo != null }"
-                    [disabled]="element.id_recibo != null">
+                <button mat-icon-button [ngClass]="{'recibo_ok' : element.id_recibo > 1 }"
+            [disabled]="element.id_recibo > 1" (click)="openReciboDialog(element)">
                     <mat-icon>check_small</mat-icon>
                 </button>
             </td>

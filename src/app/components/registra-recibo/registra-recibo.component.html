@@ -1,0 +1,16 @@
+<div class="container">
+
+    <h2 mat-dialog-title>Recibo</h2>
+
+    <div mat-dialog-content>
+        <mat-form-field class="full-width">
+            <mat-label>Número do Recibo</mat-label>
+            <input matInput [(ngModel)]="data.id_recibo">
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="button-container">
+        <button class="button" mat-flat-button color="secondary" (click)="onCancelDialog()">CANCELAR</button>
+        <button class="button" mat-flat-button color="primary" [mat-dialog-close]="data"
+            cdkFocusInitial>INSERIR</button>
+    </div>
+</div><p>registra-recibo works!</p>
