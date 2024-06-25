@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { CurrencyPipe, DatePipe, registerLocaleData } from '@angular/common';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { RouterLink } from '@angular/router';
 
 import ptBr from '@angular/common/locales/pt';
 import localePt from '@angular/common/locales/pt';
@@ -29,7 +30,7 @@ import { Extrato } from '../../models/extrato.model';
 @Component({
   selector: 'app-extrato-desbravador',
   standalone: true,
-  imports: [MatCard, MatCardModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatDatepickerModule, ReactiveFormsModule, MatListModule, MatIconModule, CurrencyPipe, MatAccordion, MatExpansionModule, MatFormFieldModule, MatIconModule],
+  imports: [MatCard, MatCardModule, MatInputModule, RouterLink, MatButtonModule, MatSelectModule, MatRadioModule, MatDatepickerModule, ReactiveFormsModule, MatListModule, MatIconModule, CurrencyPipe, MatAccordion, MatExpansionModule, MatFormFieldModule, MatIconModule],
   templateUrl: './extrato-desbravador.component.html',
   styleUrl: './extrato-desbravador.component.css',
   providers: [provideNativeDateAdapter(), DatePipe, CurrencyPipe, { provide: LOCALE_ID, useValue: 'pt-BR' }],
