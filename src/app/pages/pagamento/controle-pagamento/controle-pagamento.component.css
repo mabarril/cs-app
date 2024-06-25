@@ -32,7 +32,8 @@ input[type=number] {
 
 .button-container {
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
+    justify-content: flex-end;
 }
 
 .button {

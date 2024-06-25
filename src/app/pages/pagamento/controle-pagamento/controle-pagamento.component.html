@@ -105,7 +105,7 @@
             <button mat-mini-fab color="primary" class="button" (click)="openItemDialog(); $event.preventDefault()">
                 <mat-icon>plus_one</mat-icon>
             </button>
-            <button mat-flat-button color="primary" class="button">REGISTRAR PAGAMENTO</button>
+            <button mat-flat-button color="primary" class="button"  [disabled]="totalPago <= 0">REGISTRAR PAGAMENTO</button>
         </mat-card-actions>
     </mat-card>
 </form>
