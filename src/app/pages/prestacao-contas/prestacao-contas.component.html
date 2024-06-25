@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Prestação de Contas</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef> Nome </th>
+                    <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="item">
+                    <th mat-header-cell *matHeaderCellDef> Item </th>
+                    <td mat-cell *matCellDef="let element"> {{element.item}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="data">
+                    <th mat-header-cell *matHeaderCellDef> Data </th>
+                    <td mat-cell *matCellDef="let element"> {{element.data}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="valor_item">
+                    <th mat-header-cell *matHeaderCellDef> Valor </th>
+                    <td mat-cell *matCellDef="let element"> {{element.valor_item}} </td>
+                </ng-container>
+
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+</div>

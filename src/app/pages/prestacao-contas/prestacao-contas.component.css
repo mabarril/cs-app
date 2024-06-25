@@ -1,0 +1,13 @@
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.col {
+    display: flex;
+    flex: 1
+}
+
+.container {
+    padding: 20px;
+}
