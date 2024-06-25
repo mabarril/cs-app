@@ -79,6 +79,15 @@ td {
     justify-content: flex-end;
 }
 
+mat-list-item .row{
+    display: flex;
+    flex-direction: row;
+}
+mat-list-item .col{
+    display: flex;
+    flex: 1;
+}
+
 @media (width <= 500px) {
     .row {
         flex-direction: column;

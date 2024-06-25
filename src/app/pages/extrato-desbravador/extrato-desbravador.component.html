@@ -1,76 +1,124 @@
 <mat-card>
-    <mat-card-header>
-        <mat-card-title>
-            <h1>Extrato Desbravador</h1>
-        </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <div class="row">
-            <mat-form-field class="full-width">
-                <mat-label class="full-width">Responsável</mat-label>
-                <mat-select class="full-width" [(value)]="selectedRegistro">
-                    @for (registro of registros; track registro) {
-                    <mat-option [value]="registro">{{registro.nome}}</mat-option>
-                    }
-                </mat-select>
-            </mat-form-field>
-            <!-- <button mat-mini-fab color="secondary" class="button button-resp"
-                (click)="openResponsavelDialog(); $event.preventDefault()">
-                <mat-icon>plus_one</mat-icon>
-            </button> -->
-        </div>
+  <mat-card-header>
+    <mat-card-title>
+      <h1>Extrato Desbravador</h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="row">
+      <mat-form-field class="full-width">
+        <mat-label class="full-width">Desbravador</mat-label>
+        <mat-select class="full-width" [(value)]="selectedRegistro"
+          (selectionChange)="selecionaRegistro(selectedRegistro)">
+          @for (registro of registros; track registro) {
+          <mat-option [value]="registro">{{registro.nome}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-        <mat-list role="list">
+    <!-- <mat-list role="list">
 
             @for ( desbravador of registros; track desbravador) {
             <mat-list-item class="list-item">
                 <div class="row">
                     <div matListItemTitle>{{ desbravador.nome }}</div>
-                    <div matListItemLine>
-                        
-                        <mat-accordion>
-                            <mat-expansion-panel hideToggle>
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                  This is the expansion title
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                  This is a summary of the content
-                                </mat-panel-description>
-                              </mat-expansion-panel-header>
-                              <p>This is the primary content of the panel.</p>
-                            </mat-expansion-panel>
-                            <mat-expansion-panel (opened)="panelOpenState = true"
-                                                 (closed)="panelOpenState = false">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                  Self aware panel
-                                </mat-panel-title>
-                                <mat-panel-description>
-                                  Currently I am {{panelOpenState ? 'open' : 'closed'}}
-                                </mat-panel-description>
-                              </mat-expansion-panel-header>
-                              <p>I'm visible because I am open</p>
-                            </mat-expansion-panel>
-                          </mat-accordion>
+                    <div matListItemLine> -->
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h4>Mensalidade</h4>
+          </mat-panel-title>
+          <mat-panel-description>
+            {{this.totalPagoMensalidades | currency:'BRL':'symbol'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list>
+          @for (item of listaMensalidades; track item) {
+          <mat-list-item>
+            <div class="row">
+              <div matListItemTitle>Valor</div>
+              <div matListItemLine>{{ item.id_recibo }}</div>
+            </div>
+          </mat-list-item>
+          }
+        </mat-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h4>Uniforme</h4>
+          </mat-panel-title>
+          <mat-panel-description>
+            {{this.totalPagoUniformes | currency:'BRL':'symbol'}}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list>
+          @for (item of listaUniforme; track item) {
+          <mat-list-item>
+            <div class="row">
+              <div matListItemLine>{{ item.id_recibo }}</div>
+            </div>
+          </mat-list-item>
+          }
+        </mat-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <h4>Eventos</h4>
+          </mat-panel-title>
+          <mat-panel-description>
+            {{this.totalPagoEventos| currency:'BRL':'symbol' }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list>
+          @for (evento of listaEventos; track evento) {
+          <mat-list-item>
+            <div matListItemLine class="row">
+              <div class="col">
+                <span>{{ formataData(evento.data!)}}</span>
+              </div>
+              <div class="col">
+                <span>{{ evento.id_recibo }}</span>
+              </div>
+              <div class="col">
+                <span>{{ evento.valor_item | currency: 'BRL': 'symbol' }}</span>
+              </div>
+              <div class="col">
+                <span>{{ evento.responsavel }}</span>
+              </div>
+              <div class="col">
+                <span>{{ evento.forma }}</span>
+              </div>
+              <div class="col">
+                <span>{{ evento.descricao }}</span>
+              </div>
+            </div>
+          </mat-list-item>
+          }
+        </mat-list>
+      </mat-expansion-panel>
+    </mat-accordion>
 
 
-                    </div>
+    <!-- </div>
                 </div>
             </mat-list-item>
             <mat-divider></mat-divider>
             }
-        </mat-list>
-        <!-- <div class="total">
+        </mat-list> -->
+    <!-- <div class="total">
             <span>Total {{ totalPago.toFixed(2)}}</span>
         </div> -->
-        <mat-divider></mat-divider>
-    </mat-card-content>
-    <mat-card-actions class="button-container">
-        <!-- <button mat-mini-fab color="primary" class="button" (click)="openItemDialog(); $event.preventDefault()">
+    <mat-divider></mat-divider>
+  </mat-card-content>
+  <!-- <mat-card-actions class="button-container">
+        <button mat-mini-fab color="primary" class="button" (click)="openItemDialog(); $event.preventDefault()">
             <mat-icon>plus_one</mat-icon>
-        </button> -->
-        <button mat-flat-button color="primary" class="button">REGISTRAR PAGAMENTO</button>
-    </mat-card-actions>
+        </button> 
+                <button mat-flat-button color="primary" class="button">REGISTRAR PAGAMENTO</button>
+    </mat-card-actions> -->
 
 </mat-card>
