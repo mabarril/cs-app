@@ -5,6 +5,7 @@ import { Recibo } from '../models/recibo.model';
 import { RegistroPagamento } from '../models/registro_pagamento.model';
 import { RecebimentoRegistro } from '../models/recebimento_registro';
 import { Pagamento } from '../models/pagamento.model';
+import { NumeroRecibo } from '../models/numero-recibo';
 
 
 @Injectable({
@@ -32,5 +33,10 @@ export class RecebimentoService {
 
   getLista(): Observable<Pagamento[]> {
     return this.http.get<Pagamento[]>('api/recebimento/lista');
+  }
+
+  insereRecibo(numeroRecibo : NumeroRecibo): Observable<NumeroRecibo> {
+    console.log('numeroRecibo', numeroRecibo);
+    return this.http.post<NumeroRecibo>('api/recebimento/recibo', numeroRecibo);
   }
 }
