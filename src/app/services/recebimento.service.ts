@@ -5,6 +5,7 @@ import { Recibo } from '../models/recibo.model';
 import { RegistroPagamento } from '../models/registro_pagamento.model';
 import { RecebimentoRegistro } from '../models/recebimento_registro';
 import { Pagamento } from '../models/pagamento.model';
+import { Extrato } from '../models/extrato.model';
 import { NumeroRecibo } from '../models/numero-recibo';
 
 
@@ -35,8 +36,11 @@ export class RecebimentoService {
     return this.http.get<Pagamento[]>('api/recebimento/lista');
   }
 
+  getExtrato(id : number): Observable<Extrato[]> {
+    return this.http.get<Extrato[]>('api/recebimento/extrato/' + id);
+  }
+
   insereRecibo(numeroRecibo : NumeroRecibo): Observable<NumeroRecibo> {
-    console.log('numeroRecibo', numeroRecibo);
     return this.http.post<NumeroRecibo>('api/recebimento/recibo', numeroRecibo);
   }
 }
