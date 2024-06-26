@@ -11,3 +11,24 @@
 .container {
     padding: 20px;
 }
+
+.full-width {
+    width: 100%;
+}
+
+.gera-pdf {
+
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.gera-pdf button {
+    border-radius: 999px;
+}
+
+
+.mat-mdc-row {
+    height: 20px;
+    font-size: smaller;
+}

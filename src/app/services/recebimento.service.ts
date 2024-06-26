@@ -7,6 +7,7 @@ import { RecebimentoRegistro } from '../models/recebimento_registro';
 import { Pagamento } from '../models/pagamento.model';
 import { Extrato } from '../models/extrato.model';
 import { NumeroRecibo } from '../models/numero-recibo';
+import { ItemExtrato } from '../models/itemExtrato.model';
 
 
 @Injectable({
@@ -38,6 +39,10 @@ export class RecebimentoService {
 
   getExtrato(id : number): Observable<Extrato[]> {
     return this.http.get<Extrato[]>('api/recebimento/extrato/' + id);
+  }
+
+  getItensExtrato(): Observable<ItemExtrato[]> {
+    return this.http.get<ItemExtrato[]>('api/extrato');
   }
 
   insereRecibo(numeroRecibo : NumeroRecibo): Observable<NumeroRecibo> {
