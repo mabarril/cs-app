@@ -37,9 +37,25 @@
         <mat-list>
           @for (item of listaMensalidades; track item) {
           <mat-list-item>
-            <div class="row">
-              <div matListItemTitle>Valor</div>
-              <div matListItemLine>{{ item.id_recibo }}</div>
+            <div matListItemLine class="row">
+              <div class="col">
+                <span>{{ formataData(item.data!)}}</span>
+              </div>
+              <div class="col">
+                <span>{{ item.id_recibo }}</span>
+              </div>
+              <div class="col">
+                <span>{{ item.valor_item | currency: 'BRL': 'symbol' }}</span>
+              </div>
+              <div class="col">
+                <span>{{ item.responsavel }}</span>
+              </div>
+              <div class="col">
+                <span>{{ item.forma }}</span>
+              </div>
+              <div class="col">
+                <span>{{ item.descricao }}</span>
+              </div>
             </div>
           </mat-list-item>
           }
@@ -57,8 +73,25 @@
         <mat-list>
           @for (item of listaUniforme; track item) {
           <mat-list-item>
-            <div class="row">
-              <div matListItemLine>{{ item.id_recibo }}</div>
+            <div matListItemLine class="row">
+              <div class="col">
+                <span>{{ formataData(item.data!)}}</span>
+              </div>
+              <div class="col">
+                <span>{{ item.id_recibo }}</span>
+              </div>
+              <div class="col">
+                <span>{{ item.valor_item | currency: 'BRL': 'symbol' }}</span>
+              </div>
+              <div class="col">
+                <span>{{ item.responsavel }}</span>
+              </div>
+              <div class="col">
+                <span>{{ item.forma }}</span>
+              </div>
+              <div class="col">
+                <span>{{ item.descricao }}</span>
+              </div>
             </div>
           </mat-list-item>
           }
