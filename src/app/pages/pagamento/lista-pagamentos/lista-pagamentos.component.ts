@@ -17,7 +17,7 @@ import { ArrayFiltroPipe } from '../../../pipes/array-filtro.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIcon } from '@angular/material/icon';
 import { NgClass } from '@angular/common';
-import { Recebimento } from '../../../models/recebimento.model';
+import { NgxPrintModule } from 'ngx-print';
 import { RegistraReciboComponent } from '../../../components/registra-recibo/registra-recibo.component';
 import { NumeroRecibo } from '../../../models/numero-recibo';
 
@@ -26,7 +26,7 @@ const ELEMENT_DATA: Pagamento[] = [];
 @Component({
   selector: 'app-lista-pagamentos',
   standalone: true,
-  imports: [MatTableModule, MatButtonModule, NgClass, MatSelect, MatOption, MatIcon, SortByNamePipe, MatInputModule, MatFormFieldModule, MatPaginator, ArrayFiltroPipe],
+  imports: [MatTableModule, MatButtonModule, NgxPrintModule, NgClass, MatSelect, MatOption, MatIcon, SortByNamePipe, MatInputModule, MatFormFieldModule, MatPaginator, ArrayFiltroPipe],
   templateUrl: './lista-pagamentos.component.html',
   styleUrl: './lista-pagamentos.component.css',
   providers: [DatePipe, CurrencyPipe, { provide: LOCALE_ID, useValue: 'pt-BR' }]
