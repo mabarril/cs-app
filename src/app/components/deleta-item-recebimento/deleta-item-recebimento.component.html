@@ -1,0 +1,11 @@
+<div class="container">
+    <div mat-dialog-content>
+       <span>Confirma a exclusão do pagamento?</span>
+    </div>
+
+    <div mat-dialog-actions class="button-container">
+        <button class="button" mat-flat-button color="secondary" (click)="onCancelDialog()">NÃO</button>
+        <button class="button" mat-flat-button color="primary" [mat-dialog-close]="data"
+            cdkFocusInitial>SIM</button>
+    </div>
+</div>

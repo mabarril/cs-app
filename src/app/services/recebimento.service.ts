@@ -8,6 +8,7 @@ import { Pagamento } from '../models/pagamento.model';
 import { Extrato } from '../models/extrato.model';
 import { NumeroRecibo } from '../models/numero-recibo';
 import { ItemExtrato } from '../models/itemExtrato.model';
+import { DeletaItemRecebimentoComponent } from '../components/deleta-item-recebimento/deleta-item-recebimento.component';
 
 
 @Injectable({
@@ -47,5 +48,9 @@ export class RecebimentoService {
 
   insereRecibo(numeroRecibo : NumeroRecibo): Observable<NumeroRecibo> {
     return this.http.post<NumeroRecibo>('api/recebimento/recibo', numeroRecibo);
+  }
+
+  deleteRecebimento(id: number): Observable<Pagamento> {
+    return this.http.delete<Pagamento>('api/recebimento/' + id);
   }
 }
