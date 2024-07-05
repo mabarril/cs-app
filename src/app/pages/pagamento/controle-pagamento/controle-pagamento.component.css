@@ -2,6 +2,14 @@
     width: 100%;
 }
 
+.resp {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.width-90{
+    width:90%;
+}
 mat-card {
     background-color: rgb(235, 231, 231)s;
     position: sticky;

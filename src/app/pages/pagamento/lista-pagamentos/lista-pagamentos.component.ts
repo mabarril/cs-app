@@ -23,6 +23,7 @@ import { NgxPrintModule } from 'ngx-print';
 import { RegistraReciboComponent } from '../../../components/registra-recibo/registra-recibo.component';
 import { NumeroRecibo } from '../../../models/numero-recibo';
 import { DeletaItemRecebimentoComponent } from '../../../components/deleta-item-recebimento/deleta-item-recebimento.component';
+import { ControlePagamentoComponent } from '../controle-pagamento/controle-pagamento.component';
 
 const ELEMENT_DATA: Pagamento[] = [];
 
@@ -105,7 +106,6 @@ export class ListaPagamentosComponent {
   }
 
   openDeleteDialog(element: Pagamento) {
-    console.log('element', element);
     this.dialogRef = this.dialog.open(DeletaItemRecebimentoComponent,
       { data: element, height: 'auto', width: '480px', autoFocus: true });
     this.dialogRef.afterClosed().subscribe((result: Pagamento) => {
@@ -125,7 +125,7 @@ export class ListaPagamentosComponent {
 
   openReciboDialog(element: Pagamento) {
     this.dialogRef = this.dialog.open(RegistraReciboComponent,
-      { data: element, height: 'auto', width: '480px', autoFocus: true });
+      { data: element, width: '480px', autoFocus: true });
     this.dialogRef.afterClosed().subscribe((result: Pagamento) => {
       let rec: NumeroRecibo = {};
       rec.id_recibo = result.id_recibo;
@@ -139,5 +139,15 @@ export class ListaPagamentosComponent {
       this.selectedItem = '';
       this.selecionaItem();
     });
+  }
+
+  openControlePagamentoDialog() {
+      this.dialogRef = this.dialog.open(ControlePagamentoComponent, 
+        { height: 'calc(max-widht - 90px)', width: '600px', autoFocus: true });
+  
+      this.dialogRef.afterClosed().subscribe((result: any) => {
+        console.log('O diálogo foi fechado', result);
+        // Lógica após fechar o diálogo, se necessário
+      });
   }
 }

@@ -4,8 +4,9 @@
             <mat-card-title>Controle de Pagamento</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <div class="row">
-                <mat-form-field class="full-width">
+            <div class="row resp">
+                <mat-form-field class="width-90">
+
                     <mat-label class="full-width">Responsável</mat-label>
                     <mat-select class="full-width" [(value)]="selectedResponsavel">
                         @for (responsavel of responsaveis; track responsavel) {
@@ -16,7 +17,7 @@
                     <mat-error>O nome do evento deverá ser informado </mat-error>
                     }
                 </mat-form-field>
-                <button mat-mini-fab color="secondary" class="button button-resp"
+                <button mat-mini-fab color="primary" class="button button-resp"
                     (click)="openResponsavelDialog(); $event.preventDefault()">
                     <mat-icon>plus_one</mat-icon>
                 </button>

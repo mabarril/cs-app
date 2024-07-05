@@ -10,6 +10,7 @@
             </mat-form-field>
         </div>
         <div class="col">
+            <mat-form-field class="full-width">
             <mat-label class="full-width">Itens</mat-label>
             <mat-select class="full-width" [(value)]="selectedItem" (selectionChange)="selecionaItem()">
                 <mat-option [value]="">Todos</mat-option>
@@ -17,11 +18,15 @@
                 <mat-option [value]="item">{{item}}</mat-option>
                 }
             </mat-select>
+        </mat-form-field>
         </div>
-        <div class="col">
+        <div class="col botoes">
             <div class="gera-pdf">
                 <button mat-flat-button color="primary" printSectionId="lista-pdf" [useExistingCss]="true"
-                    styleSheetFile="./print-pdf.css" ngxPrint>Gerar PDF</button>
+                    styleSheetFile="./print-pdf.css" ngxPrint>GERAR PDF</button>
+            </div>
+            <div class="gera-pdf">
+                <button mat-flat-button color="primary" (click)="openControlePagamentoDialog()" >PAGAMENTO</button>
             </div>
         </div>
 
