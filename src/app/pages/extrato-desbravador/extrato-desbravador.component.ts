@@ -10,7 +10,7 @@ import { CurrencyPipe, DatePipe, registerLocaleData } from '@angular/common';
 import { MatAccordion, MatExpansionModule } from '@angular/material/expansion';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { RouterLink } from '@angular/router';
-
+import { MatDialog } from '@angular/material/dialog';
 import ptBr from '@angular/common/locales/pt';
 import localePt from '@angular/common/locales/pt';
 
@@ -19,7 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 registerLocaleData(ptBr);
 import { provideNativeDateAdapter } from '@angular/material/core';
 
-
+import {rev}
 import { RegistroService } from '../../services/registro.services';
 import { Registro } from '../../models/registro.model';
 import { RecebimentoService } from '../../services/recebimento.service';
@@ -54,10 +54,11 @@ export class ExtratoDesbravadorComponent implements OnInit {
   totalPagoMensalidades: number = 0;
   totalPagoUniformes: number = 0;
   totalPagoEventos: number = 0;
+  dialogRef:any;
 
   constructor(
-    private registroService: RegistroService, private recebimentoService: RecebimentoService, public datePipe: DatePipe,
-  ) { }
+private registroService: RegistroService, private recebimentoService: RecebimentoService, public datePipe: DatePipe, public currencyPipe: CurrencyPipe, public dialog: MatDialog)
+ { };
 
   ngOnInit(): void {
     this.registroService.getAll().subscribe(registros => {
@@ -110,5 +111,9 @@ export class ExtratoDesbravadorComponent implements OnInit {
     this.totalPagoUniformes = totalUniforme;  
 
   }
+ openDialogRecebimento() {
+ this.dialogRef = this.dialog.open(RecebimentoComponent, {}
+
+
 
 }
