@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 import { MatFormField } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -6,7 +6,6 @@ import { MatLabel, } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { RegistroService } from '../../services/registro.services';
 import { Responsavel } from '../../models/responsavel.model';
 
 

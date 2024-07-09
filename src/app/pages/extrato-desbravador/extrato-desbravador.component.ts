@@ -13,17 +13,16 @@ import { RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import ptBr from '@angular/common/locales/pt';
 import localePt from '@angular/common/locales/pt';
-
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 registerLocaleData(ptBr);
 import { provideNativeDateAdapter } from '@angular/material/core';
-
-import {rev}
 import { RegistroService } from '../../services/registro.services';
 import { Registro } from '../../models/registro.model';
 import { RecebimentoService } from '../../services/recebimento.service';
 import { Extrato } from '../../models/extrato.model';
+import { ControlePagamentoComponent } from '../pagamento/controle-pagamento/controle-pagamento.component';
+
 
 
 
@@ -40,7 +39,7 @@ export class ExtratoDesbravadorComponent implements OnInit {
 
   @ViewChild(MatAccordion) accordion: MatAccordion | undefined;
 
-
+  dialogRef: any;
 
   registros: Registro[] = [];
   extrato: Extrato[] | undefined;
@@ -54,11 +53,9 @@ export class ExtratoDesbravadorComponent implements OnInit {
   totalPagoMensalidades: number = 0;
   totalPagoUniformes: number = 0;
   totalPagoEventos: number = 0;
-  dialogRef:any;
 
   constructor(
-private registroService: RegistroService, private recebimentoService: RecebimentoService, public datePipe: DatePipe, public currencyPipe: CurrencyPipe, public dialog: MatDialog)
- { };
+    private registroService: RegistroService, private recebimentoService: RecebimentoService, public datePipe: DatePipe, public currencyPipe: CurrencyPipe, public dialog: MatDialog) { };
 
   ngOnInit(): void {
     this.registroService.getAll().subscribe(registros => {
@@ -98,7 +95,7 @@ private registroService: RegistroService, private recebimentoService: Recebiment
       totalMensalidade = totalMensalidade + Number(element.valor_item!);
     });
 
-    this.listaUniforme.forEach(element => { 
+    this.listaUniforme.forEach(element => {
       totalUniforme = totalUniforme + Number(element.valor_item!);
     });
 
@@ -108,12 +105,18 @@ private registroService: RegistroService, private recebimentoService: Recebiment
 
     this.totalPagoMensalidades = totalMensalidade;
     this.totalPagoEventos = totalEventos;
-    this.totalPagoUniformes = totalUniforme;  
+    this.totalPagoUniformes = totalUniforme;
 
   }
- openDialogRecebimento() {
- this.dialogRef = this.dialog.open(RecebimentoComponent, {}
+  openControlePagamentoDialog() {
+    this.dialogRef = this.dialog.open(ControlePagamentoComponent,
+      { height: 'calc(max-widht - 90px)', width: '600px', autoFocus: true });
 
+    this.dialogRef.afterClosed().subscribe((result: any) => {
+      console.log('O diálogo foi fechado', result);
+      // Lógica após fechar o diálogo, se necessário
+    });
+  }
 
 
 }

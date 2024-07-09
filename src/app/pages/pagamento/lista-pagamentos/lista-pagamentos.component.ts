@@ -24,6 +24,7 @@ import { RegistraReciboComponent } from '../../../components/registra-recibo/reg
 import { NumeroRecibo } from '../../../models/numero-recibo';
 import { DeletaItemRecebimentoComponent } from '../../../components/deleta-item-recebimento/deleta-item-recebimento.component';
 import { ControlePagamentoComponent } from '../controle-pagamento/controle-pagamento.component';
+import { DetalhaReciboComponent } from '../../../components/detalha-recibo/detalha-recibo.component';
 
 const ELEMENT_DATA: Pagamento[] = [];
 
@@ -116,7 +117,7 @@ export class ListaPagamentosComponent {
       this.recebimentoService.deleteRecebimento(result.id).subscribe((res: any) => {
         console.log(res);
       });
-      alert('Recibo registrado com sucesso');
+      alert('Recibo removido com sucesso');
       this.fetchData();
       this.selectedItem = '';
       this.selecionaItem();
@@ -142,12 +143,22 @@ export class ListaPagamentosComponent {
   }
 
   openControlePagamentoDialog() {
-      this.dialogRef = this.dialog.open(ControlePagamentoComponent, 
-        { height: 'calc(max-widht - 90px)', width: '600px', autoFocus: true });
-  
-      this.dialogRef.afterClosed().subscribe((result: any) => {
-        console.log('O diálogo foi fechado', result);
-        // Lógica após fechar o diálogo, se necessário
-      });
+    this.dialogRef = this.dialog.open(ControlePagamentoComponent,
+      { height: 'calc(max-widht - 90px)', width: '600px', autoFocus: true });
+
+    this.dialogRef.afterClosed().subscribe((result: any) => {
+    });
   }
+
+  detalhaReciboDialog(element: Pagamento) {
+
+    let resultado: any;
+    element.id ? this.recebimentoService.getItensRecibo(element.id).subscribe((res: any) => {
+      resultado = res;
+      this.dialogRef = this.dialog.open(DetalhaReciboComponent,
+        { data: resultado, height: 'auto', width: '480px', autoFocus: true });
+      console.log(resultado);
+    }) : '';
+  }
+
 }
