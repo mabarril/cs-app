@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, NgModel, FormControl } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
@@ -11,7 +11,6 @@ import { MatListModule } from '@angular/material/list';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CurrencyPipe } from '@angular/common';
-
 import { RecebimentoRegistro } from '../../../models/recebimento_registro';
 import { Responsavel } from '../../../models/responsavel.model';
 import { Recebimento } from '../../../models/recebimento.model';
@@ -28,7 +27,7 @@ import { RegistraResponsavelComponent } from '../../../components/registra-respo
   selector: 'app-controle-pagamento',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, ReactiveFormsModule, MatDatepickerModule, MatListModule, MatIconModule, CurrencyPipe],
+  imports: [MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, ReactiveFormsModule,  MatDatepickerModule, MatListModule, MatIconModule, CurrencyPipe],
   templateUrl: './controle-pagamento.component.html',
   styleUrl: './controle-pagamento.component.css'
 })

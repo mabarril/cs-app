@@ -52,26 +52,23 @@ export class ListaPagamentosComponent {
   selectdItem: any;
 
   listaOriginal: Pagamento[] | undefined;
+  filterValue: string = '';
 
   constructor(private recebimentoService: RecebimentoService, public datePipe: DatePipe, public dialog: MatDialog) { };
 
 
   ngOnInit(): void {
-    // Call the method to fetch the data from the service
     this.fetchData();
   }
 
   fetchData(): void {
-    // Call the service method to get the data
     this.recebimentoService.getLista().subscribe(
       (data: Pagamento[]) => {
-        // Assign the received data to the dataSource property
         this.dataSource = data;
         this.dataSource = orderBy(this.dataSource, ['responsavel'], 'asc');
         this.listaOriginal = this.dataSource;
       },
       (error: any) => {
-        // Handle the error
         console.error('Error fetching data:', error);
       }
     );
@@ -117,10 +114,7 @@ export class ListaPagamentosComponent {
       this.recebimentoService.deleteRecebimento(result.id).subscribe((res: any) => {
         console.log(res);
       });
-      alert('Recibo removido com sucesso');
-      this.fetchData();
-      this.selectedItem = '';
-      this.selecionaItem();
+      this.refreshItem('Item removido com sucesso');
     });
   }
 
@@ -135,11 +129,15 @@ export class ListaPagamentosComponent {
       this.recebimentoService.insereRecibo(rec).subscribe((res: any) => {
         console.log(res);
       });
-      alert('Recibo registrado com sucesso');
-      this.fetchData();
-      this.selectedItem = '';
-      this.selecionaItem();
+      this.refreshItem('Recibo registrado com sucesso');
     });
+  }
+
+  private refreshItem(mensagem: string) {
+    mensagem != '' ? alert(mensagem) : null;
+    this.fetchData();
+    this.selectedItem = '';
+    this.selecionaItem();
   }
 
   openControlePagamentoDialog() {
@@ -147,17 +145,16 @@ export class ListaPagamentosComponent {
       { height: 'calc(max-widht - 90px)', width: '600px', autoFocus: true });
 
     this.dialogRef.afterClosed().subscribe((result: any) => {
+      this.refreshItem('');
     });
   }
 
   detalhaReciboDialog(element: Pagamento) {
-
     let resultado: any;
     element.id ? this.recebimentoService.getItensRecibo(element.id).subscribe((res: any) => {
       resultado = res;
       this.dialogRef = this.dialog.open(DetalhaReciboComponent,
         { data: resultado, height: 'auto', width: '480px', autoFocus: true });
-      console.log(resultado);
     }) : '';
   }
 
