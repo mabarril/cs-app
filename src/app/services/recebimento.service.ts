@@ -53,4 +53,8 @@ export class RecebimentoService {
   deleteRecebimento(id: number): Observable<Pagamento> {
     return this.http.delete<Pagamento>('api/recebimento/' + id);
   }
+
+  getItensRecibo(id: number): Observable<Pagamento> {
+    return this.http.get<Pagamento>('api/recebimento/' + id);
+  }
 }

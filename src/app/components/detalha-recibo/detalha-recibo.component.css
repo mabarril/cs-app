@@ -1,0 +1,24 @@
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.col {
+    flex: 1;
+}
+
+.button-container {
+    display: flex;
+    justify-content: end;
+}
+
+.button {
+    border-radius: 9999px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}

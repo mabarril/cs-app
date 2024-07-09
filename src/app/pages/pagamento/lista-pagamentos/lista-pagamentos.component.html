@@ -11,14 +11,14 @@
         </div>
         <div class="col">
             <mat-form-field class="full-width">
-            <mat-label class="full-width">Itens</mat-label>
-            <mat-select class="full-width" [(value)]="selectedItem" (selectionChange)="selecionaItem()">
-                <mat-option [value]="">Todos</mat-option>
-                @for (item of itens; track item) {
-                <mat-option [value]="item">{{item}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
+                <mat-label class="full-width">Itens</mat-label>
+                <mat-select class="full-width" [(value)]="selectedItem" (selectionChange)="selecionaItem()">
+                    <mat-option [value]="">Todos</mat-option>
+                    @for (item of itens; track item) {
+                    <mat-option [value]="item">{{item}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
         </div>
         <div class="col botoes">
             <div class="gera-pdf">
@@ -26,7 +26,7 @@
                     styleSheetFile="./print-pdf.css" ngxPrint>GERAR PDF</button>
             </div>
             <div class="gera-pdf">
-                <button mat-flat-button color="primary" (click)="openControlePagamentoDialog()" >PAGAMENTO</button>
+                <button mat-flat-button color="primary" (click)="openControlePagamentoDialog()">PAGAMENTO</button>
             </div>
         </div>
 
@@ -68,18 +68,16 @@
             <div class="acao">
                 <ng-container matColumnDef="acao">
                     <th mat-header-cell *matHeaderCellDef> Ação </th>
-                    <td mat-cell *matCellDef="let element"> <button mat-icon-button [matMenuTriggerFor]="menu">
-                            <mat-icon>more_vert</mat-icon>
+                    <td mat-cell *matCellDef="let element">
+                        <button mat-icon-button (click)="openDeleteDialog(element)" style="color: red;">
+                            <mat-icon>delete_forever</mat-icon>
                         </button>
-                        <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="openDeleteDialog(element)">
-                                <mat-icon>delete_forever</mat-icon>
-                                <span>Excluir</span>
-                            </button>
-                        </mat-menu>
                         <button mat-icon-button [ngClass]="{'recibo_ok' : element.id_recibo > 1 }"
                             [disabled]="element.id_recibo > 1" (click)="openReciboDialog(element)">
                             <mat-icon>check_small</mat-icon>
+                        </button>
+                        <button mat-icon-button (click)="detalhaReciboDialog(element)" style="color: blue;">
+                            <mat-icon>search</mat-icon>
                         </button>
                     </td>
                 </ng-container>
