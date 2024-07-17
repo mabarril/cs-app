@@ -80,7 +80,7 @@ export class RegistraDebitoComponent implements OnInit  {
 
   private _filterUniforme(desc: string): Uniforme[] {
     const filterValue = desc.toLowerCase();
-    return this.optionsUniforme.filter(option => option.desc_uniforme!.toLowerCase().includes(filterValue));
+    return this.optionsUniforme.filter(item => item.desc_uniforme!.toLowerCase().includes(filterValue));
   }
 
 }
