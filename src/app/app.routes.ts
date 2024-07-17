@@ -8,6 +8,7 @@ import { ExemploComponent } from './pages/exemplo/exemplo.component';
 import { ExtratoDesbravadorComponent } from './pages/extrato-desbravador/extrato-desbravador.component';
 import { ListaPagamentosComponent } from './pages/pagamento/lista-pagamentos/lista-pagamentos.component';
 import { PrestacaoContasComponent } from './pages/prestacao-contas/prestacao-contas.component';
+import { RegistraDebitoComponent } from './components/registra-debito/registra-debito.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -18,6 +19,7 @@ export const routes: Routes = [
     { path: 'extrato/desbravador', component: ExtratoDesbravadorComponent },
     { path: 'pagamento/lista', component: ListaPagamentosComponent },
     { path: 'prestacao/contas', component: PrestacaoContasComponent },
+    { path: 'uniforme', component: RegistraDebitoComponent },
 
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: 'home' }
