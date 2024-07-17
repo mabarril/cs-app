@@ -17,8 +17,7 @@ export const routes: Routes = [
     { path: 'pagamento/controle', component: ControlePagamentoComponent },
     { path: 'extrato/desbravador', component: ExtratoDesbravadorComponent },
     { path: 'pagamento/lista', component: ListaPagamentosComponent },
-    { path: 'exemplo', component: ExemploComponent },
-    {path: 'prestacao-contas', component: PrestacaoContasComponent},
+    { path: 'prestacao/contas', component: PrestacaoContasComponent },
 
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: 'home' }
