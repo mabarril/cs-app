@@ -13,33 +13,54 @@ import { Observable } from 'rxjs/internal/Observable';
 import { startWith } from 'rxjs/internal/operators/startWith';
 import { map } from 'rxjs/internal/operators/map';
 import { RegistroService } from '../../services/registro.services';
+import { UniformeService } from '../../services/uniforme.service';
+import { Uniforme } from '../../models/uniforme.model';
 
 
 @Component({
   selector: 'app-registra-debito',
   standalone: true,
   imports: [AsyncPipe, MatFormField, FormsModule, MatLabel, MatInputModule, MatButtonModule, MatSelectModule, MatAutocompleteModule, ReactiveFormsModule],
-  templateUrl: './registra-debito.component.html',
-  styleUrl: './registra-debito.component.css'
+  templateUrl: './registra-debito-uniforme.component.html',
+  styleUrl: './registra-debito-uniforme.component.css'
 })
 export class RegistraDebitoComponent implements OnInit  {
-  myControl = new FormControl<string | Registro>('');
+  controlRegistro = new FormControl<string | Registro>('');
+  controlUniforme = new FormControl<string | Uniforme>('');
+  
   options: Registro[] = [];
+  optionsUniforme: Uniforme[] = [];
+
   filteredOptions: Observable<Registro[]> | undefined;
+  filteredOptionsUniforme: Observable<Uniforme[]> | undefined;
 
   constructor(
-    private registroService: RegistroService,
+    private registroService: RegistroService, 
+    private uniformeSevice: UniformeService
   ) { }
 
   ngOnInit() {
     this.registroService.getAll().subscribe(registros => {
       this.options = registros;
     });
-    this.filteredOptions = this.myControl.valueChanges.pipe(
+
+    this.uniformeSevice.getAll().subscribe(uniformes => {
+      this.optionsUniforme = uniformes;
+    });
+
+    this.filteredOptions = this.controlRegistro.valueChanges.pipe(
       startWith(''),
       map(value => {
         const name = typeof value === 'string' ? value : value?.nome;
         return name ? this._filter(name as string) : this.options.slice();
+      }),
+    );
+
+    this.filteredOptionsUniforme = this.controlUniforme.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const desc = typeof value === 'string' ? value : value?.desc_uniforme;
+        return desc ? this._filterUniforme(desc as string) : this.optionsUniforme.slice();
       }),
     );
   }
@@ -50,8 +71,16 @@ export class RegistraDebitoComponent implements OnInit  {
 
   private _filter(nome: string): Registro[] {
     const filterValue = nome.toLowerCase();
-
     return this.options.filter(option => option.nome!.toLowerCase().includes(filterValue));
+  }
+
+  displayFnUniforme(uniforme: Uniforme): string {
+    return uniforme && uniforme.desc_uniforme ? uniforme.desc_uniforme : '';
+  }
+
+  private _filterUniforme(desc: string): Uniforme[] {
+    const filterValue = desc.toLowerCase();
+    return this.optionsUniforme.filter(option => option.desc_uniforme!.toLowerCase().includes(filterValue));
   }
 
 }

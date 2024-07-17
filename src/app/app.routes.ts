@@ -8,7 +8,7 @@ import { ExemploComponent } from './pages/exemplo/exemplo.component';
 import { ExtratoDesbravadorComponent } from './pages/extrato-desbravador/extrato-desbravador.component';
 import { ListaPagamentosComponent } from './pages/pagamento/lista-pagamentos/lista-pagamentos.component';
 import { PrestacaoContasComponent } from './pages/prestacao-contas/prestacao-contas.component';
-import { RegistraDebitoComponent } from './components/registra-debito/registra-debito.component';
+import { RegistraDebitoComponent } from './components/registra-debito-uniforme/registra-debito-uniforme.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
