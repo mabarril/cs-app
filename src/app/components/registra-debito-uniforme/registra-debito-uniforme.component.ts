@@ -14,13 +14,18 @@ import { startWith } from 'rxjs/internal/operators/startWith';
 import { map } from 'rxjs/internal/operators/map';
 import { RegistroService } from '../../services/registro.services';
 import { UniformeService } from '../../services/uniforme.service';
+<<<<<<< HEAD:src/app/components/registra-debito/registra-debito.component.ts
 import { UniformeCadastro } from '../../models/uniforme-cadastro';
 import { ListaUniformeComponent } from "../lista-uniforme/lista-uniforme.component";
+=======
+import { Uniforme } from '../../models/uniforme.model';
+>>>>>>> da138b30664aba0bd2537028369fcf764b4cc259:src/app/components/registra-debito-uniforme/registra-debito-uniforme.component.ts
 
 
 @Component({
   selector: 'app-registra-debito',
   standalone: true,
+<<<<<<< HEAD:src/app/components/registra-debito/registra-debito.component.ts
   imports: [AsyncPipe, MatFormField, FormsModule, MatLabel, MatInputModule, MatButtonModule, MatSelectModule, MatAutocompleteModule, ReactiveFormsModule, ListaUniformeComponent],
   templateUrl: './registra-debito.component.html',
   styleUrl: './registra-debito.component.css'
@@ -28,12 +33,32 @@ import { ListaUniformeComponent } from "../lista-uniforme/lista-uniforme.compone
 export class RegistraDebitoComponent implements OnInit {
   [x: string]: any;
   myControl = new FormControl<string | Registro>('');
+=======
+  imports: [AsyncPipe, MatFormField, FormsModule, MatLabel, MatInputModule, MatButtonModule, MatSelectModule, MatAutocompleteModule, ReactiveFormsModule],
+  templateUrl: './registra-debito-uniforme.component.html',
+  styleUrl: './registra-debito-uniforme.component.css'
+})
+export class RegistraDebitoComponent implements OnInit  {
+  controlRegistro = new FormControl<string | Registro>('');
+  controlUniforme = new FormControl<string | Uniforme>('');
+  
+>>>>>>> da138b30664aba0bd2537028369fcf764b4cc259:src/app/components/registra-debito-uniforme/registra-debito-uniforme.component.ts
   options: Registro[] = [];
+  optionsUniforme: Uniforme[] = [];
+
   filteredOptions: Observable<Registro[]> | undefined;
+<<<<<<< HEAD:src/app/components/registra-debito/registra-debito.component.ts
   uniformesCadastro: UniformeCadastro[] | undefined;
 
   constructor(
     private registroService: RegistroService, private uniformeService: UniformeService,
+=======
+  filteredOptionsUniforme: Observable<Uniforme[]> | undefined;
+
+  constructor(
+    private registroService: RegistroService, 
+    private uniformeSevice: UniformeService
+>>>>>>> da138b30664aba0bd2537028369fcf764b4cc259:src/app/components/registra-debito-uniforme/registra-debito-uniforme.component.ts
   ) { }
 
   ngOnInit() {
@@ -46,11 +71,27 @@ export class RegistraDebitoComponent implements OnInit {
       this.uniformesCadastro = registroUniformes;
     });
 
+<<<<<<< HEAD:src/app/components/registra-debito/registra-debito.component.ts
     this.filteredOptions = this.myControl.valueChanges.pipe(
+=======
+    this.uniformeSevice.getAll().subscribe(uniformes => {
+      this.optionsUniforme = uniformes;
+    });
+
+    this.filteredOptions = this.controlRegistro.valueChanges.pipe(
+>>>>>>> da138b30664aba0bd2537028369fcf764b4cc259:src/app/components/registra-debito-uniforme/registra-debito-uniforme.component.ts
       startWith(''),
       map(value => {
         const name = typeof value === 'string' ? value : value?.nome;
         return name ? this._filter(name as string) : this.options.slice();
+      }),
+    );
+
+    this.filteredOptionsUniforme = this.controlUniforme.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const desc = typeof value === 'string' ? value : value?.desc_uniforme;
+        return desc ? this._filterUniforme(desc as string) : this.optionsUniforme.slice();
       }),
     );
   }
@@ -61,8 +102,16 @@ export class RegistraDebitoComponent implements OnInit {
 
   private _filter(nome: string): Registro[] {
     const filterValue = nome.toLowerCase();
-
     return this.options.filter(option => option.nome!.toLowerCase().includes(filterValue));
+  }
+
+  displayFnUniforme(uniforme: Uniforme): string {
+    return uniforme && uniforme.desc_uniforme ? uniforme.desc_uniforme : '';
+  }
+
+  private _filterUniforme(desc: string): Uniforme[] {
+    const filterValue = desc.toLowerCase();
+    return this.optionsUniforme.filter(item => item.desc_uniforme!.toLowerCase().includes(filterValue));
   }
 
 }

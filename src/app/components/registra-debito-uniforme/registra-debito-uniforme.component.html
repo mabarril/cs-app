@@ -1,0 +1,31 @@
+<div class="container">
+
+    <h2 mat-dialog-title>Uniforme</h2>
+
+    <div class="example-form">
+        <mat-form-field class="full-width">
+          <mat-label>Desbravador</mat-label>
+          <input type="text" matInput [formControl]="controlRegistro" [matAutocomplete]="dbv">
+          <mat-autocomplete #dbv="matAutocomplete" [displayWith]="displayFn"  autoActiveFirstOption>
+            @for (option of filteredOptions | async; track option) {
+              <mat-option [value]="option">{{option.nome}}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>Produto</mat-label>
+          <input type="text" matInput [formControl]="controlUniforme" [matAutocomplete]="unif">
+          <mat-autocomplete #unif="matAutocomplete" [displayWith]="displayFnUniforme" autoActiveFirstOption>
+            @for (item of filteredOptionsUniforme | async; track filteredOptionsUniforme) {
+              <mat-option [value]="item">{{item.desc_uniforme}}</mat-option> 
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+     
+    <div mat-dialog-actions class="button-container">
+        <!-- <button class="button" mat-flat-button color="secondary" (click)="onCancelDialog()">CANCELAR</button>
+        <button class="button" mat-flat-button color="primary" [mat-dialog-close]="data"
+            cdkFocusInitial>INSERIR</button> -->
+    </div>
+   </div> 
