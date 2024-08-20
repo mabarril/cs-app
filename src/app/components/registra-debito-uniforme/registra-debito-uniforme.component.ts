@@ -114,4 +114,8 @@ export class RegistraDebitoComponent implements OnInit  {
     return this.optionsUniforme.filter(item => item.desc_uniforme!.toLowerCase().includes(filterValue));
   }
 
+  dataHoje() {
+   let data =new Date();
+ 
+
 }
