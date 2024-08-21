@@ -9,6 +9,7 @@ import { ExtratoDesbravadorComponent } from './pages/extrato-desbravador/extrato
 import { ListaPagamentosComponent } from './pages/pagamento/lista-pagamentos/lista-pagamentos.component';
 import { PrestacaoContasComponent } from './pages/prestacao-contas/prestacao-contas.component';
 import { RegistraDebitoComponent } from './components/registra-debito-uniforme/registra-debito-uniforme.component';
+import { ListaUniformeComponent } from './components/lista-uniforme/lista-uniforme.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -20,6 +21,7 @@ export const routes: Routes = [
     { path: 'pagamento/lista', component: ListaPagamentosComponent },
     { path: 'prestacao/contas', component: PrestacaoContasComponent },
     { path: 'uniforme', component: RegistraDebitoComponent },
+    { path: 'uniforme/lista', component: ListaUniformeComponent},
 
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: 'home' }

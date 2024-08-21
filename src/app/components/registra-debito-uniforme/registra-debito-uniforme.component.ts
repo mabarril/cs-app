@@ -14,51 +14,33 @@ import { startWith } from 'rxjs/internal/operators/startWith';
 import { map } from 'rxjs/internal/operators/map';
 import { RegistroService } from '../../services/registro.services';
 import { UniformeService } from '../../services/uniforme.service';
-<<<<<<< HEAD:src/app/components/registra-debito/registra-debito.component.ts
 import { UniformeCadastro } from '../../models/uniforme-cadastro';
 import { ListaUniformeComponent } from "../lista-uniforme/lista-uniforme.component";
-=======
 import { Uniforme } from '../../models/uniforme.model';
->>>>>>> da138b30664aba0bd2537028369fcf764b4cc259:src/app/components/registra-debito-uniforme/registra-debito-uniforme.component.ts
 
 
 @Component({
   selector: 'app-registra-debito',
   standalone: true,
-<<<<<<< HEAD:src/app/components/registra-debito/registra-debito.component.ts
-  imports: [AsyncPipe, MatFormField, FormsModule, MatLabel, MatInputModule, MatButtonModule, MatSelectModule, MatAutocompleteModule, ReactiveFormsModule, ListaUniformeComponent],
-  templateUrl: './registra-debito.component.html',
-  styleUrl: './registra-debito.component.css'
-})
-export class RegistraDebitoComponent implements OnInit {
-  [x: string]: any;
-  myControl = new FormControl<string | Registro>('');
-=======
   imports: [AsyncPipe, MatFormField, FormsModule, MatLabel, MatInputModule, MatButtonModule, MatSelectModule, MatAutocompleteModule, ReactiveFormsModule],
   templateUrl: './registra-debito-uniforme.component.html',
   styleUrl: './registra-debito-uniforme.component.css'
 })
 export class RegistraDebitoComponent implements OnInit  {
+  
   controlRegistro = new FormControl<string | Registro>('');
   controlUniforme = new FormControl<string | Uniforme>('');
   
->>>>>>> da138b30664aba0bd2537028369fcf764b4cc259:src/app/components/registra-debito-uniforme/registra-debito-uniforme.component.ts
   options: Registro[] = [];
   optionsUniforme: Uniforme[] = [];
 
   filteredOptions: Observable<Registro[]> | undefined;
-<<<<<<< HEAD:src/app/components/registra-debito/registra-debito.component.ts
-  uniformesCadastro: UniformeCadastro[] | undefined;
-
-  constructor(
-    private registroService: RegistroService, private uniformeService: UniformeService,
-=======
   filteredOptionsUniforme: Observable<Uniforme[]> | undefined;
+  uniformesCadastro: UniformeCadastro[] | undefined;
 
   constructor(
     private registroService: RegistroService, 
     private uniformeSevice: UniformeService
->>>>>>> da138b30664aba0bd2537028369fcf764b4cc259:src/app/components/registra-debito-uniforme/registra-debito-uniforme.component.ts
   ) { }
 
   ngOnInit() {
@@ -67,19 +49,15 @@ export class RegistraDebitoComponent implements OnInit  {
 
     });
 
-    this.uniformeService.getAll().subscribe(registroUniformes => {
+    this.uniformeSevice.getAll().subscribe(registroUniformes => {
       this.uniformesCadastro = registroUniformes;
     });
 
-<<<<<<< HEAD:src/app/components/registra-debito/registra-debito.component.ts
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-=======
     this.uniformeSevice.getAll().subscribe(uniformes => {
       this.optionsUniforme = uniformes;
     });
 
     this.filteredOptions = this.controlRegistro.valueChanges.pipe(
->>>>>>> da138b30664aba0bd2537028369fcf764b4cc259:src/app/components/registra-debito-uniforme/registra-debito-uniforme.component.ts
       startWith(''),
       map(value => {
         const name = typeof value === 'string' ? value : value?.nome;
@@ -118,4 +96,5 @@ export class RegistraDebitoComponent implements OnInit  {
    let data =new Date();
  
 
+}
 }

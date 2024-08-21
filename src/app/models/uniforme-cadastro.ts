@@ -4,5 +4,6 @@ export class UniformeCadastro {
     nome?: string;
     valor_uniforme?: number;
     qtd_uniforme?: number;
+    codigo_uniforme?: number;
     desc_uniforme?: string;
 }
