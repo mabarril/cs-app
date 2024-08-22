@@ -102,12 +102,12 @@ export class ExtratoDesbravadorComponent implements OnInit {
     this.listaEventos.forEach(element => {
       totalEventos = totalEventos + Number(element.valor_item!);
     });
-
+    
     this.totalPagoMensalidades = totalMensalidade;
     this.totalPagoEventos = totalEventos;
     this.totalPagoUniformes = totalUniforme;
-
   }
+
   openControlePagamentoDialog() {
     this.dialogRef = this.dialog.open(ControlePagamentoComponent,
       { height: 'calc(max-widht - 90px)', width: '600px', autoFocus: true });

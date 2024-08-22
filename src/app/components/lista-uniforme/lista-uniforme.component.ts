@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { UniformeCadastro } from '../../models/uniforme-cadastro';
 import { UniformeService } from '../../services/uniforme.service';
+import { CurrencyPipe } from '@angular/common';
 
 // export interface ItemListaUniforme {
 //   id: number;
@@ -18,9 +19,10 @@ import { UniformeService } from '../../services/uniforme.service';
 @Component({
   selector: 'app-lista-uniforme',
   standalone: true,
-  imports: [MatTableModule, MatInputModule, MatFormFieldModule],
+  imports: [MatTableModule, MatInputModule, MatFormFieldModule, CurrencyPipe],
   templateUrl: './lista-uniforme.component.html',
-  styleUrl: './lista-uniforme.component.css'
+  styleUrl: './lista-uniforme.component.css',
+  providers: [CurrencyPipe, { provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
 
 
@@ -28,23 +30,16 @@ export class ListaUniformeComponent implements OnInit{
 
   constructor(
     private uniformeService : UniformeService
-  ) { }
-
-  id?: number;
-  id_cadastro?: number;
-  nome?: string;
-  valor_uniforme?: number;
-  qtd_uniforme?: number;
-  codigo_uniforme?: number;
-  desc_uniforme?: string;
+  ) { };
 
   displayedColumns: string[] = ['nome', 'descricao', 'valor', 'quantidade'];
   uniformeCadastro: UniformeCadastro[] = [];
-  dataSource = new MatTableDataSource(this.uniformeCadastro);
-  
+  dataSource = new MatTableDataSource<UniformeCadastro>();  
   ngOnInit(): void {
     this.uniformeService.getAll().subscribe((itens) => {
-      this.uniformeCadastro = itens;     
+      this.uniformeCadastro = itens;  
+      this.dataSource = new MatTableDataSource(this.uniformeCadastro);   
+      console.log(this.uniformeCadastro);
     });
   } 
   
