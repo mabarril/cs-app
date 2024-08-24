@@ -1,0 +1,26 @@
+<div class="container">
+
+    <h2 mat-dialog-title>Pagamento</h2>
+  
+    <div mat-dialog-content>
+      <mat-form-field class="full-width">
+        <mat-label class="full-width">Desbravador</mat-label>
+        <mat-select class="full-width"  [(value)]="selectedRegistro" [(ngModel)]="data.id_cadastro">
+          @for (registro of registros; track registro) {
+          <mat-option [value]="registro">{{registro.nome}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field class="full-width">
+        <mat-label>Valor</mat-label>
+        <input matInput [(ngModel)]="data.codigo_uniforme" placeholder="0" type="number" class="example-right-align">
+        <span matTextPrefix>R$&nbsp;</span>
+        <span matTextSuffix>.00</span>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="button-container">
+      <button class="button" mat-flat-button color="secondary" (click)="onCancelUserDialog()">CANCELAR</button>
+      <button class="button" mat-flat-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>INSERIR</button>
+    </div>
+  </div>
