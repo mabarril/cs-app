@@ -8,6 +8,7 @@ import { Pagamento } from '../models/pagamento.model';
 import { Extrato } from '../models/extrato.model';
 import { NumeroRecibo } from '../models/numero-recibo';
 import { ItemExtrato } from '../models/itemExtrato.model';
+import { ItemRecebimento } from '../models/item-recebimento';
 import { DeletaItemRecebimentoComponent } from '../components/deleta-item-recebimento/deleta-item-recebimento.component';
 
 
@@ -56,5 +57,9 @@ export class RecebimentoService {
 
   getItensRecibo(id: number): Observable<Pagamento> {
     return this.http.get<Pagamento>('api/recebimento/' + id);
+  }
+  
+  getItensConciliacao(tipoItem: string, idCadastro: number): Observable<ItemRecebimento[]> {
+    return this.http.get<ItemRecebimento[]>('api/recebimento/' + tipoItem + '/' + idCadastro);
   }
 }

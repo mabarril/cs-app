@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConciliaPagamentoComponent } from '../concilia-pagamento/concilia-pagamento.component';
+import { ItemRecebimento } from '../../models/item-recebimento';
 
 
 // export interface ItemListaUniforme {
@@ -41,6 +42,7 @@ export class ListaUniformeComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'descricao', 'valor', 'quantidade', 'acoes'];
   uniformeCadastro: UniformeCadastro[] = [];
   dataSource = new MatTableDataSource<UniformeCadastro>();
+  itemRecebimento: ItemRecebimento[] = [];
   ngOnInit(): void {
     this.uniformeService.getAll().subscribe((itens) => {
       this.uniformeCadastro = itens;
@@ -56,7 +58,10 @@ export class ListaUniformeComponent implements OnInit {
 
   openPagamentoDialog(item: UniformeCadastro) {
     this.dialogRef = this.dialog.open(ConciliaPagamentoComponent,
-      { data: UniformeCadastro, width: '480px', autoFocus: true });
+      { data: { 
+          uniformeCadastro: item,
+          itemRecbimento: this.itemRecebimento
+        }, width: '480px', autoFocus: true });
     this.dialogRef.afterClosed().subscribe((result: any) => {
       // let rec: NumeroRecibo = {};
       // rec.id_recibo = result.id_recibo;
