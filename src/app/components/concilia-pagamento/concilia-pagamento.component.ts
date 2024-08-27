@@ -9,7 +9,9 @@ import { UniformeCadastro } from '../../models/uniforme-cadastro';
 import { RecebimentoService } from '../../services/recebimento.service';
 import { ItemRecebimento } from '../../models/item-recebimento';
 import { CommonModule } from '@angular/common';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { DatePipe } from '@angular/common';
+
 
 
 @Component({
@@ -17,7 +19,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   standalone: true,
   imports: [CommonModule, MatCheckboxModule, MatDialogClose, FormsModule, MatLabel, MatFormField, MatButtonModule, MatInputModule, MatSelectModule],
   templateUrl: './concilia-pagamento.component.html',
-  styleUrl: './concilia-pagamento.component.css'
+  styleUrl: './concilia-pagamento.component.css',
+  providers: [DatePipe]
 })
 export class ConciliaPagamentoComponent {
 
@@ -30,16 +33,21 @@ export class ConciliaPagamentoComponent {
   constructor(
     public dialogRef: MatDialogRef<ConciliaPagamentoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private recebimentoService : RecebimentoService,
+    private recebimentoService: RecebimentoService,
   ) {
-      this.recebimentoService.getItensConciliacao('uniforme', data.uniformeCadastro.id_cadastro).subscribe(result => {
-        this.itensRecebimento = result;
-        this.itensExistente = this.itensRecebimento.length > 0;
-      });
+    this.recebimentoService.getItensConciliacao('uniforme', data.uniformeCadastro.id_cadastro).subscribe(result => {
+      this.itensRecebimento = result;
+      this.itensExistente = this.itensRecebimento.length > 0;
+    });
   }
 
   onCancelUserDialog(): void {
     this.dialogRef.close();
+  }
+
+  // Método para extrair o primeiro nome
+  getFirstName(fullName: string): string {
+    return fullName.split(' ')[0];
   }
 
 }
