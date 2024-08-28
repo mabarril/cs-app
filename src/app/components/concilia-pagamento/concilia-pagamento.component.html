@@ -12,8 +12,18 @@
         @for (item of itensRecebimento; track item; let i = $index) {
         <li>
           <mat-checkbox>
-            <!-- (change)="update($event.checked, i)"> -->
-            {{ getFirstName(item.responsavel!) }} - {{item.data | date:'dd/MM/yyyy' }} - R$ {{item.valor_item}}
+            <div class="row">
+              <div class="col">
+                {{ getFirstName(item.responsavel!) }}
+              </div>
+              <div class="col">
+                {{item.data | date:'dd/MM/yyyy'}}
+              </div>
+              <div class="col">
+                {{item.valor_item | currency:'BRL'}}
+              </div>
+              <!-- (change)="update($event.checked, i)"> -->
+            </div>
           </mat-checkbox>
         </li>
         }

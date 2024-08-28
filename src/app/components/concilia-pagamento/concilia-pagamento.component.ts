@@ -11,6 +11,7 @@ import { ItemRecebimento } from '../../models/item-recebimento';
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DatePipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 
 
 
@@ -20,7 +21,7 @@ import { DatePipe } from '@angular/common';
   imports: [CommonModule, MatCheckboxModule, MatDialogClose, FormsModule, MatLabel, MatFormField, MatButtonModule, MatInputModule, MatSelectModule],
   templateUrl: './concilia-pagamento.component.html',
   styleUrl: './concilia-pagamento.component.css',
-  providers: [DatePipe]
+  providers: [DatePipe, CurrencyPipe]
 })
 export class ConciliaPagamentoComponent {
 
