@@ -42,17 +42,8 @@ switch ($request_method) {
         }
         break;
     case 'POST':
-        if (empty($_POST["id"])) {
-            insertDados();
-        } else {
-            $id = intval($_GET["id"]);
-            updateDados($id);
-        }
-        break;
-    case 'DELETE':
-        // Delete Product
-        $id = intval($_GET["id"]);
-        deleteDados($id);
+        insertDados();
+        echo ('oi');
         break;
     default:
         // Invalid Request Method
@@ -62,12 +53,7 @@ switch ($request_method) {
 
 function getDados($id = 0)
 {
-    $PDO = db_connect();
-    $sql = "SELECT id, data_recibo, nr_recibo, nome_recibo, vlr_recibo from pc_recibo";
-    if ($id != 0) {
-        $sql .= " where id = " . $id . " LIMIT 1";
-    }
-    $sql .= " order by 1";
+    $sql = "SELECT * from uniforme order by 2";
 
     try {
         $stmt = $PDO->prepare($sql);
@@ -75,9 +61,9 @@ function getDados($id = 0)
         $stmt->execute();
         $response = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
-        $message = "Erro ao selecionar recibo " . $e->getMessage();
+        $message = "Erro ao selecionar lista de uniformes " . $e->getMessage();
     } catch (Exception $e) {
-        $message = "General Error: recibo nПлкo selecionado " . $e->getMessage();
+        $message = "General Error: Lista de uniformes " . $e->getMessage();
     }
 
     if (isset($stmt)) {
@@ -90,91 +76,66 @@ function getDados($id = 0)
     }
 }
 
+
 function insertDados()
 {
     $data = getRequestDataBody();
     $message = "";
-
-    if ($data !== []) {
-        $nr_recibo = $data["nr_recibo"];
-        $id_cadastro = $data["id_cadastro"];
-        $vlr = $data["vlr"];
-
-
-        $PDO = db_connect();
-        $sql = "INSERT INTO recibo_cadastro (nr_recibo, id_cadastro, vlr) VALUES (:nr_recibo, :id_cadastro, vlr)";
-        try {
-            $PDO->beginTransaction();
-            $stmt = $PDO->prepare($sql)->execute(['nr_recibo'] = $nr_recibo, ['id_cadastro'] = $id_cadastro, ['vlr'] = $vlr);
-
-            $PDO->commit();
-        } catch (PDOException $e) {
-            $PDO->rollBack();
-            $message = "Erro ao recebimento " . $e->getMessage();
-            echo ($message);
-        } catch (Exception $e) {
-            $PDO->rollBack();
-            $message = "General Error: não efetuada " . $e->getMessage();
-            echo ($message);
-        }
-
-        if (isset($stmt)) {
-            $response = array(
-                'status' => 1,
-                'status_message' => 'pagamento atualizado com sucesso.'
-            );
-        } else {
-            header("HTTP/1.0 400 Bad Request");
-            $response = array(
-                'status_message' => $message
-            );
-        }
+    echo ($data);
+    if (isset($data)) {
+        header("HTTP/1.0 400 Bad Request");
+        $response = array(
+            'status_message' => 'requisicao vazia'
+        );
     }
-}
-
-function updateDados($id)
-{
-    $evento = $_POST["evento"];
-    $cadastro = $_POST["cadastro"];
 
     $PDO = db_connect();
-    $sql = "UPDATE evento_cadastro SET id_evento=?, id_pagamento=? WHERE id=?";
-    $stmt = $PDO->prepare($sql)->execute([$evento["id_evento"], $cadastro["id"], $id]);
+    if (isset($data["valorUniforme"])) {
+        $valor_uniforme = $data["valorUniforme"];
+        $id_cadastro = $data["idCadastro"];
+        $desc_uniforme = $data["descUniforme"];
 
-    if ($stmt) {
-        $response = array(
-            'status' => 1,
-            'status_message' => 'Inscricao atualizado com sucesso.'
-        );
-    } else {
-        $response = array(
-            'status' => 0,
-            'status_message' => 'erro ao atualizar Inscricao.'
-        );
+        $sql = "INSERT INTO uniforme_cadastro (valor_uniforme, id_cadastro, desc_uniforme) VALUES (?,?,?)";
+        $stmt = $PDO->prepare($sql);
+        $stmt->bindParam(1, $valor_uniforme);
+        $stmt->bindParam(2, $id_cadastro);
+        $stmt->bindParam(3, $desc_uniforme);
+
     }
 
-    header('Content-Type: application/json');
-    echo json_encode($response);
-}
+    if (isset($data["id_recebimento"])) {
+        $id_recebimento = $data["id_recebimento"];
+        $id_uniforme_cadastro = $data["id_uniforme_cadastro"];
 
-function deleteDados($id)
-{
-    $PDO = db_connect();
-    $sql = "DELETE FROM Pagamentos WHERE id=?";
-    $stmt = $PDO->prepare($sql)->execute([$id]);
+        $sql = "INSERT INTO recebimento_uniforme (id_recebimento, id_uniforme_cadastro) VALUES (?,?)";
+        $stmt = $PDO->prepare($sql);
+        $stmt->bindParam(1, $id_recebimento);
+        $stmt->bindParam(2, $id_uniforme_cadastro);
+        $stmt->bindParam(3, $desc_uniforme);
 
-    if ($stmt) {
+    }
+
+    try {
+        $PDO->beginTransaction();
+        $stmt = $PDO->execute();
+        $PDO->commit();
+    } catch (PDOException $e) {
+        $PDO->rollBack();
+        $message = "Erro inserir registro " . $e->getMessage();
+        echo ($message);
+    } catch (Exception $e) {
+        $PDO->rollBack();
+        $message = "General Error: nao efetuda " . $e->getMessage();
+        echo ($message);
+    }
+
+    if (isset($stmt)) {
         $response = array(
             'status' => 1,
-            'status_message' => 'Inscricao removida com sucesso.'
+            'status_message' => 'Registro atualizado com sucesso.'
         );
     } else {
-        $response = array(
-            'status' => 0,
-            'status_message' => 'erro ao remover Inscricao'
-        );
+        header("HTTP/1.0 400 Bad Request");
+        $response = array('status_message' => $message);
     }
-    header('Content-Type: application/json');
-    echo json_encode($response);
 }
-
