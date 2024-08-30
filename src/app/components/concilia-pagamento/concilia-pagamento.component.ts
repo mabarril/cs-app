@@ -50,5 +50,7 @@ export class ConciliaPagamentoComponent {
   getFirstName(fullName: string): string {
     return fullName.split(' ')[0];
   }
-
+    selecionaItem(item: any) {
+      console.log(item);
+    }
 }
