@@ -11,7 +11,7 @@
       <ul>
         @for (item of itensRecebimento; track item; let i = $index) {
         <li>
-          <mat-checkbox (change)="selecionaItem(itensRecebimento)">
+          <mat-checkbox (change)="selecionaItem(item)">
             <div class="row">
               <div class="col">
                 {{ getFirstName(item.responsavel!) }}
@@ -28,22 +28,6 @@
         }
       </ul>
     </span>
-
-
-
-
-]
-
-
-
-
-  
-
-]
-
-
-
-
   </div>
   <div mat-dialog-actions class="button-container">
     <button class="button" mat-flat-button color="secondary" (click)="onCancelUserDialog()">CANCELAR</button>

@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DatePipe } from '@angular/common';
 import { CurrencyPipe } from '@angular/common';
+import { PagamentoUniforme } from '../../models/pagamentoUniforme';
 
 
 
@@ -27,7 +28,7 @@ export class ConciliaPagamentoComponent {
 
   selectedRegistro: any | undefined;
   selectedItem: any | undefined;
-  registros: any[] = [];
+  pagamantoUniforme: PagamentoUniforme[] = [];
   itensRecebimento: ItemRecebimento[] | undefined;
   itensExistente: boolean = false;
 
@@ -35,7 +36,7 @@ export class ConciliaPagamentoComponent {
     public dialogRef: MatDialogRef<ConciliaPagamentoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private recebimentoService: RecebimentoService,
-  ) {
+    ) {
     this.recebimentoService.getItensConciliacao('uniforme', data.uniformeCadastro.id_cadastro).subscribe(result => {
       this.itensRecebimento = result;
       this.itensExistente = this.itensRecebimento.length > 0;
@@ -50,7 +51,8 @@ export class ConciliaPagamentoComponent {
   getFirstName(fullName: string): string {
     return fullName.split(' ')[0];
   }
-    selecionaItem(item: any) {
-      console.log(item);
-    }
+  selecionaItem(item: ItemRecebimento) {
+    this.pagamantoUniforme.push({ id_recebimento: item.id_recebimento, id_uniforme_cadastro: this.data.uniformeCadastro.id });
+    this.data.pagamantoUniforme = this.pagamantoUniforme;
+  }
 }

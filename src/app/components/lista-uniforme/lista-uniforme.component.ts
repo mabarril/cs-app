@@ -58,19 +58,17 @@ export class ListaUniformeComponent implements OnInit {
 
   openPagamentoDialog(item: UniformeCadastro) {
     this.dialogRef = this.dialog.open(ConciliaPagamentoComponent,
-      { data: { 
+      {
+        data: {
           uniformeCadastro: item,
           itemRecbimento: this.itemRecebimento
-        }, width: '480px', autoFocus: true });
+        }, width: '480px', autoFocus: true
+      });
     this.dialogRef.afterClosed().subscribe((result: any) => {
-      // let rec: NumeroRecibo = {};
-      // rec.id_recibo = result.id_recibo;
-      // rec.id = result.id;
-      // console.log(rec);
-      // this.recebimentoService.insereRecibo(rec).subscribe((res: any) => {
-      //   console.log(res);
-      // });
-      // this.refreshItem('Recibo registrado com sucesso');
+      if (result.pagamantoUniforme.length > 0) {
+        this.uniformeService.payment(result.pagamantoUniforme).subscribe((res: any) => { console.log(res); });
+        alert('Pagamento registrado com sucesso');
+      };
     });
   }
 }
