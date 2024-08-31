@@ -39,7 +39,7 @@ export class ListaUniformeComponent implements OnInit {
     public dialog: MatDialog
   ) { };
 
-  displayedColumns: string[] = ['nome', 'descricao', 'valor', 'quantidade', 'acoes'];
+  displayedColumns: string[] = ['nome', 'descricao', 'valor', 'quantidade', 'valorPago', 'acoes'];
   uniformeCadastro: UniformeCadastro[] = [];
   dataSource = new MatTableDataSource<UniformeCadastro>();
   itemRecebimento: ItemRecebimento[] = [];
@@ -62,13 +62,13 @@ export class ListaUniformeComponent implements OnInit {
         data: {
           uniformeCadastro: item,
           itemRecbimento: this.itemRecebimento
-        }, width: '480px', autoFocus: true
+        }, width: '600px', autoFocus: true
       });
     this.dialogRef.afterClosed().subscribe((result: any) => {
       if (result.pagamantoUniforme.length > 0) {
         this.uniformeService.payment(result.pagamantoUniforme).subscribe((res: any) => { console.log(res); });
-        alert('Pagamento registrado com sucesso');
       };
+      alert('Pagamento registrado com sucesso');
     });
   }
 }

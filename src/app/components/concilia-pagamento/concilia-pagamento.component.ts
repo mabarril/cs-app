@@ -5,7 +5,7 @@ import { MatLabel, } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { UniformeCadastro } from '../../models/uniforme-cadastro';
+import {MatListModule} from '@angular/material/list';
 import { RecebimentoService } from '../../services/recebimento.service';
 import { ItemRecebimento } from '../../models/item-recebimento';
 import { CommonModule } from '@angular/common';
@@ -19,7 +19,7 @@ import { PagamentoUniforme } from '../../models/pagamentoUniforme';
 @Component({
   selector: 'app-concilia-pagamento',
   standalone: true,
-  imports: [CommonModule, MatCheckboxModule, MatDialogClose, FormsModule, MatLabel, MatFormField, MatButtonModule, MatInputModule, MatSelectModule],
+  imports: [CommonModule, MatCheckboxModule, MatListModule, MatDialogClose, FormsModule, MatLabel, MatFormField, MatButtonModule, MatInputModule, MatSelectModule],
   templateUrl: './concilia-pagamento.component.html',
   styleUrl: './concilia-pagamento.component.css',
   providers: [DatePipe, CurrencyPipe]
@@ -31,6 +31,7 @@ export class ConciliaPagamentoComponent {
   pagamantoUniforme: PagamentoUniforme[] = [];
   itensRecebimento: ItemRecebimento[] | undefined;
   itensExistente: boolean = false;
+  valor: number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<ConciliaPagamentoComponent>,
@@ -40,6 +41,7 @@ export class ConciliaPagamentoComponent {
     this.recebimentoService.getItensConciliacao('uniforme', data.uniformeCadastro.id_cadastro).subscribe(result => {
       this.itensRecebimento = result;
       this.itensExistente = this.itensRecebimento.length > 0;
+      console.log(data);
     });
   }
 
@@ -52,7 +54,7 @@ export class ConciliaPagamentoComponent {
     return fullName.split(' ')[0];
   }
   selecionaItem(item: ItemRecebimento) {
-    this.pagamantoUniforme.push({ id_recebimento: item.id_recebimento, id_uniforme_cadastro: this.data.uniformeCadastro.id });
+    this.pagamantoUniforme.push({ id_recebimento: item.id_recebimento, id_uniforme_cadastro: this.data.uniformeCadastro.id, valor_pgto: item.valor_pgto });
     this.data.pagamantoUniforme = this.pagamantoUniforme;
   }
 }

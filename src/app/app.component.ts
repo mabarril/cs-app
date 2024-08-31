@@ -20,9 +20,10 @@ import { CommonModule } from "@angular/common";
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [provideNgxMask(), { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { height: '480px', width: '600px', autoFocus: true } }], 
+  providers: [provideNgxMask(), { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { height: '480px', width: '600px', autoFocus: true } }],
   imports: [RouterOutlet, HttpClientModule, HomeComponent, ToolbarComponent, NgxPrintModule, FormsModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, MatInputModule
-    , MatDialogModule, NgxMaskDirective, NgxMaskPipe, CommonModule,]
+    , MatDialogModule, NgxMaskDirective, NgxMaskPipe, CommonModule,
+  ]
 })
 
 

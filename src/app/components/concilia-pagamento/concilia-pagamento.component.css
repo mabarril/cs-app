@@ -40,7 +40,28 @@
     height: 100%;
   }
 
+
   ul {
     list-style-type: none;
     margin-top: 4px;
   }
+
+  .nome{
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .itens {
+    padding-top: 25px;
+  }
+
+
+
+  mat-list-item:nth-child(n){
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px;
+    height: 70px;
+    }

@@ -7,4 +7,5 @@ export class ItemRecebimento {
     item?: string;
     id_recibo?: number;
     id_item?: number;
+    valor_pgto?: number;
 }

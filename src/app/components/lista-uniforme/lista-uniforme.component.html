@@ -26,6 +26,12 @@
             <th mat-header-cell *matHeaderCellDef>Quantidade</th>
             <td mat-cell *matCellDef="let item"> {{item.qtd_uniforme}} </td>
         </ng-container>
+
+        <ng-container matColumnDef="valorPago">
+            <th mat-header-cell *matHeaderCellDef>Valor Pago</th>
+            <td mat-cell *matCellDef="let item"> {{item.valor_pgto | currency: 'BRL': 'symbol' }} </td>
+        </ng-container>
+
         <ng-container matColumnDef="acoes">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let item">
