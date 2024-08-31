@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConciliaPagamentoComponent } from '../concilia-pagamento/concilia-pagamento.component';
 import { ItemRecebimento } from '../../models/item-recebimento';
+import { PagamentoUniforme } from '../../models/pagamentoUniforme';
 
 
 // export interface ItemListaUniforme {
@@ -43,6 +44,7 @@ export class ListaUniformeComponent implements OnInit {
   uniformeCadastro: UniformeCadastro[] = [];
   dataSource = new MatTableDataSource<UniformeCadastro>();
   itemRecebimento: ItemRecebimento[] = [];
+  itemPagamento: PagamentoUniforme[] = [];
   ngOnInit(): void {
     this.uniformeService.getAll().subscribe((itens) => {
       this.uniformeCadastro = itens;
@@ -65,8 +67,19 @@ export class ListaUniformeComponent implements OnInit {
         }, width: '600px', autoFocus: true
       });
     this.dialogRef.afterClosed().subscribe((result: any) => {
-      if (result.pagamantoUniforme.length > 0) {
-        this.uniformeService.payment(result.pagamantoUniforme).subscribe((res: any) => { console.log(res); });
+      if (result.itemRecebimento.length > 0) {
+        let pagamento = new PagamentoUniforme;
+        result.pagamantoUniforme.forEach((item: ItemRecebimento) => {
+          if (item.valor_pgto! > 0) {
+            pagamento.id_uniforme_cadastro = result.uniformeCadastro.id_uniforme_cadastro;
+            pagamento.id_recebimento = item.id_recebimento;
+            pagamento.valor_pgto = item.valor_pgto;
+          }
+          this.itemPagamento.push(pagamento);
+        }
+        );
+
+        this.uniformeService.payment(result.itemPagamento).subscribe((res: any) => { console.log(res); });
       };
       alert('Pagamento registrado com sucesso');
     });
