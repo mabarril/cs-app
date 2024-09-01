@@ -55,13 +55,16 @@
     padding-top: 25px;
   }
 
+  .col {
+    max-width: 100px;
+  }
 
-
-  mat-list-item:nth-child(n){
+  mat-list-option:nth-child(n){
     display: flex;
+    flex-wrap: nowrap;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     padding: 4px;
     height: 70px;
     }

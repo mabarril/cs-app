@@ -68,6 +68,7 @@ export class ListaUniformeComponent implements OnInit {
       });
     this.dialogRef.afterClosed().subscribe((result: any) => {
       if (result.itemRecebimento.length > 0) {
+        console.log(result);
         let pagamento = new PagamentoUniforme;
         result.pagamantoUniforme.forEach((item: ItemRecebimento) => {
           if (item.valor_pgto! > 0) {

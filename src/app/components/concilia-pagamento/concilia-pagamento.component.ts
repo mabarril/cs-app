@@ -45,6 +45,11 @@ export class ConciliaPagamentoComponent {
     });
   }
 
+  onConfirmUserDialog(): void {
+    listaItem.selectedOptions.selected
+    this.dialogRef.close(this.data);
+  }
+
   onCancelUserDialog(): void {
     this.dialogRef.close();
   }

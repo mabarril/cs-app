@@ -8,9 +8,9 @@
   </div>
 
   <div *ngIf="itensExistente" mat-dialog-content>
-    <mat-selection-list #item>
+    <mat-selection-list #listaItem>
       @for (item of itensRecebimento; track item) {
-      <mat-list-item>
+      <mat-list-option>
         <div class="row">
             <div class="col itens">
               {{ getFirstName(item.responsavel!) }}
@@ -24,25 +24,14 @@
   
           <div class="col">
             <mat-form-field>
+              <span matTextPrefix>R$ &nbsp;</span>
               <input matInput [(ngModel)]="item.valor_pgto">
             </mat-form-field>
           </div>
         </div>
-      </mat-list-item>
+      </mat-list-option>
       }
-    </mat-selection-list>
-    <!-- <ul>
-      @for (item of itensRecebimento; track item; let i = $index) {
-
-
-      <a (onclick)="selecionaItem(item)">
-
-      </a>
-      </li>
-      }
-    </ul> -->
-
-  
+    </mat-selection-list>  
   <div mat-dialog-actions class="button-container">
     <button class="button" mat-flat-button color="secondary" (click)="onCancelUserDialog()">CANCELAR</button>
     <button *ngIf="itensExistente" class="button" mat-flat-button color="primary" [mat-dialog-close]="data"
