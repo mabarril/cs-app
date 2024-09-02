@@ -5,7 +5,7 @@ import { MatLabel, } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule, MatSelectionList } from '@angular/material/list';
 import { RecebimentoService } from '../../services/recebimento.service';
 import { ItemRecebimento } from '../../models/item-recebimento';
 import { CommonModule } from '@angular/common';
@@ -37,17 +37,12 @@ export class ConciliaPagamentoComponent {
     public dialogRef: MatDialogRef<ConciliaPagamentoComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private recebimentoService: RecebimentoService,
-    ) {
+  ) {
     this.recebimentoService.getItensConciliacao('uniforme', data.uniformeCadastro.id_cadastro).subscribe(result => {
       this.itensRecebimento = result;
       this.itensExistente = this.itensRecebimento.length > 0;
       console.log(data);
     });
-  }
-
-  onConfirmUserDialog(): void {
-    listaItem.selectedOptions.selected
-    this.dialogRef.close(this.data);
   }
 
   onCancelUserDialog(): void {
@@ -61,5 +56,11 @@ export class ConciliaPagamentoComponent {
   selecionaItem(item: ItemRecebimento) {
     this.pagamantoUniforme.push({ id_recebimento: item.id_recebimento, id_uniforme_cadastro: this.data.uniformeCadastro.id, valor_pgto: item.valor_pgto });
     this.data.pagamantoUniforme = this.pagamantoUniforme;
+  }
+
+  // Método para obter os itens selecionados
+  // Método para obter os itens selecionados e seus valores de valor_pgto
+  getSelectedItems(itens: any): void {
+    console.log(itens);
   }
 }
