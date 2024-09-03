@@ -36,6 +36,6 @@
         <div mat-dialog-actions class="button-container">
           <button class="button" mat-flat-button color="secondary" (click)="onCancelUserDialog()">CANCELAR</button>
           <button *ngIf="itensExistente" class="button" mat-flat-button color="primary" [mat-dialog-close]="data"
-            cdkFocusInitial (click)="getSelectedItems(itensRecebimento)">INSERIR</button>
+            cdkFocusInitial (click)="payment()">INSERIR</button>
         </div>
       </div>

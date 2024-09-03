@@ -63,12 +63,12 @@ export class ListaUniformeComponent implements OnInit {
       {
         data: {
           uniformeCadastro: item,
-          itemRecbimento: this.itemRecebimento
+          itemRecebimento: this.itemRecebimento,
+          itemPagamento: this.itemPagamento
         }, width: '600px', autoFocus: true
       });
     this.dialogRef.afterClosed().subscribe((result: any) => {
       if (result.itemRecebimento.length > 0) {
-        console.log(result);
         let pagamento = new PagamentoUniforme;
         result.pagamantoUniforme.forEach((item: ItemRecebimento) => {
           if (item.valor_pgto! > 0) {

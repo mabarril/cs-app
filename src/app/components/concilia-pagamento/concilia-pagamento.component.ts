@@ -41,7 +41,10 @@ export class ConciliaPagamentoComponent {
     this.recebimentoService.getItensConciliacao('uniforme', data.uniformeCadastro.id_cadastro).subscribe(result => {
       this.itensRecebimento = result;
       this.itensExistente = this.itensRecebimento.length > 0;
-      console.log(data);
+      console.log(this.itensRecebimento);
+      this.itensRecebimento.forEach(item => {
+        item.valor_pgto = 0;
+      });
     });
   }
 
@@ -60,7 +63,7 @@ export class ConciliaPagamentoComponent {
 
   // Método para obter os itens selecionados
   // Método para obter os itens selecionados e seus valores de valor_pgto
-  getSelectedItems(itens: any): void {
-    console.log(itens);
+  payment(): void {
+    console.log(this.data);
   }
 }
