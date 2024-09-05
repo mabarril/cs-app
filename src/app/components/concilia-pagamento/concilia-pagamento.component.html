@@ -1,41 +1,41 @@
 <div class="container">
 
   <h2 mat-dialog-title>Pagamento</h2>
-  <span class="nome">{{data.uniformeCadastro.nome}}<span>
+  <!-- <span class="nome">{{data.uniformeCadastro.nome}}<span> -->
 
-      <div *ngIf="!itensExistente" class="no-itens">
-        <h5>Não há itens para conciliar</h5>
-      </div>
+  <div *ngIf="!itensExistente" class="no-itens">
+    <h5>Não há itens para conciliar</h5>
+  </div>
 
-      <div *ngIf="itensExistente" mat-dialog-content>
-        <ul class="list">
+  <div *ngIf="itensExistente" mat-dialog-content>
+    <ul class="list">
 
-          @for (item of itensRecebimento; track item) {
-          <li class="list-item">
-            <div class="row">
-                
-                <div class="col itens">
-                  {{ getFirstName(item.responsavel!) }}
-                </div>
-                <div class="col itens">
-                  {{item.data | date:'dd/MM/yyyy'}}
-                </div>
-                <div class="col itens">
-                  {{item.valor_item | currency:'BRL'}}
-                </div>
+      @for (item of data.registroPagamento; track item) {
+      <li class="list-item">
+        <div class="row">
 
-                <div class="col">
-                  <mat-form-field>
-                    <span matTextPrefix>R$ &nbsp;</span>
-                    <input matInput [value]="item.valor_pgto">
-                  </mat-form-field>
-                </div>
-             </div>
-          </li>          }
-        </ul>
-        <div mat-dialog-actions class="button-container">
-          <button class="button" mat-flat-button color="secondary" (click)="onCancelUserDialog()">CANCELAR</button>
-          <button *ngIf="itensExistente" class="button" mat-flat-button color="primary" [mat-dialog-close]="data"
-            cdkFocusInitial (click)="payment()">INSERIR</button>
+          <div class="col itens">
+            {{ getFirstName(item.responsavel!) }}
+          </div>
+          <div class="col itens">
+            {{item.data | date:'dd/MM/yyyy'}}
+          </div>
+          <div class="col itens">
+            {{item.valor_item | currency:'BRL'}}
+          </div>
+
+          <div class="col">
+            <mat-form-field>
+              <span matTextPrefix>R$ &nbsp;</span>
+              <input #valorPgto matInput (blur)="onInputBlur(item.id_recebimento, $event)">
+            </mat-form-field>
+          </div>
         </div>
-      </div>
+      </li> }
+    </ul>
+    <div mat-dialog-actions class="button-container">
+      <button class="button" mat-flat-button color="secondary" (click)="onCancelUserDialog()">CANCELAR</button>
+      <button *ngIf="itensExistente" class="button" mat-flat-button color="primary" [matDialogClose]="data"
+        cdkFocusInitial>INSERIR</button>
+    </div>
+  </div>

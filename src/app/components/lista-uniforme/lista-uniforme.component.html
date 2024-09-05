@@ -32,6 +32,12 @@
             <td mat-cell *matCellDef="let item"> {{item.valor_pgto | currency: 'BRL': 'symbol' }} </td>
         </ng-container>
 
+
+        <ng-container matColumnDef="saldo">
+            <th mat-header-cell *matHeaderCellDef>Saldo</th>
+            <td mat-cell *matCellDef="let item" [ngClass]="{'saldo-devedor': calcularSaldo(item) > 0}"> {{calcularSaldo(item) | currency: 'BRL': 'symbol' }} </td>
+        </ng-container>
+
         <ng-container matColumnDef="acoes">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let item">

@@ -15,7 +15,7 @@ export class UniformeService {
     return this.http.get<UniformeCadastro[]>(`api/uniforme/lista`);
   }
 
-  payment(pagamentoUniforme : PagamentoUniforme): Observable<PagamentoUniforme> {
+  payment(pagamentoUniforme : PagamentoUniforme[]): Observable<PagamentoUniforme> {
     return this.http.post<PagamentoUniforme>(`api/uniforme/pagamento`, pagamentoUniforme);
   }
 }
