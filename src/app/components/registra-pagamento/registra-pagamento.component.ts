@@ -25,13 +25,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-registro',
+  selector: 'app-registra-pagamento',
   standalone: true,
   imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule],
-  templateUrl: './registro.component.html',
-  styleUrl: './registro.component.css'
+  templateUrl: './registra-pagamento.component.html',
+  styleUrl: './registra-pagamento.component.css'
 })
-export class RegistroComponent {
+export class RegistraPagamentoComponent {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
@@ -39,5 +39,4 @@ export class RegistroComponent {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
 }
