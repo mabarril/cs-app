@@ -1,0 +1,25 @@
+/* Structure */
+table {
+    width: 100%;
+}
+
+.mat-mdc-form-field {
+    font-size: 12px;
+    width: 100%;
+}
+
+.button-bar {
+    padding-bottom: 1em;
+    display: flex;
+    gap: 1em;
+
+
+    button {
+        border-radius: 999px;
+    }
+}
+
+.form {
+    padding-top: 1em;
+    
+}
