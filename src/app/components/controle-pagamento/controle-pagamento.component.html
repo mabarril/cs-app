@@ -3,9 +3,26 @@
         <mat-card-header>
             <mat-card-title>Controle de Pagamento</mat-card-title>
         </mat-card-header>
-        <mat-card-content>
+          <mat-card-content>
             <div class="row resp">
-                <mat-form-field class="width-90">
+                 <mat-form-field class="example-full-width">
+                    <mat-label>Number</mat-label>
+                    <input type="text"
+                           placeholder="Pick one"
+                           aria-label="Number"
+                           matInput
+                           [formControl]="myControl"
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                      @for (responsavel of responsaveis; track responsavel) {
+                        <mat-option [value]="responsavel">{{responsavel.nome_responsavel}}</mat-option>
+                      }
+                    </mat-autocomplete>
+                  </mat-form-field>
+
+
+
+                <!-- <mat-form-field class="width-90">
 
                     <mat-label class="full-width">Responsável</mat-label>
                     <mat-select class="full-width" [(value)]="selectedResponsavel">
@@ -16,7 +33,7 @@
                     @if (controlePagamentoForm.controls['responsavel'].hasError('required')) {
                     <mat-error>O nome do evento deverá ser informado </mat-error>
                     }
-                </mat-form-field>
+                </mat-form-field> -->
                 <button mat-mini-fab color="primary" class="button button-resp"
                     (click)="openResponsavelDialog(); $event.preventDefault()">
                     <mat-icon>plus_one</mat-icon>

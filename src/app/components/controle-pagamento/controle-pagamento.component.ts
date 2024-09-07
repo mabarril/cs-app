@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators, NgModel, FormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormControl, FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
@@ -11,23 +11,26 @@ import { MatListModule } from '@angular/material/list';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { CurrencyPipe } from '@angular/common';
-import { RecebimentoRegistro } from '../../../models/recebimento_registro';
-import { Responsavel } from '../../../models/responsavel.model';
-import { Recebimento } from '../../../models/recebimento.model';
-import { ItemPago } from '../../../models/itemPago.model';
-import { Registro } from '../../../models/registro.model';
+import { RecebimentoRegistro } from '../../models/recebimento_registro';
+import { Responsavel } from '../../models/responsavel.model';
+import { Recebimento } from '../../models/recebimento.model';
+import { ItemPago } from '../../models/itemPago.model';
+import { Registro } from '../../models/registro.model';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { AsyncPipe } from '@angular/common';
 
-import { ResponsavelService } from '../../../services/responsavel.service';
-import { ControleRecebimentoService } from '../../../services/controle-recebimento.service';
+import { ResponsavelService } from '../../services/responsavel.service';
+import { ControleRecebimentoService } from '../../services/controle-recebimento.service';
 
-import { RegistraItemRecebimentoComponent } from '../../../components/registra-item-recebimento/registra-item-recebimento';
-import { RegistraResponsavelComponent } from '../../../components/registra-responsavel/registra-responsavel.component';
+import { RegistraItemRecebimentoComponent } from '../../components/registra-item-recebimento/registra-item-recebimento';
+import { RegistraResponsavelComponent } from '../../components/registra-responsavel/registra-responsavel.component';
+import { map, startWith, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-controle-pagamento',
   standalone: true,
   providers: [provideNativeDateAdapter()],
-  imports: [MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, ReactiveFormsModule,  MatDatepickerModule, MatListModule, MatIconModule, CurrencyPipe],
+  imports: [FormsModule, AsyncPipe, MatAutocompleteModule, MatInputModule, MatButtonModule, MatSelectModule, MatRadioModule, MatCardModule, ReactiveFormsModule, MatDatepickerModule, MatListModule, MatIconModule, CurrencyPipe],
   templateUrl: './controle-pagamento.component.html',
   styleUrl: './controle-pagamento.component.css'
 })
@@ -54,13 +57,31 @@ export class ControlePagamentoComponent implements OnInit {
   listaItensPago: ItemPago[] = [];
   listaResultado: ItemPago[] = [];
 
+  myControl = new FormControl<string | Responsavel>('');
+  filteredOptions: Observable<Responsavel[]> | undefined;
+
   constructor(private responsavelService: ResponsavelService, public dialog: MatDialog, private controleRecebimentoService: ControleRecebimentoService) { }
 
   ngOnInit(): void {
     this.responsavelService.getAll().subscribe(responsaveis => {
       this.responsaveis = responsaveis;
     });
+
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : value?.nome_responsavel;
+        return name ? this._filter(name as string) : this.responsaveis!.slice();
+      }),
+    );
   }
+
+
+  private _filter(value: string): Responsavel[] {
+    const filterValue = value.toLowerCase();
+    return this.responsaveis!.filter(option => option.nome_responsavel!.toLowerCase().includes(filterValue));
+  }
+
 
   private fb = inject(FormBuilder);
   controlePagamentoForm = this.fb.group({

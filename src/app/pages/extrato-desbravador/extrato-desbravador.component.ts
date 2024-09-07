@@ -21,7 +21,7 @@ import { RegistroService } from '../../services/registro.services';
 import { Registro } from '../../models/registro.model';
 import { RecebimentoService } from '../../services/recebimento.service';
 import { Extrato } from '../../models/extrato.model';
-import { ControlePagamentoComponent } from '../pagamento/controle-pagamento/controle-pagamento.component';
+import { ControlePagamentoComponent } from '../../components/controle-pagamento/controle-pagamento.component';
 
 
 
