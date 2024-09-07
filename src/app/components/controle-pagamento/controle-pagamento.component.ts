@@ -26,6 +26,11 @@ import { RegistraItemRecebimentoComponent } from '../../components/registra-item
 import { RegistraResponsavelComponent } from '../../components/registra-responsavel/registra-responsavel.component';
 import { map, startWith, Observable } from 'rxjs';
 
+
+export interface User {
+  name: string;
+}
+
 @Component({
   selector: 'app-controle-pagamento',
   standalone: true,
@@ -35,12 +40,14 @@ import { map, startWith, Observable } from 'rxjs';
   styleUrl: './controle-pagamento.component.css'
 })
 
+
 export class ControlePagamentoComponent implements OnInit {
 
   itemPago: ItemPago = {
     desbravador: {} as Registro,
     valor: 0,
   };
+
 
   totalPago: number = 0;
 
@@ -58,28 +65,39 @@ export class ControlePagamentoComponent implements OnInit {
   listaResultado: ItemPago[] = [];
 
   myControl = new FormControl<string | Responsavel>('');
-  filteredOptions: Observable<Responsavel[]> | undefined;
+  options!: Responsavel[];
+  filteredOptions!: Observable<Responsavel[]>;
 
   constructor(private responsavelService: ResponsavelService, public dialog: MatDialog, private controleRecebimentoService: ControleRecebimentoService) { }
 
   ngOnInit(): void {
-    this.responsavelService.getAll().subscribe(responsaveis => {
-      this.responsaveis = responsaveis;
+    this.responsavelService.getAll().subscribe(result => {
+      this.options = result;
+      console.log('resp ', this.options);
     });
+  }
 
+
+  onValueChange() {
+    console.log(this.myControl.value);
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map(value => {
         const name = typeof value === 'string' ? value : value?.nome_responsavel;
-        return name ? this._filter(name as string) : this.responsaveis!.slice();
+        console.log(name);
+        return name ? this._filter(name as string) : this.options.slice();
       }),
-    );
+    )
   }
 
+  displayFn(user: Responsavel): string {
+    console.log(user);
+    return user && user.nome_responsavel ? user.nome_responsavel : '';
+  }
 
-  private _filter(value: string): Responsavel[] {
-    const filterValue = value.toLowerCase();
-    return this.responsaveis!.filter(option => option.nome_responsavel!.toLowerCase().includes(filterValue));
+  private _filter(name: string): Responsavel[] {
+    const filterValue = name.toLowerCase();
+    return this.options.filter(option => option.nome_responsavel!.toLowerCase().includes(filterValue));
   }
 
 
@@ -149,6 +167,11 @@ export class ControlePagamentoComponent implements OnInit {
     this.listaItensPago.push(itemPago);
     this.totalPago = this.totalPago + itemPago.valor;
     console.log(this.listaItensPago);
+  }
+
+  onResponsavelSelection(resp : Responsavel) {
+    this.selectedResponsavel = resp;
+    console.log(this.selectedResponsavel);
   }
 }
 
