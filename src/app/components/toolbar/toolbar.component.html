@@ -6,38 +6,53 @@
           aria-label="Example icon-button with menu icon">
           <mat-icon>menu</mat-icon>
       </button>
-  <mat-menu #menu="matMenu">
-      <button mat-menu-item routerLink="/prestacao/contas">
-        <!-- <mat-icon>dialpad</mat-icon> -->
-        <span>Prestação de Contas</span>
-      </button>
-      <button mat-menu-item routerLink="extrato/desbravador">
-        <span>Extrato</span>
-      </button>
-      <button mat-menu-item routerLink="/evento/inscricao">
-        <!-- <mat-icon>notifications_off</mat-icon> -->
-        <span>Inscrição Evento</span>
-      </button>
-      <button mat-menu-item routerLink="/recebimento/relatorio">
-        <!-- <mat-icon>notifications_off</mat-icon> -->
-        <span>Relatório</span>          
-      </button>
-      <button mat-menu-item routerLink="/pagamento/controle">
-        <!-- <mat-icon>notifications_off</mat-icon> -->
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item [matMenuTriggerFor]="cadastro">Desbravadores</button>
+        <button mat-menu-item [matMenuTriggerFor]="financeiro">Financeiro</button>
+        
+      </mat-menu>
+
+      <mat-menu #cadastro="matMenu">
+        <button mat-menu-item routerLink="extrato/desbravador">
+          <span>Extrato</span>
+        </button>
+        <button mat-menu-item routerLink="/evento/inscricao">
+          <!-- <mat-icon>notifications_off</mat-icon> -->
+          <span>Inscrição Evento</span>
+        </button>
+        <button mat-menu-item routerLink="/uniforme">
+          <!-- <mat-icon>notifications_off</mat-icon> -->
+          <span>Registra Débito Uniforme</span>
+        </button>
+  
+        </mat-menu>
+
+      <mat-menu #financeiro="matMenu">
+        <button mat-menu-item routerLink="/prestacao/contas">
+          <!-- <mat-icon>dialpad</mat-icon> -->
+          <span>Prestação de Contas</span>
+        </button>
+        <button mat-menu-item routerLink="/recebimento/relatorio">
+          <!-- <mat-icon>notifications_off</mat-icon> -->
+          <span>Relatório</span>          
+        </button>
+        <button mat-menu-item routerLink="/pagamento/lista">
+          <!-- <mat-icon>notifications_off</mat-icon> -->
+          <span>Lista de Pagamentos</span>
+        </button>
+        <button mat-menu-item routerLink="/uniforme/lista">
+          <!-- <mat-icon>notifications_off</mat-icon> -->
+          <span>Lista de Uniforme</span>
+        </button>
+      </mat-menu>
+
+
+      
+      
+      <!-- <button mat-menu-item routerLink="/pagamento/controle">
+        <mat-icon>notifications_off</mat-icon>
         <span>Pagamento</span>
-      </button>
-      <button mat-menu-item routerLink="/pagamento/lista">
-        <!-- <mat-icon>notifications_off</mat-icon> -->
-        <span>Lista de Pagamentos</span>
-      </button>
-      <button mat-menu-item routerLink="/uniforme">
-        <!-- <mat-icon>notifications_off</mat-icon> -->
-        <span>Registra Débito Uniforme</span>
-      </button>
-      <button mat-menu-item routerLink="/uniforme/lista">
-        <!-- <mat-icon>notifications_off</mat-icon> -->
-        <span>Lista de Uniforme</span>
-      </button>
-    </mat-menu>
+      </button> -->
+
   </mat-toolbar-row>
 </mat-toolbar>

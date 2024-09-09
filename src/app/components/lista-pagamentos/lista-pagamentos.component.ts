@@ -23,7 +23,7 @@ import { NgxPrintModule } from 'ngx-print';
 import { RegistraReciboComponent } from '../registra-recibo/registra-recibo.component';
 import { NumeroRecibo } from '../../models/numero-recibo';
 import { DeletaItemRecebimentoComponent } from '../deleta-item-recebimento/deleta-item-recebimento.component';
-import { ControlePagamentoComponent } from '../controle-pagamento/controle-pagamento.component';
+import { RegistraPagamentoComponent } from '../registra-pagamento/registra-pagamento.component';
 import { DetalhaReciboComponent } from '../detalha-recibo/detalha-recibo.component';
 
 const ELEMENT_DATA: Pagamento[] = [];
@@ -141,7 +141,7 @@ export class ListaPagamentosComponent {
   }
 
   openControlePagamentoDialog() {
-    this.dialogRef = this.dialog.open(ControlePagamentoComponent,
+    this.dialogRef = this.dialog.open(RegistraPagamentoComponent,
       { height: 'calc(max-widht - 90px)', width: '600px', autoFocus: true });
 
     this.dialogRef.afterClosed().subscribe((result: any) => {

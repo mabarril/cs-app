@@ -11,3 +11,16 @@ table {
   .saldo-devedor {
     color: red;
 }
+
+.row-search{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+    
+    button {
+        border-radius: 99px;
+    }
+}

@@ -7,23 +7,17 @@
   <mat-card-content>
     <div class="row">
       <mat-form-field class="full-width">
-        <mat-label class="full-width">Desbravador</mat-label>
-        <mat-select class="full-width" [(value)]="selectedRegistro"
-          (selectionChange)="selecionaRegistro(selectedRegistro)">
-          @for (registro of registros; track registro) {
-          <mat-option [value]="registro">{{registro.nome}}</mat-option>
-          }
-        </mat-select>
+        <!-- <mat-form-field class="width-90"> -->
+          <mat-label>Desbravador</mat-label>
+          <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto"
+              (keypress)="onValueChange()">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn" >
+              @for (option of filteredOptions | async; track option) {
+              <mat-option [value]="option" (onSelectionChange)="selecionaRegistro(option)">{{option.nome}}</mat-option>
+              }
+          </mat-autocomplete>
       </mat-form-field>
     </div>
-
-    <!-- <mat-list role="list">
-
-            @for ( desbravador of registros; track desbravador) {
-            <mat-list-item class="list-item">
-                <div class="row">
-                    <div matListItemTitle>{{ desbravador.nome }}</div>
-                    <div matListItemLine> -->
     <mat-accordion>
       <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header>
@@ -138,5 +132,4 @@
   <mat-card-actions class="button-container">
     <button mat-flat-button color="primary" class="button" (click)="openControlePagamentoDialog()">REGISTRAR PAGAMENTO</button>
   </mat-card-actions>
-
 </mat-card>

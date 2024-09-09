@@ -13,7 +13,9 @@ import { ConciliaPagamentoComponent } from '../concilia-pagamento/concilia-pagam
 import { ItemRecebimento } from '../../models/item-recebimento';
 import { PagamentoUniforme } from '../../models/pagamentoUniforme';
 import { CommonModule } from '@angular/common';
-import { last } from 'rxjs';
+import { MatCardActions } from '@angular/material/card';
+import { RegistraPagamentoComponent } from '../registra-pagamento/registra-pagamento.component';
+
 
 
 // export interface ItemListaUniforme {
@@ -89,6 +91,16 @@ export class ListaUniformeComponent implements OnInit {
     return saldo;
   } 
   
+
+  openControlePagamentoDialog() {
+    this.dialogRef = this.dialog.open(RegistraPagamentoComponent,
+      { height: 'calc(max-widht - 90px)', width: '600px', autoFocus: true });
+
+    this.dialogRef.afterClosed().subscribe((result: any) => {
+      console.log('O diálogo foi fechado', result);
+      // Lógica após fechar o diálogo, se necessário
+    });
+  }
 
 
   fetchUniformData() {

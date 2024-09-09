@@ -1,6 +1,6 @@
 import { Component, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
 import { MatCard, MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
@@ -21,7 +21,10 @@ import { RegistroService } from '../../services/registro.services';
 import { Registro } from '../../models/registro.model';
 import { RecebimentoService } from '../../services/recebimento.service';
 import { Extrato } from '../../models/extrato.model';
-import { ControlePagamentoComponent } from '../../components/controle-pagamento/controle-pagamento.component';
+import { RegistraPagamentoComponent } from '../../components/registra-pagamento/registra-pagamento.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { map, Observable, startWith } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 
 
@@ -29,7 +32,7 @@ import { ControlePagamentoComponent } from '../../components/controle-pagamento/
 @Component({
   selector: 'app-extrato-desbravador',
   standalone: true,
-  imports: [MatCard, MatCardModule, MatInputModule, RouterLink, MatButtonModule, MatSelectModule, MatRadioModule, MatDatepickerModule, ReactiveFormsModule, MatListModule, MatIconModule, CurrencyPipe, MatAccordion, MatExpansionModule, MatFormFieldModule, MatIconModule],
+  imports: [ AsyncPipe, MatAutocompleteModule, MatCard, MatCardModule, MatInputModule, RouterLink, MatButtonModule, MatSelectModule, MatRadioModule, MatDatepickerModule, ReactiveFormsModule, MatListModule, MatIconModule, CurrencyPipe, MatAccordion, MatExpansionModule, MatFormFieldModule, MatIconModule],
   templateUrl: './extrato-desbravador.component.html',
   styleUrl: './extrato-desbravador.component.css',
   providers: [provideNativeDateAdapter(), DatePipe, CurrencyPipe, { provide: LOCALE_ID, useValue: 'pt-BR' }],
@@ -38,6 +41,10 @@ import { ControlePagamentoComponent } from '../../components/controle-pagamento/
 export class ExtratoDesbravadorComponent implements OnInit {
 
   @ViewChild(MatAccordion) accordion: MatAccordion | undefined;
+
+  myControl = new FormControl<string | Registro>('');
+  options!: Registro[];
+  filteredOptions!: Observable<Registro[]>;
 
   dialogRef: any;
 
@@ -59,12 +66,34 @@ export class ExtratoDesbravadorComponent implements OnInit {
 
   ngOnInit(): void {
     this.registroService.getAll().subscribe(registros => {
-      this.registros = registros;
+      this.options = registros;
     });
   }
 
+  displayFn(user: Registro): string {
+    console.log(user);
+    return user && user.nome ? user.nome: '';
+  }
+
+  private _filter(name: string): Registro[] {
+    const filterValue = name.toLowerCase();
+    return this.options.filter(option => option.nome!.toLowerCase().includes(filterValue));
+  }
+
+  onValueChange() {
+    console.log(this.myControl.value);
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : value?.nome;
+        console.log(name);
+        return name ? this._filter(name as string) : this.options.slice();
+      }),
+    )
+  }
+
   selecionaRegistro(registro: Registro) {
-    console.log(registro.id);
+    console.log('8888888  ', registro.id);
     this.recebimentoService.getExtrato(registro.id!).subscribe(result => {
       this.extrato = result;
       this.calculatePaymentsTotal();
@@ -109,7 +138,7 @@ export class ExtratoDesbravadorComponent implements OnInit {
   }
 
   openControlePagamentoDialog() {
-    this.dialogRef = this.dialog.open(ControlePagamentoComponent,
+    this.dialogRef = this.dialog.open(RegistraPagamentoComponent,
       { height: 'calc(max-widht - 90px)', width: '600px', autoFocus: true });
 
     this.dialogRef.afterClosed().subscribe((result: any) => {
