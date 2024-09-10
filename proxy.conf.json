@@ -1,6 +1,6 @@
 {
     "/api": {
-      "target": "http://iasdcentraldebrasilia.com.br/cruzeirodosul/sgcs/dbv-api/",
+      "target": "http://iasdcentraldebrasilia.com.br/cruzeirodosul/dbvApi/",
       "secure": false,
       "changeOrigin": true,
       "pathRewrite": {

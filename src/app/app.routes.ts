@@ -10,6 +10,7 @@ import { PrestacaoContasComponent } from './pages/prestacao-contas/prestacao-con
 import { RegistraDebitoComponent } from './components/registra-debito-uniforme/registra-debito-uniforme.component';
 import { ListaUniformeComponent } from './components/lista-uniforme/lista-uniforme.component';
 import { PagamentoComponent } from './components/pagamento/pagamento.component';
+import { ListaDebitosComponent } from './components/lista-debitos/lista-debitos.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -23,7 +24,7 @@ export const routes: Routes = [
     { path: 'uniforme', component: RegistraDebitoComponent },
     { path: 'uniforme/lista', component: ListaUniformeComponent },
     { path: 'pagamento', component: PagamentoComponent },
-
+    {path: 'lista', component: ListaDebitosComponent},
 
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: 'home' }
