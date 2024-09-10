@@ -9,6 +9,7 @@ import { ListaPagamentosComponent } from './components/lista-pagamentos/lista-pa
 import { PrestacaoContasComponent } from './pages/prestacao-contas/prestacao-contas.component';
 import { RegistraDebitoComponent } from './components/registra-debito-uniforme/registra-debito-uniforme.component';
 import { ListaUniformeComponent } from './components/lista-uniforme/lista-uniforme.component';
+import { PagamentoComponent } from './components/pagamento/pagamento.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -20,7 +21,9 @@ export const routes: Routes = [
     { path: 'pagamento/lista', component: ListaPagamentosComponent },
     { path: 'prestacao/contas', component: PrestacaoContasComponent },
     { path: 'uniforme', component: RegistraDebitoComponent },
-    { path: 'uniforme/lista', component: ListaUniformeComponent},
+    { path: 'uniforme/lista', component: ListaUniformeComponent },
+    { path: 'pagamento', component: PagamentoComponent },
+
 
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: '**', redirectTo: 'home' }
