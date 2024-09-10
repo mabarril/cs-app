@@ -1,0 +1,18 @@
+.filter-dbv {
+    display: flex;
+    align-items: first baseline;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    .item {
+        flex-grow: 11;
+    }
+
+    .item-button {
+        flex-grow: 1;
+    }
+}
+
+button {
+   border-radius: 99px;
+}

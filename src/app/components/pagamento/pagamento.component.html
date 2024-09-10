@@ -1,20 +1,60 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      <h1>Pagamento</h1>
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="row">
-      <mat-form-field class="full-width">
-        <mat-label>Desbravador</mat-label>
-        <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto" (keypress)="onValueChange()">
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
-          @for (option of filteredOptions | async; track option) {
-          <mat-option [value]="option" (onSelectionChange)="selecionaRegistro(option)">{{option.nome}}</mat-option>
-          }
-        </mat-autocomplete>
-      </mat-form-field>
-    </div>
-  </mat-card-content>
-</mat-card>
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1>Pagamento</h1>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="filter-dbv">
+        <mat-form-field class="item">
+          <mat-label>Desbravador</mat-label>
+          <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto" (keypress)="onValueChange()">
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+            @for (option of filteredOptions | async; track option) {
+            <mat-option [value]="option" (onSelectionChange)="selecionaRegistro(option)">{{option.nome}}</mat-option>
+            }
+          </mat-autocomplete>
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="item-button">DÉBITOS</button>
+      </div>
+      <div class="table">
+        <h3>Debitos</h3>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+          <!-- Position Column -->
+          <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let debito">{{debito.nome}}</td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="item">
+            <th mat-header-cell *matHeaderCellDef>Item</th>
+            <td mat-cell *matCellDef="let debito">{{debito.item}}</td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="vlrDevido">
+            <th mat-header-cell *matHeaderCellDef>Valor</th>
+            <td mat-cell *matCellDef="let debito">{{debito.vlrDevido | currency:'BRL':'symbol':'1.2-2'}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      <div class = "registro-pgto">
+        <h3>Registro de Pagamento</h3>
+        <mat-form-field>
+          <mat-label>Valor</mat-label>
+          <input matInput type="number"  name="valor">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Data</mat-label>
+          <input matInput type="date"  name="data">
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="item-button" >SALVAR</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

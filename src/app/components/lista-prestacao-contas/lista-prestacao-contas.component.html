@@ -25,24 +25,22 @@
             <!-- Weight Column -->
             <ng-container matColumnDef="vlrEvento">
                 <th mat-header-cell *matHeaderCellDef> Valor Evento </th>
-                <td mat-cell *matCellDef="let element" class="align-right"> {{formataValor(element.vlrEvento)}} </td>
-                <td mat-footer-cell *matFooterCellDef class="align-right" style="font-weight: bolder;">{{formataValor(totalVlrEvento)}}</td>
+                <td mat-cell *matCellDef="let element" class="align-right"> {{element.vlrEvento | currency:'BRL':'symbol':'1.2-2' }} </td>
+                <td mat-footer-cell *matFooterCellDef class="align-right" style="font-weight: bolder;">{{totalVlrEvento | currency:'BRL':'symbol':'1.2-2'}}</td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="vlrPago">
                 <th mat-header-cell *matHeaderCellDef> Valor Pago </th>
-                <td mat-cell *matCellDef="let element" class="align-right"> {{formataValor(element.vlrPago)}} </td>
-                <td mat-footer-cell *matFooterCellDef class="align-right" style="font-weight: bolder;">{{formataValor(totalVlrPago)}} </td>
+                <td mat-cell *matCellDef="let element" class="align-right"> {{element.vlrPago | currency:'BRL':'symbol':'1.2-2'}} </td>
+                <td mat-footer-cell *matFooterCellDef class="align-right" style="font-weight: bolder;">{{totalVlrPago | currency:'BRL':'symbol':'1.2-2'}} </td>
             </ng-container>
 
             <ng-container matColumnDef="saldo">
                 <th mat-header-cell *matHeaderCellDef> Saldo </th>
-                <td mat-cell *matCellDef="let element" class="align-right"> {{formataValor(element.saldo)}} </td>
-                <td mat-footer-cell *matFooterCellDef class="align-right" style="color: red; font-weight: bolder;">{{formataValor(totalSaldo)}}</td>
+                <td mat-cell *matCellDef="let element" class="align-right"> {{ element.saldo | currency:'BRL':'symbol':'1.2-2'}} </td>
+                <td mat-footer-cell *matFooterCellDef class="align-right" style="color: red; font-weight: bolder;">{{totalSaldo | currency:'BRL':'symbol':'1.2-2'}}</td>
             </ng-container>
-
-
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>

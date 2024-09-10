@@ -1,111 +1,66 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatSort, MatSortModule} from '@angular/material/sort';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { DebitoService } from '../../services/debito.service';
 import { Debito } from '../../models/debito.model';
+import { CurrencyPipe, DatePipe, NgIf } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
 
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
-}
-
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
 
 @Component({
   selector: 'app-lista-debitos',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule, MatPaginatorModule],
+  imports: [NgIf, DatePipe, CurrencyPipe, MatFormFieldModule, MatInputModule, MatTableModule, MatSortModule],
   templateUrl: './lista-debitos.component.html',
   styleUrl: './lista-debitos.component.css'
 })
-export class ListaDebitosComponent implements AfterViewInit, OnInit {
-
+export class ListaDebitosComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'valor', 'vencimento', 'descricao'];
   dataSource!: MatTableDataSource<Debito>;
+  clickedRows = new Set<Debito>();
+  totalDebito: number = 0;
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(
-    private debitoService: DebitoService
-  ) {
-    // Create 100 users
-    const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
 
-    // Assign the data to the data source for the table to render
-    
-  }
+  constructor(
+    private debitoService: DebitoService,
+
+    public dialogRef: MatDialogRef<ListaDebitosComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) { };
+
   ngOnInit(): void {
+    console.log(this.clickedRows);
     this.debitoService.getDebitoDesbravador(1473577).subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
     });
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
-}
 
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
-    ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
-    '.';
+  selectRow(row: Debito) {
+    this.clickedRows.has(row) ? this.clickedRows.delete(row) : this.clickedRows.add(row);
+    console.log(this.clickedRows);
+    this.getTotalDebito();
+  }
 
-  return {
-    id: id.toString(),
-    name: name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-  };
+  getTotalDebito() {
+    let total = 0;
+    this.clickedRows.forEach(t => {
+      total += t.valor_debito ? t.valor_debito : 0;
+    });
+    this.totalDebito = total;
+  }
+
+  onCancelDialog(): void {
+    this.dialogRef.close();
+  }
 
 }

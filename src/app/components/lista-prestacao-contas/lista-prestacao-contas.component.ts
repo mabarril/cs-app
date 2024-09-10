@@ -4,7 +4,7 @@ import { RecebimentoRegistro } from '../../models/recebimento_registro';
 import { RecebimentoService } from '../../services/recebimento.service';;
 import { MatButtonModule } from '@angular/material/button';
 import { NgxPrintModule } from 'ngx-print';
-import { CurrencyPipe, registerLocaleData } from '@angular/common';
+import { CurrencyPipe} from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
 
@@ -15,8 +15,7 @@ const ELEMENT_DATA: RecebimentoRegistro[] = [];
   standalone: true,
   templateUrl: './lista-prestacao-contas.component.html',
   styleUrl: './lista-prestacao-contas.component.css',
-  imports: [MatTableModule, MatButtonModule, NgxPrintModule ],
-  providers: [CurrencyPipe, { provide: LOCALE_ID, useValue: 'pt-BR' }]
+  imports: [MatTableModule, MatButtonModule, NgxPrintModule, CurrencyPipe ],
 })
 
 
@@ -53,11 +52,6 @@ export class ListaPrestacaoContasComponent implements OnInit {
   displayedColumns: string[] = ['nome', 'evento', 'vlrEvento', 'vlrPago', 'saldo'];
   dataSource = ELEMENT_DATA;
 
-
-  formataValor(valor: number) {
-    registerLocaleData(localePt, 'pt-BR');
-    return new CurrencyPipe('pt-BR').transform(valor, 'BRL', 'symbol', '1.2-2');
-  };
 
   calculaTotal() {
     this.dataSource.forEach((element: any) => {
