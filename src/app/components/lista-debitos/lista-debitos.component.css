@@ -1,3 +1,6 @@
+.container {
+ padding: 1rem;
+}
 h3 {
     padding-top: 1rem;
 }
@@ -32,4 +35,17 @@ mat-form-field {
     font-size: 1rem;
     padding: 1rem 1.5rem 1rem 1.5rem;
     justify-content: space-between;
+}
+
+.botoes {
+    display: flex;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    font-size: 1rem;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    justify-content: space-between;
+    button {
+        border-radius: 9999px;
+        margin: 0 0.5rem 0 0.5rem;
+    }
 }
