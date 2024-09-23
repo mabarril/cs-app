@@ -60,6 +60,8 @@ export class PagamentoComponent {
   dataToDisplay = [...ELEMENT_DATA];
   dataSource = new MatTableDataSource<RelacaoDebitos>(this.dataToDisplay);
 
+  disableDebitos = true;
+
   selectedFormaPagamento: string | undefined;
   formaPagamento: string[] = ['Pix', '7me', 'Dinheiro', 'Cartão'];
 
@@ -122,7 +124,7 @@ export class PagamentoComponent {
   }
 
   selecionaRegistro(registro: Registro) {
-    
+    registro.id? this.disableDebitos = false : this.disableDebitos = true;
     this.data  = { nome : registro.nome, id: registro.id};
     this.recebimentoService.getExtrato(registro.id!).subscribe(result => {
       // this.extrato = result;
@@ -151,7 +153,7 @@ export class PagamentoComponent {
 
   openListaDebitosDialog() {
     this.dialogRef = this.dialog.open(ListaDebitosComponent,
-      { data: this.data, height: 'auto', width: '480px', autoFocus: true });
+      { data: this.data, height: 'auto', width: '600px', autoFocus: true });
 
     // this.dialogRef.afterClosed().subscribe((result: ItemPago) => {
     //   this.adicionarItem(result);

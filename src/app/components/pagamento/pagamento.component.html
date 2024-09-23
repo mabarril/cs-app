@@ -16,7 +16,7 @@
             }
           </mat-autocomplete>
         </mat-form-field>
-        <button mat-raised-button color="primary" class="item-button" (click)="openListaDebitosDialog()"><mat-icon>add</mat-icon>DÉBITOS</button>
+        <button mat-raised-button color="primary" class="item-button" (click)="openListaDebitosDialog()" [disabled]="disableDebitos" ><mat-icon>search</mat-icon>DÉBITOS</button>
       </div>
       <div class="table">
         <h3>Debitos</h3>
