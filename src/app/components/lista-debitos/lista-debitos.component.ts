@@ -17,7 +17,7 @@ export interface Dvb {
 @Component({
   selector: 'app-lista-debitos',
   standalone: true,
-  imports: [NgIf, DatePipe, CurrencyPipe, MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule],
+  imports: [NgIf, DatePipe, CurrencyPipe, MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatDialogClose],
   templateUrl: './lista-debitos.component.html',
   styleUrl: './lista-debitos.component.css'
 })

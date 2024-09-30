@@ -53,7 +53,8 @@
   </div>
   
 </div>
-<div class="botoes">
-  <button mat-raised-button color="primary">Pagar</button>
-  <button mat-raised-button color="warn">Cancelar</button>
+<div mat-dialog-actions class="botoes">
+  <button class="button" mat-flat-button color="secondary" (click)="onCancelDialog()">CANCELAR</button>
+  <button class="button" mat-flat-button color="primary" [mat-dialog-close]="data"
+      cdkFocusInitial>PAGAR</button>
 </div>
