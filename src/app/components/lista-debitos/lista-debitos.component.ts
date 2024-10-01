@@ -6,8 +6,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { DebitoService } from '../../services/debito.service';
 import { Debito } from '../../models/debito.model';
 import { CurrencyPipe, DatePipe, NgIf } from '@angular/common';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialogClose } from '@angular/material/dialog';
-
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatDialogClose,
+} from '@angular/material/dialog';
 
 export interface Dvb {
   id: number;
@@ -17,12 +20,20 @@ export interface Dvb {
 @Component({
   selector: 'app-lista-debitos',
   standalone: true,
-  imports: [NgIf, DatePipe, CurrencyPipe, MatFormFieldModule, MatInputModule, MatTableModule, MatButtonModule, MatDialogClose],
+  imports: [
+    NgIf,
+    DatePipe,
+    CurrencyPipe,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatButtonModule,
+    MatDialogClose,
+  ],
   templateUrl: './lista-debitos.component.html',
-  styleUrl: './lista-debitos.component.css'
+  styleUrl: './lista-debitos.component.css',
 })
 export class ListaDebitosComponent implements OnInit {
-
   displayedColumns: string[] = ['valor', 'vencimento', 'descricao'];
   dataSource!: MatTableDataSource<Debito>;
   clickedRows = new Set<Debito>();
@@ -32,11 +43,12 @@ export class ListaDebitosComponent implements OnInit {
   constructor(
     private debitoService: DebitoService,
     public dialogRef: MatDialogRef<ListaDebitosComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-  ) { this.dbv = data };
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    this.dbv = data;
+  }
 
   ngOnInit(): void {
-    console.log(this.clickedRows);
     this.debitoService.getDebitoDesbravador(this.dbv.id).subscribe((data) => {
       this.dataSource = new MatTableDataSource(data);
     });
@@ -48,14 +60,15 @@ export class ListaDebitosComponent implements OnInit {
   // }
 
   selectRow(row: Debito) {
-    this.clickedRows.has(row) ? this.clickedRows.delete(row) : this.clickedRows.add(row);
-    console.log(this.clickedRows);
+    this.clickedRows.has(row)
+      ? this.clickedRows.delete(row)
+      : this.clickedRows.add(row);
     this.getTotalDebito();
   }
 
   getTotalDebito() {
     let total = 0;
-    this.clickedRows.forEach(t => {
+    this.clickedRows.forEach((t) => {
       total += t.valor_debito ? t.valor_debito : 0;
     });
     this.totalDebito = total;
@@ -64,5 +77,4 @@ export class ListaDebitosComponent implements OnInit {
   onCancelDialog(): void {
     this.dialogRef.close();
   }
-
 }

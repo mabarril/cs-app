@@ -1,5 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { AsyncPipe, CurrencyPipe, DatePipe } from '@angular/common';
@@ -15,22 +21,27 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
-import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
+import {
+  MatNativeDateModule,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
 import { Responsavel } from '../../models/responsavel.model';
 import { RegistraResponsavelComponent } from '../registra-responsavel/registra-responsavel.component';
 import { ResponsavelService } from '../../services/responsavel.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ListaDebitosComponent } from '../lista-debitos/lista-debitos.component';
 
-
-
 export interface RelacaoDebitos {
   nome: string;
-  item: string
+  item: string;
   vlrDevido: number;
 }
 
-const ELEMENT_DATA: RelacaoDebitos[] = [{ nome: 'João', item: 'Item 1', vlrDevido: 100.00 }, { nome: 'Maria', item: 'Item 2', vlrDevido: 200.00 }, { nome: 'José', item: 'Item 3', vlrDevido: 300.00 }];
+const ELEMENT_DATA: RelacaoDebitos[] = [
+  { nome: 'João', item: 'Item 1', vlrDevido: 100.0 },
+  { nome: 'Maria', item: 'Item 2', vlrDevido: 200.0 },
+  { nome: 'José', item: 'Item 3', vlrDevido: 300.0 },
+];
 
 @Component({
   selector: 'app-pagamento',
@@ -48,14 +59,13 @@ const ELEMENT_DATA: RelacaoDebitos[] = [{ nome: 'João', item: 'Item 1', vlrDevi
     CurrencyPipe,
     MatIcon,
     MatDatepickerModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './pagamento.component.html',
-  styleUrl: './pagamento.component.css'
+  styleUrl: './pagamento.component.css',
 })
 export class PagamentoComponent {
-
   displayedColumns: string[] = ['nome', 'item', 'vlrDevido'];
   dataToDisplay = [...ELEMENT_DATA];
   dataSource = new MatTableDataSource<RelacaoDebitos>(this.dataToDisplay);
@@ -76,7 +86,11 @@ export class PagamentoComponent {
   data = {} as any;
 
   constructor(
-    private registroService: RegistroService, private recebimentoService: RecebimentoService, private responsavelService: ResponsavelService, public dialog: MatDialog,) { };
+    private registroService: RegistroService,
+    private recebimentoService: RecebimentoService,
+    private responsavelService: ResponsavelService,
+    public dialog: MatDialog
+  ) {}
 
   myControl = new FormControl<string | Registro>('');
   options!: Registro[];
@@ -90,16 +104,14 @@ export class PagamentoComponent {
     formaPagamento: [null, Validators.required],
     descricao: null, // não obrigatório
     recibo: [null, Validators.pattern('^[0-9]*$')],
-    item: [null, Validators.required]
+    item: [null, Validators.required],
   });
 
-
   ngOnInit(): void {
-    this.registroService.getAll().subscribe(registros => {
+    this.registroService.getAll().subscribe((registros) => {
       this.options = registros;
     });
   }
-
 
   displayFn(user: Registro): string {
     console.log(user);
@@ -108,25 +120,27 @@ export class PagamentoComponent {
 
   private _filter(name: string): Registro[] {
     const filterValue = name.toLowerCase();
-    return this.options.filter(option => option.nome!.toLowerCase().includes(filterValue));
+    return this.options.filter((option) =>
+      option.nome!.toLowerCase().includes(filterValue)
+    );
   }
 
   onValueChange() {
     console.log(this.myControl.value);
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
-      map(value => {
+      map((value) => {
         const name = typeof value === 'string' ? value : value?.nome;
         console.log(name);
         return name ? this._filter(name as string) : this.options.slice();
-      }),
-    )
+      })
+    );
   }
 
   selecionaRegistro(registro: Registro) {
-    registro.id? this.disableDebitos = false : this.disableDebitos = true;
-    this.data  = { nome : registro.nome, id: registro.id};
-    this.recebimentoService.getExtrato(registro.id!).subscribe(result => {
+    registro.id ? (this.disableDebitos = false) : (this.disableDebitos = true);
+    this.data = { nome: registro.nome, id: registro.id };
+    this.recebimentoService.getExtrato(registro.id!).subscribe((result) => {
       // this.extrato = result;
       // this.calculatePaymentsTotal();
     });
@@ -139,8 +153,12 @@ export class PagamentoComponent {
 
   openResponsavelDialog() {
     let data = {} as Responsavel;
-    this.dialogRef = this.dialog.open(RegistraResponsavelComponent,
-      { data: data, height: 'auto', width: '480px', autoFocus: true });
+    this.dialogRef = this.dialog.open(RegistraResponsavelComponent, {
+      data: data,
+      height: 'auto',
+      width: '480px',
+      autoFocus: true,
+    });
 
     this.dialogRef.afterClosed().subscribe((result: Responsavel) => {
       result.nome_responsavel = result.nome_responsavel!.toUpperCase();
@@ -152,13 +170,16 @@ export class PagamentoComponent {
   }
 
   openListaDebitosDialog() {
-    this.dialogRef = this.dialog.open(ListaDebitosComponent,
-      { data: this.data, height: 'auto', width: '600px', autoFocus: true });
+    this.dialogRef = this.dialog.open(ListaDebitosComponent, {
+      data: this.data,
+      height: 'auto',
+      width: '600px',
+      autoFocus: true,
+    });
 
-    // this.dialogRef.afterClosed().subscribe((result: ItemPago) => {
-    //   this.adicionarItem(result);
-    // });
-
+    this.dialogRef.afterClosed().subscribe((result: any) => {
+      console.log(result);
+      //this.adicionarItem(result);
+    });
   }
-
 }

@@ -16,8 +16,6 @@ import { CommonModule } from '@angular/common';
 import { MatCardActions } from '@angular/material/card';
 import { RegistraPagamentoComponent } from '../registra-pagamento/registra-pagamento.component';
 
-
-
 // export interface ItemListaUniforme {
 //   id: number;
 //   nome: string;
@@ -27,25 +25,39 @@ import { RegistraPagamentoComponent } from '../registra-pagamento/registra-pagam
 //   vlr_pago: number;
 // };
 
-
 @Component({
   selector: 'app-lista-uniforme',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatInputModule, MatFormFieldModule, CurrencyPipe, MatIconModule, MatButtonModule, MatDialogModule],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatInputModule,
+    MatFormFieldModule,
+    CurrencyPipe,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
+  ],
   templateUrl: './lista-uniforme.component.html',
   styleUrl: './lista-uniforme.component.css',
   providers: [CurrencyPipe, { provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
-
-
 export class ListaUniformeComponent implements OnInit {
   dialogRef: any;
   constructor(
     private uniformeService: UniformeService,
     public dialog: MatDialog
-  ) { };
+  ) {}
 
-  displayedColumns: string[] = ['nome', 'descricao', 'valor', 'quantidade', 'valorPago', 'saldo', 'acoes'];
+  displayedColumns: string[] = [
+    'nome',
+    'descricao',
+    'valor',
+    'quantidade',
+    'valorPago',
+    'saldo',
+    'acoes',
+  ];
   uniformeCadastro: UniformeCadastro[] = [];
   dataSource = new MatTableDataSource<UniformeCadastro>();
   itemRecebimento: ItemRecebimento[] = [];
@@ -61,17 +73,15 @@ export class ListaUniformeComponent implements OnInit {
   }
 
   openPagamentoDialog(item: UniformeCadastro) {
+    this.dialogRef = this.dialog.open(ConciliaPagamentoComponent, {
+      data: { id_cadastro: item.id_cadastro!, id_uniforme_cadastro: item.id! },
+      width: '600px',
+      autoFocus: true,
+    });
 
-    this.dialogRef = this.dialog.open(ConciliaPagamentoComponent,
-      {
-        data: { id_cadastro : item.id_cadastro!, id_uniforme_cadastro : item.id! }, width: '600px', autoFocus: true
-      });
-
-
-
-     this.dialogRef.afterClosed().subscribe((result: any) => {
+    this.dialogRef.afterClosed().subscribe((result: any) => {
       console.log(result);
-      let pagamentoUniforme = new PagamentoUniforme;
+      let pagamentoUniforme = new PagamentoUniforme();
       result.registroPagamento.forEach((item: any) => {
         if (item.valor_pgto! > 0) {
           pagamentoUniforme.id_uniforme_cadastro = item.id_uniforme_cadastro;
@@ -80,28 +90,33 @@ export class ListaUniformeComponent implements OnInit {
           this.itemPagamento.push(pagamentoUniforme);
         }
       });
-      this.uniformeService.payment(this.itemPagamento).subscribe((res: any) => { console.log(res); }); 
+      this.uniformeService.payment(this.itemPagamento).subscribe((res: any) => {
+        console.log(res);
+      });
       alert('Pagamento registrado com sucesso');
       this.fetchUniformData();
-  });
-  } 
+    });
+  }
 
   calcularSaldo(item: any) {
-    let saldo = item.valor_uniforme! * item.qtd_uniforme - (item.valor_pgto? item.valor_pgto : 0);
+    let saldo =
+      item.valor_uniforme! * item.qtd_uniforme -
+      (item.valor_pgto ? item.valor_pgto : 0);
     return saldo;
-  } 
-  
+  }
 
   openControlePagamentoDialog() {
-    this.dialogRef = this.dialog.open(RegistraPagamentoComponent,
-      { height: 'calc(max-widht - 90px)', width: '600px', autoFocus: true });
+    this.dialogRef = this.dialog.open(RegistraPagamentoComponent, {
+      height: 'calc(max-widht - 90px)',
+      width: '600px',
+      autoFocus: true,
+    });
 
     this.dialogRef.afterClosed().subscribe((result: any) => {
       console.log('O diálogo foi fechado', result);
       // Lógica após fechar o diálogo, se necessário
     });
   }
-
 
   fetchUniformData() {
     this.uniformeService.getAll().subscribe((itens) => {
