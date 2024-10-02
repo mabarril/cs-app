@@ -60,10 +60,15 @@ export class ListaDebitosComponent implements OnInit {
   // }
 
   selectRow(row: Debito) {
+    let debitos: Debito[] = [];
     this.clickedRows.has(row)
       ? this.clickedRows.delete(row)
       : this.clickedRows.add(row);
-    this.getTotalDebito();
+     this.getTotalDebito();
+     this.clickedRows.forEach((t) => {
+      debitos.push(t);
+     });
+     this.data.debitos = debitos;
   }
 
   getTotalDebito() {

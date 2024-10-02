@@ -37,11 +37,11 @@ export interface RelacaoDebitos {
   vlrDevido: number;
 }
 
-const ELEMENT_DATA: RelacaoDebitos[] = [
-  { nome: 'João', item: 'Item 1', vlrDevido: 100.0 },
-  { nome: 'Maria', item: 'Item 2', vlrDevido: 200.0 },
-  { nome: 'José', item: 'Item 3', vlrDevido: 300.0 },
-];
+// const ELEMENT_DATA: RelacaoDebitos[] = [
+//   { nome: 'João', item: 'Item 1', vlrDevido: 100.0 },
+//   { nome: 'Maria', item: 'Item 2', vlrDevido: 200.0 },
+//   { nome: 'José', item: 'Item 3', vlrDevido: 300.0 },
+// ];
 
 @Component({
   selector: 'app-pagamento',
@@ -67,8 +67,8 @@ const ELEMENT_DATA: RelacaoDebitos[] = [
 })
 export class PagamentoComponent {
   displayedColumns: string[] = ['nome', 'item', 'vlrDevido'];
-  dataToDisplay = [...ELEMENT_DATA];
-  dataSource = new MatTableDataSource<RelacaoDebitos>(this.dataToDisplay);
+  dataToDisplay: RelacaoDebitos[] = [];
+  dataSource = new MatTableDataSource<RelacaoDebitos>;
 
   disableDebitos = true;
 
@@ -110,6 +110,10 @@ export class PagamentoComponent {
   ngOnInit(): void {
     this.registroService.getAll().subscribe((registros) => {
       this.options = registros;
+    });
+
+    this.responsavelService.getAll().subscribe((responsaveis) => {
+      this.responsaveis = responsaveis;
     });
   }
 
@@ -178,8 +182,17 @@ export class PagamentoComponent {
     });
 
     this.dialogRef.afterClosed().subscribe((result: any) => {
-      console.log(result);
-      //this.adicionarItem(result);
+      result.debitos.forEach((debito: any) => {
+        let varDebito = {
+          nome: this.data.nome,
+          item: debito.desc_debito,
+          vlrDevido: debito.valor_debito,
+        };
+        this.dataToDisplay.push(varDebito);
+      });
+      this.dataSource = new MatTableDataSource<RelacaoDebitos>(
+        this.dataToDisplay
+      );
     });
   }
 }
