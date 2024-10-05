@@ -146,9 +146,4 @@ export class PagamentoComponent {
     });
     
   }
-
-  onResponsavelSelection(resp: Responsavel) {
-    this.selectedResponsavel = resp;
-    console.log(this.selectedResponsavel);
-  }
 }
