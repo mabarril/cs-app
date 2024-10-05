@@ -154,6 +154,7 @@ export class PagamentoComponent {
 
     console.log(this.totalValue);
   }
+<<<<<<< HEAD
 
   getTotalCost() {
     return this.totalValue;
@@ -167,3 +168,6 @@ export class PagamentoComponent {
       });
   }
 }
+=======
+}
+>>>>>>> 86a9a15 (Refactor code to remove unused function onResponsavelSelection)
