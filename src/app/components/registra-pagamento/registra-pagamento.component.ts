@@ -23,7 +23,6 @@ import { ResponsavelService } from '../../services/responsavel.service';
 import { ControleRecebimentoService } from '../../services/controle-recebimento.service';
 
 import { RegistraItemRecebimentoComponent } from '../registra-item-recebimento/registra-item-recebimento';
-import { RegistraResponsavelComponent } from '../registra-responsavel/registra-responsavel.component';
 import { map, startWith, Observable } from 'rxjs';
 
 
@@ -71,6 +70,9 @@ export class RegistraPagamentoComponent implements OnInit {
   constructor(private responsavelService: ResponsavelService, public dialog: MatDialog, private controleRecebimentoService: ControleRecebimentoService) { }
 
   ngOnInit(): void {
+
+    
+
     this.responsavelService.getAll().subscribe(result => {
       this.options = result;
       console.log('resp ', this.options);
@@ -146,20 +148,6 @@ export class RegistraPagamentoComponent implements OnInit {
 
     this.dialogRef.afterClosed().subscribe((result: ItemPago) => {
       this.adicionarItem(result);
-    });
-  }
-
-  openResponsavelDialog() {
-    let data = {} as Responsavel;
-    this.dialogRef = this.dialog.open(RegistraResponsavelComponent,
-      { data: data, height: 'auto', width: '480px', autoFocus: true });
-
-    this.dialogRef.afterClosed().subscribe((result: Responsavel) => {
-      result.nome_responsavel = result.nome_responsavel!.toUpperCase();
-      this.responsaveis?.push(result);
-      this.responsavelService.create(result).subscribe((res: Responsavel) => {
-        console.log(res);
-      });
     });
   }
 

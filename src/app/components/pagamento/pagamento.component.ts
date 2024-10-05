@@ -17,7 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Registro } from '../../models/registro.model';
 import { RegistroService } from '../../services/registro.services';
 import { RecebimentoService } from '../../services/recebimento.service';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
@@ -26,10 +26,11 @@ import {
   provideNativeDateAdapter,
 } from '@angular/material/core';
 import { Responsavel } from '../../models/responsavel.model';
-import { RegistraResponsavelComponent } from '../registra-responsavel/registra-responsavel.component';
 import { ResponsavelService } from '../../services/responsavel.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ListaDebitosComponent } from '../lista-debitos/lista-debitos.component';
+import { DebitoService } from '../../services/debito.service';
+import { Debito } from '../../models/debito.model';
 
 export interface RelacaoDebitos {
   nome: string;
@@ -57,6 +58,7 @@ export interface RelacaoDebitos {
     MatButtonModule,
     MatTableModule,
     CurrencyPipe,
+    DatePipe,
     MatIcon,
     MatDatepickerModule,
     MatSelectModule,
@@ -66,16 +68,17 @@ export interface RelacaoDebitos {
   styleUrl: './pagamento.component.css',
 })
 export class PagamentoComponent {
-  displayedColumns: string[] = ['nome', 'item', 'vlrDevido'];
-  dataToDisplay: RelacaoDebitos[] = [];
-  dataSource = new MatTableDataSource<RelacaoDebitos>;
+  displayedColumns: string[] = ['vencimento', 'valor', 'descricao'];
+  dataSource: Debito[] = [];
 
-  disableDebitos = true;
+  debitos: Debito[] = [];
+  selectedDebito: Debito | undefined;
 
   selectedFormaPagamento: string | undefined;
   formaPagamento: string[] = ['Pix', '7me', 'Dinheiro', 'Cartão'];
 
   selectedItem: string | undefined;
+  
   itens: string[] = ['Mensalidade', 'Eventos', 'Uniforme'];
 
   responsaveis?: Responsavel[];
@@ -88,7 +91,7 @@ export class PagamentoComponent {
   constructor(
     private registroService: RegistroService,
     private recebimentoService: RecebimentoService,
-    private responsavelService: ResponsavelService,
+    private debitoService: DebitoService,
     public dialog: MatDialog
   ) {}
 
@@ -110,10 +113,6 @@ export class PagamentoComponent {
   ngOnInit(): void {
     this.registroService.getAll().subscribe((registros) => {
       this.options = registros;
-    });
-
-    this.responsavelService.getAll().subscribe((responsaveis) => {
-      this.responsaveis = responsaveis;
     });
   }
 
@@ -142,57 +141,14 @@ export class PagamentoComponent {
   }
 
   selecionaRegistro(registro: Registro) {
-    registro.id ? (this.disableDebitos = false) : (this.disableDebitos = true);
-    this.data = { nome: registro.nome, id: registro.id };
-    this.recebimentoService.getExtrato(registro.id!).subscribe((result) => {
-      // this.extrato = result;
-      // this.calculatePaymentsTotal();
+    this.debitoService.getDebitoDesbravador(registro.id!).subscribe((debitos) => {
+      this.dataSource = debitos;
     });
+    
   }
 
   onResponsavelSelection(resp: Responsavel) {
     this.selectedResponsavel = resp;
     console.log(this.selectedResponsavel);
-  }
-
-  openResponsavelDialog() {
-    let data = {} as Responsavel;
-    this.dialogRef = this.dialog.open(RegistraResponsavelComponent, {
-      data: data,
-      height: 'auto',
-      width: '480px',
-      autoFocus: true,
-    });
-
-    this.dialogRef.afterClosed().subscribe((result: Responsavel) => {
-      result.nome_responsavel = result.nome_responsavel!.toUpperCase();
-      this.responsaveis?.push(result);
-      this.responsavelService.create(result).subscribe((res: Responsavel) => {
-        console.log(res);
-      });
-    });
-  }
-
-  openListaDebitosDialog() {
-    this.dialogRef = this.dialog.open(ListaDebitosComponent, {
-      data: this.data,
-      height: 'auto',
-      width: '600px',
-      autoFocus: true,
-    });
-
-    this.dialogRef.afterClosed().subscribe((result: any) => {
-      result.debitos.forEach((debito: any) => {
-        let varDebito = {
-          nome: this.data.nome,
-          item: debito.desc_debito,
-          vlrDevido: debito.valor_debito,
-        };
-        this.dataToDisplay.push(varDebito);
-      });
-      this.dataSource = new MatTableDataSource<RelacaoDebitos>(
-        this.dataToDisplay
-      );
-    });
   }
 }

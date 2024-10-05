@@ -30,79 +30,60 @@
             }
           </mat-autocomplete>
         </mat-form-field>
-        <button
-          mat-raised-button
-          color="primary"
-          class="item-button"
-          (click)="openListaDebitosDialog()"
-          [disabled]="disableDebitos"
-        >
-          <mat-icon>search</mat-icon>DÉBITOS
-        </button>
       </div>
-      <div class="table">
-        <h3>Debitos</h3>
-        <table
-          mat-table
-          [dataSource]="dataSource"
-          class="mat-elevation-z8 demo-table"
-        >
-          <!-- Position Column -->
-          <ng-container matColumnDef="nome">
-            <th mat-header-cell *matHeaderCellDef>Nome</th>
-            <td mat-cell *matCellDef="let debito">{{ debito.nome }}</td>
-          </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="item">
-            <th mat-header-cell *matHeaderCellDef>Item</th>
-            <td mat-cell *matCellDef="let debito">{{ debito.item }}</td>
-          </ng-container>
 
-          <!-- Weight Column -->
-          <ng-container matColumnDef="vlrDevido">
-            <th mat-header-cell *matHeaderCellDef>Valor</th>
-            <td mat-cell *matCellDef="let debito">
-              {{ debito.vlrDevido | currency : "BRL" : "symbol" : "1.2-2" }}
-            </td>
-          </ng-container>
 
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </div>
-      <div class="row resp">
-        <mat-form-field class="width-90">
-          <mat-label>Responsável</mat-label>
-          <input
-            type="text"
-            matInput
-            [formControl]="myControl"
-            [matAutocomplete]="resp"
-            (keypress)="onValueChange()"
-          />
-          <mat-autocomplete
-            autoActiveFirstOption
-            #resp="matAutocomplete"
-            [displayWith]="displayFn"
-          >
-            @for (optionResp of filteredOptionsResp | async; track optionResp) {
-            <mat-option
-              [value]="optionResp"
-              (onSelectionChange)="onResponsavelSelection(optionResp)"
-              >{{ optionResp.nome_responsavel }}</mat-option
-            >
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Vencimento Column -->
+        <ng-container matColumnDef="vencimento">
+          <th mat-header-cell *matHeaderCellDef> Vencimento </th>
+          <td mat-cell *matCellDef="let debito"> {{debito.vcto_debito | date : 'dd/MM/yyyy'}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="valor">S
+          <th mat-header-cell *matHeaderCellDef> Valor </th>
+          <td mat-cell *matCellDef="let debito"> {{debito.valor_debito | currency : "BRL" : "symbol" : "1.2-2"}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="descricao">
+          <th mat-header-cell *matHeaderCellDef> Descrição </th>
+          <td mat-cell *matCellDef="let debito"> {{debito.desc_debito}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <!-- <div class="col">
+        <mat-form-field class="full-width">
+          <mat-label class="full-width">Débito</mat-label>
+          <mat-select class="full-width" [(value)]="selectedDebito">
+            @for (debito of debitos; track debito) {
+            <mat-option [value]="debito.id">{{ (debito.vcto_debito | date : 'dd/MM/yyyy') + ' - ' + (debito.valor_debito | currency : "BRL" : "symbol" : "1.2-2" ) + ' ' + debito.desc_debito }}</mat-option>
             }
-          </mat-autocomplete>
+          </mat-select>
+           @if
+          (controlePagamentoForm.controls['responsavel'].hasError('required'))
+          {
+          <mat-error>O nome do evento deverá ser informado </mat-error>
+          }         </mat-form-field>
+      </div> -->
+
+
+
+      <div class="row resp">
+        <mat-form-field class="full-width">
+          <mat-label>Responsável</mat-label>
+          <input matInput formControlName="responsavel" />
         </mat-form-field>
-        <button
-          mat-mini-fab
-          color="primary"
-          class="button button-resp"
-          (click)="openResponsavelDialog(); $event.preventDefault()"
-        >
-          <mat-icon>plus_one</mat-icon>
-        </button>
       </div>
       <div class="row">
         <div class="col">

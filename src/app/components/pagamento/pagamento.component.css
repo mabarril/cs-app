@@ -107,6 +107,11 @@ td {
   justify-content: flex-end;
 }
 
+table {
+  padding: 1em;
+  width: 100%;
+}
+
 @media (width <= 500px) {
   .row {
     flex-direction: column;
