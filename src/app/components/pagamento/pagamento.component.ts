@@ -159,6 +159,7 @@ export class PagamentoComponent {
   getTotalCost() {
     return this.totalValue;
   }
+<<<<<<< HEAD
 
   selecionaRegistro(registro: Registro) {
     this.debitoService
@@ -167,6 +168,8 @@ export class PagamentoComponent {
         this.dataSource = debitos;
       });
   }
+=======
+>>>>>>> 86a9a1508092dd7fe37d3b3d42c9755324aa822a
 }
 =======
 }
