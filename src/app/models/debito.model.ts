@@ -7,4 +7,5 @@ export class Debito {
     vcto_debito?:Date;
     qtd_item_debito?: number;
     codigo_item_debito?: number;
+    valor_pago?: number;
 }

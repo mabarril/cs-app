@@ -36,6 +36,7 @@ export interface RelacaoDebitos {
   nome: string;
   item: string;
   vlrDevido: number;
+  vlrPago: number;
 }
 
 // const ELEMENT_DATA: RelacaoDebitos[] = [
@@ -68,7 +69,12 @@ export interface RelacaoDebitos {
   styleUrl: './pagamento.component.css',
 })
 export class PagamentoComponent {
-  displayedColumns: string[] = ['vencimento', 'valor', 'descricao'];
+  displayedColumns: string[] = [
+    'vencimento',
+    'valor',
+    'descricao',
+    'valorPago',
+  ];
   dataSource: Debito[] = [];
 
   debitos: Debito[] = [];
@@ -78,7 +84,7 @@ export class PagamentoComponent {
   formaPagamento: string[] = ['Pix', '7me', 'Dinheiro', 'Cartão'];
 
   selectedItem: string | undefined;
-  
+
   itens: string[] = ['Mensalidade', 'Eventos', 'Uniforme'];
 
   responsaveis?: Responsavel[];
@@ -87,6 +93,8 @@ export class PagamentoComponent {
   dialogRef: any;
 
   data = {} as any;
+
+  totalValue = 0;
 
   constructor(
     private registroService: RegistroService,
@@ -129,26 +137,33 @@ export class PagamentoComponent {
   }
 
   onValueChange() {
-    console.log(this.myControl.value);
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map((value) => {
         const name = typeof value === 'string' ? value : value?.nome;
-        console.log(name);
         return name ? this._filter(name as string) : this.options.slice();
       })
     );
   }
 
-  selecionaRegistro(registro: Registro) {
-    this.debitoService.getDebitoDesbravador(registro.id!).subscribe((debitos) => {
-      this.dataSource = debitos;
-    });
-    
+  calculaPagamento() {
+    this.totalValue = this.debitos.reduce(
+      (sum, debito) => sum + (debito.valor_pago || 0),
+      0
+    );
+
+    console.log(this.totalValue);
   }
 
-  onResponsavelSelection(resp: Responsavel) {
-    this.selectedResponsavel = resp;
-    console.log(this.selectedResponsavel);
+  getTotalCost() {
+    return this.totalValue;
+  }
+
+  selecionaRegistro(registro: Registro) {
+    this.debitoService
+      .getDebitoDesbravador(registro.id!)
+      .subscribe((debitos) => {
+        this.dataSource = debitos;
+      });
   }
 }
