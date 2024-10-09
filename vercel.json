@@ -2,7 +2,7 @@
     "rewrites": [
       {
         "source": "/api/:match*",
-        "destination": "http://iasdcentraldebrasilia.com.br/cruzeirodosul/sgcs/dbv-api/:match*"
+        "destination": "http://iasdcentraldebrasilia.com.br/cruzeirodosul/dbvApi/:match*"
       }
     ],
     "headers": [

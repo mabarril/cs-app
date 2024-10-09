@@ -6,6 +6,7 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
+      <div [formGroup] = "controlePagamentoForm">
       <div class="filter-dbv">
         <mat-form-field class="item">
           <mat-label>Desbravador</mat-label>
@@ -66,7 +67,7 @@
           <td mat-cell *matCellDef="let debito"> 
             <mat-form-field floatLabel="always">
               <mat-label>Amount</mat-label>
-              <input matInput type="number" class="example-right-align" placeholder="0" [(ngModel)]="debito.valor_pago" (change)="calculaPagamento()"/>
+              <input matInput type="number" class="example-right-align" placeholder="0" (change)="calculaPagamento($event, debito)"/>
               <span matTextPrefix>R$&nbsp;</span>
               <span matTextSuffix>,00</span>
             </mat-form-field>            
@@ -164,6 +165,7 @@
           </mat-form-field>
         </div>
       </div>
+    </div>
     </mat-card-content>
   </mat-card>
 </div>

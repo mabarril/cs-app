@@ -16,27 +16,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Registro } from '../../models/registro.model';
 import { RegistroService } from '../../services/registro.services';
-import { RecebimentoService } from '../../services/recebimento.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
-import {
-  MatNativeDateModule,
-  provideNativeDateAdapter,
-} from '@angular/material/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { Responsavel } from '../../models/responsavel.model';
-import { ResponsavelService } from '../../services/responsavel.service';
-import { MatDialog } from '@angular/material/dialog';
-import { ListaDebitosComponent } from '../lista-debitos/lista-debitos.component';
 import { DebitoService } from '../../services/debito.service';
 import { Debito } from '../../models/debito.model';
+import { Pagamento } from '../../models/pagamento.model';
 
 export interface RelacaoDebitos {
-  nome: string;
-  item: string;
-  vlrDevido: number;
-  vlrPago: number;
+  id?: number;
+  nome?: string;
+  item?: string;
+  vlrDevido?: number;
+  vlrPago?: number;
 }
 
 // const ELEMENT_DATA: RelacaoDebitos[] = [
@@ -80,6 +75,11 @@ export class PagamentoComponent {
   debitos: Debito[] = [];
   selectedDebito: Debito | undefined;
 
+  relacaoDebitos: RelacaoDebitos[] = [];
+
+  pagamento: Pagamento | undefined;
+  pagamentos: Pagamento[] = [];
+
   selectedFormaPagamento: string | undefined;
   formaPagamento: string[] = ['Pix', '7me', 'Dinheiro', 'Cartão'];
 
@@ -98,9 +98,7 @@ export class PagamentoComponent {
 
   constructor(
     private registroService: RegistroService,
-    private recebimentoService: RecebimentoService,
     private debitoService: DebitoService,
-    public dialog: MatDialog
   ) {}
 
   myControl = new FormControl<string | Registro>('');
@@ -146,20 +144,26 @@ export class PagamentoComponent {
     );
   }
 
-  calculaPagamento() {
-    this.totalValue = this.debitos.reduce(
-      (sum, debito) => sum + (debito.valor_pago || 0),
-      0
-    );
+  calculaPagamento(event: any, debito: Debito) {
+    if (event.target.value > 0 && debito) {
+      var relDeb = {} as RelacaoDebitos;
+      relDeb.id = debito.id;
+      // relDeb.item = debito.no
+      relDeb.vlrDevido = event.target.value;
+    }
+
+    let pagamento = new Pagamento();
+    pagamento.valor = debito.valor_debito;
+    pagamento.valor_pagamento = Number(event.target.value);
+    pagamento.id_debito = debito.id;
+    pagamento.data = new Date().toISOString();
+    +this.pagamentos.push(pagamento);
 
     console.log(this.totalValue);
   }
-<<<<<<< HEAD
-
   getTotalCost() {
     return this.totalValue;
   }
-<<<<<<< HEAD
 
   selecionaRegistro(registro: Registro) {
     this.debitoService
@@ -168,9 +172,4 @@ export class PagamentoComponent {
         this.dataSource = debitos;
       });
   }
-=======
->>>>>>> 86a9a1508092dd7fe37d3b3d42c9755324aa822a
 }
-=======
-}
->>>>>>> 86a9a15 (Refactor code to remove unused function onResponsavelSelection)

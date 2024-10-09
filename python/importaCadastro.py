@@ -1,4 +1,5 @@
 import csv
+import ssl
 import mysql.connector
 
 # Configurações do banco de dados
@@ -9,12 +10,12 @@ db_config = {
     'database': 'iasdc624_sgcs'
 }
 
-# Conecta ao banco de dados
+# Conecta ao banco de dados1
 conn = mysql.connector.connect(**db_config)
 cursor = conn.cursor()
 
 # Leitura do arquivo CSV
-with open('cadastro.csv', 'r') as csvfile:
+with open('CADASTRO.csv', 'r') as csvfile:
     csvreader = csv.reader(csvfile)
     next(csvreader)  # Pula o cabeçalho (se houver)
 

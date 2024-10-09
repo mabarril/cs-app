@@ -6,4 +6,6 @@ export class Pagamento {
     valor?: number; 
     id_recibo?: number;   
     item?: string;
+    id_debito?: number;
+    valor_pagamento?: number;
 };
