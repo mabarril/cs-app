@@ -99,7 +99,7 @@ export class PagamentoComponent {
   constructor(
     private registroService: RegistroService,
     private debitoService: DebitoService,
-  ) {}
+  ) { }
 
   myControl = new FormControl<string | Registro>('');
   options!: Registro[];

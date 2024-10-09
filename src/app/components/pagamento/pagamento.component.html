@@ -6,81 +6,70 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div [formGroup] = "controlePagamentoForm">
-      <div class="filter-dbv">
-        <mat-form-field class="item">
-          <mat-label>Desbravador</mat-label>
-          <input
-            type="text"
-            matInput
-            [formControl]="myControl"
-            [matAutocomplete]="auto"
-            (keypress)="onValueChange()"
-          />
-          <mat-autocomplete
-            autoActiveFirstOption
-            #auto="matAutocomplete"
-            [displayWith]="displayFn"
-          >
-            @for (option of filteredOptions | async; track option) {
-            <mat-option
-              [value]="option"
-              (onSelectionChange)="selecionaRegistro(option)"
-              >{{ option.nome }}</mat-option
-            >
-            }
-          </mat-autocomplete>
-        </mat-form-field>
-      </div>
+      <div [formGroup]="controlePagamentoForm">
+        <div class="filter-dbv">
+          <mat-form-field class="item">
+            <mat-label>Desbravador</mat-label>
+            <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto"
+              (keypress)="onValueChange()" />
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+              @for (option of filteredOptions | async; track option) {
+              <mat-option [value]="option" (onSelectionChange)="selecionaRegistro(option)">{{ option.nome
+                }}</mat-option>
+              }
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
 
 
 
 
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
 
-        <!--- Note that these columns can be defined in any order.
+          <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
-      
-        <!-- Vencimento Column -->
-        <ng-container matColumnDef="vencimento">
-          <th mat-header-cell *matHeaderCellDef> Vencimento </th>
-          <td mat-cell *matCellDef="let debito"> {{debito.vcto_debito | date : 'dd/MM/yyyy'}} </td>
-          <td mat-footer-cell *matFooterCellDef> Total </td>
-        </ng-container>
-      
-        <!-- Name Column -->
-        <ng-container matColumnDef="valor">S
-          <th mat-header-cell *matHeaderCellDef> Valor </th>
-          <td mat-cell *matCellDef="let debito"> {{debito.valor_debito | currency : "BRL" : "symbol" : "1.2-2"}} </td>
-          <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
-      
-        <!-- Weight Column -->
-        <ng-container matColumnDef="descricao">
-          <th mat-header-cell *matHeaderCellDef> Descrição </th>
-          <td mat-cell *matCellDef="let debito"> {{debito.desc_debito}} </td>
-          <td mat-footer-cell *matFooterCellDef> </td>
-        </ng-container>
 
-        <ng-container matColumnDef="valorPago">
-          <th mat-header-cell *matHeaderCellDef> Valor Pago </th>
-          <td mat-cell *matCellDef="let debito"> 
-            <mat-form-field floatLabel="always">
-              <mat-label>Amount</mat-label>
-              <input matInput type="number" class="example-right-align" placeholder="0" (change)="calculaPagamento($event, debito)"/>
-              <span matTextPrefix>R$&nbsp;</span>
-              <span matTextSuffix>,00</span>
-            </mat-form-field>            
-          </td>
-          ]<td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
-        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
-      </table>
+          <!-- Vencimento Column -->
+          <ng-container matColumnDef="vencimento">
+            <th mat-header-cell *matHeaderCellDef> Vencimento </th>
+            <td mat-cell *matCellDef="let debito"> {{debito.vcto_debito | date : 'dd/MM/yyyy'}} </td>
+            <td mat-footer-cell *matFooterCellDef> Total </td>
+          </ng-container>
 
-      <!-- <div class="col">
+          <!-- Name Column -->
+          <ng-container matColumnDef="valor">S
+            <th mat-header-cell *matHeaderCellDef> Valor </th>
+            <td mat-cell *matCellDef="let debito"> {{debito.valor_debito | currency : "BRL" : "symbol" : "1.2-2"}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="descricao">
+            <th mat-header-cell *matHeaderCellDef> Descrição </th>
+            <td mat-cell *matCellDef="let debito"> {{debito.desc_debito}} </td>
+            <td mat-footer-cell *matFooterCellDef> </td>
+          </ng-container>
+
+          <ng-container matColumnDef="valorPago">
+            <th mat-header-cell *matHeaderCellDef> Valor Pago </th>
+            <td mat-cell *matCellDef="let debito">
+              <mat-form-field floatLabel="always">
+                <mat-label>Amount</mat-label>
+                <input matInput type="number" class="example-right-align" placeholder="0"
+                  (change)="calculaPagamento($event, debito)" />
+                <span matTextPrefix>R$&nbsp;</span>
+                <span matTextSuffix>,00</span>
+              </mat-form-field>
+            </td>
+            ]<td mat-footer-cell *matFooterCellDef> {{getTotalCost() | currency}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        </table>
+
+        <!-- <div class="col">
         <mat-form-field class="full-width">
           <mat-label class="full-width">Débito</mat-label>
           <mat-select class="full-width" [(value)]="selectedDebito">
@@ -97,75 +86,70 @@
 
 
 
-      <div class="row resp">
-        <mat-form-field class="full-width">
-          <mat-label>Responsável</mat-label>
-          <input matInput formControlName="responsavel" />
-        </mat-form-field>
-      </div>
-      <div class="row">
-        <div class="col">
+        <div class="row resp">
           <mat-form-field class="full-width">
-            <mat-label class="full-width">Data</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="data" />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            @if (controlePagamentoForm.controls['data'].hasError('required')) {
-            <mat-error>A data deverá ser informada </mat-error>
-            }
+            <mat-label>Responsável</mat-label>
+            <input matInput formControlName="responsavel" />
           </mat-form-field>
         </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label class="full-width">Forma de Pagamento</mat-label>
-            <mat-select class="full-width" [(value)]="selectedFormaPagamento">
-              @for (tipo of formaPagamento; track tipo) {
-              <mat-option [value]="tipo">{{ tipo }}</mat-option>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label class="full-width">Data</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="data" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              @if (controlePagamentoForm.controls['data'].hasError('required')) {
+              <mat-error>A data deverá ser informada </mat-error>
               }
-            </mat-select>
-            @if
-            (controlePagamentoForm.controls['responsavel'].hasError('required'))
-            {
-            <mat-error>O nome do evento deverá ser informado </mat-error>
-            }
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label class="full-width">Descrição</mat-label>
-            <input matInput formControlName="descricao" />
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label class="full-width">Número do Recibo</mat-label>
-            <input matInput formControlName="recibo" />
-          </mat-form-field>
-          @if (controlePagamentoForm.controls['recibo'].hasError('pattern')) {
-          <mat-error
-            >Informar somente <strong>valor numérico</strong></mat-error
-          >
-          }
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-label class="full-width">Item</mat-label>
-            <mat-select class="full-width" [(value)]="selectedItem">
-              @for (item of itens; track item) {
-              <mat-option [value]="item">{{ item }}</mat-option>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label class="full-width">Forma de Pagamento</mat-label>
+              <mat-select class="full-width" [(value)]="selectedFormaPagamento">
+                @for (tipo of formaPagamento; track tipo) {
+                <mat-option [value]="tipo">{{ tipo }}</mat-option>
+                }
+              </mat-select>
+              @if
+              (controlePagamentoForm.controls['responsavel'].hasError('required'))
+              {
+              <mat-error>O nome do evento deverá ser informado </mat-error>
               }
-            </mat-select>
-          </mat-form-field>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label class="full-width">Descrição</mat-label>
+              <input matInput formControlName="descricao" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label class="full-width">Número do Recibo</mat-label>
+              <input matInput formControlName="recibo" />
+            </mat-form-field>
+            @if (controlePagamentoForm.controls['recibo'].hasError('pattern')) {
+            <mat-error>Informar somente <strong>valor numérico</strong></mat-error>
+            }
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <mat-label class="full-width">Item</mat-label>
+              <mat-select class="full-width" [(value)]="selectedItem">
+                @for (item of itens; track item) {
+                <mat-option [value]="item">{{ item }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
       </div>
-    </div>
     </mat-card-content>
   </mat-card>
 </div>
