@@ -107,6 +107,10 @@ td {
   justify-content: flex-end;
 }
 
+.right-align {
+  text-align: right;
+}
+
 @media (width <= 500px) {
   .row {
     flex-direction: column;

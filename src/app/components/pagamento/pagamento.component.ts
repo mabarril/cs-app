@@ -21,10 +21,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatIcon } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
-import {
-  MatNativeDateModule,
-  provideNativeDateAdapter,
-} from '@angular/material/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 import { Responsavel } from '../../models/responsavel.model';
 import { RegistraResponsavelComponent } from '../registra-responsavel/registra-responsavel.component';
 import { ResponsavelService } from '../../services/responsavel.service';
@@ -35,6 +32,7 @@ export interface RelacaoDebitos {
   nome: string;
   item: string;
   vlrDevido: number;
+  vlrPago: number;
 }
 
 // const ELEMENT_DATA: RelacaoDebitos[] = [
@@ -66,7 +64,7 @@ export interface RelacaoDebitos {
   styleUrl: './pagamento.component.css',
 })
 export class PagamentoComponent {
-  displayedColumns: string[] = ['nome', 'item', 'vlrDevido'];
+  displayedColumns: string[] = ['nome', 'item', 'vlrDevido', 'vlrPago'];
   dataToDisplay: RelacaoDebitos[] = [];
   dataSource = new MatTableDataSource<RelacaoDebitos>;
 
@@ -90,7 +88,7 @@ export class PagamentoComponent {
     private recebimentoService: RecebimentoService,
     private responsavelService: ResponsavelService,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   myControl = new FormControl<string | Registro>('');
   options!: Registro[];
@@ -118,7 +116,6 @@ export class PagamentoComponent {
   }
 
   displayFn(user: Registro): string {
-    console.log(user);
     return user && user.nome ? user.nome : '';
   }
 
@@ -130,7 +127,6 @@ export class PagamentoComponent {
   }
 
   onValueChange() {
-    console.log(this.myControl.value);
     this.filteredOptions = this.myControl.valueChanges.pipe(
       startWith(''),
       map((value) => {
@@ -152,7 +148,6 @@ export class PagamentoComponent {
 
   onResponsavelSelection(resp: Responsavel) {
     this.selectedResponsavel = resp;
-    console.log(this.selectedResponsavel);
   }
 
   openResponsavelDialog() {
@@ -187,6 +182,7 @@ export class PagamentoComponent {
           nome: this.data.nome,
           item: debito.desc_debito,
           vlrDevido: debito.valor_debito,
+          vlrPago: debito.valor_debito,
         };
         this.dataToDisplay.push(varDebito);
       });
