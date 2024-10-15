@@ -131,7 +131,6 @@ export class PagamentoComponent {
       startWith(''),
       map((value) => {
         const name = typeof value === 'string' ? value : value?.nome;
-        console.log(name);
         return name ? this._filter(name as string) : this.options.slice();
       })
     );
